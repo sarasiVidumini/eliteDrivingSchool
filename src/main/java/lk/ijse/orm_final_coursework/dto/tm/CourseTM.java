@@ -10,11 +10,11 @@ import lombok.*;
 @Builder
 
 public class CourseTM {
-    String courseId;
-    String instructorId;
-    String courseName;
-    String duration;
-    double fee;
-    String description;
+    private String courseId;
+    private String instructorId;
+    private String courseName;
+    private String duration;
+    private double fee;
+    private String description;
 
 }

@@ -10,10 +10,10 @@ import lombok.*;
 @Builder
 
 public class User {
-    String userId;
-    String userName;
-    String password;
-    String role;
-    String email;
-    String status;
+    private String userId;
+    private String userName;
+    private String password;
+    private String role;
+    private String email;
+    private String status;
 }

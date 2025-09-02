@@ -13,13 +13,13 @@ import java.util.Date;
 @Builder
 
 public class Lessons {
-    String lessonId;
-    String studentId;
-    String courseId;
-    String instructorId;
-    Date lessonDate;
-    Time startTime;
-    Time endTime;
-    String status;
+    private String lessonId;
+    private String studentId;
+    private String instructorId;
+    private Date lessonDate;
+    private Time startTime;
+    private Time endTime;
+    private String status;
+    private String courseId;
 
 }

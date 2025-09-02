@@ -13,13 +13,13 @@ import java.sql.Time;
 @Builder
 
 public class LessonsTM {
-    String  lessonId;
-    String  studentId;
-    String courseId;
-    String instructorId;
-    Date lessonDate;
-    Time startTime;
-    Time endTime;
-    String status;
+    private String  lessonId;
+    private String  studentId;
+    private String courseId;
+    private String instructorId;
+    private Date lessonDate;
+    private Time startTime;
+    private Time endTime;
+    private String status;
 
 }

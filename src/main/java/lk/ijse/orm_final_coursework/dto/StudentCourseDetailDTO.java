@@ -12,11 +12,11 @@ import java.util.Date;
 @Builder
 
 public class StudentCourseDetailDTO {
-    String studentCourseId;
-    String studentId;
-    String courseId;
-    Date enrollmentDate;
-    String status;
-    String grade;
+    private String studentCourseId;
+    private String studentId;
+    private String courseId;
+    private Date enrollmentDate;
+    private String status;
+    private String grade;
 
 }

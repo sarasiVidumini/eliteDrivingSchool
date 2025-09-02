@@ -12,13 +12,13 @@ import java.sql.Date;
 @Builder
 
 public class StudentTM {
-    String studentId;
-    String firstName;
-    String lastName;
-    String email;
-    String phone;
-    String address;
-    Date dob;
-    Date registrationDate;
+    private String studentId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String address;
+    private Date dob;
+    private Date registrationDate;
 
 }

@@ -10,11 +10,11 @@ import lombok.*;
 @Builder
 
 public class InstructorDTO {
-    String instructorId;
-    String firstName;
-    String lastName;
-    String email;
-    String phone;
-    String specialization;
-    boolean availability_schedule;
+    private String instructorId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String specialization;
+    private boolean availability_schedule;
 }

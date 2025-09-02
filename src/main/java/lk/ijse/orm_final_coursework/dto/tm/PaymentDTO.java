@@ -13,10 +13,10 @@ import java.sql.Date;
 @Builder
 
 public class PaymentDTO {
-    String paymentId;
-    String studentId;
-    Date paymentDate;
-    double amount;
-    String paymentMethod;
-    String status;
+    private String paymentId;
+    private String studentId;
+    private Date paymentDate;
+    private double amount;
+    private String paymentMethod;
+    private String status;
 }
