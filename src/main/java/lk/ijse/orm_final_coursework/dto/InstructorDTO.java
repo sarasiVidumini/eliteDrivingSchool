@@ -2,6 +2,8 @@ package lk.ijse.orm_final_coursework.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
+
 @Getter
 @Setter
 @ToString
@@ -17,4 +19,6 @@ public class InstructorDTO {
     private String phone;
     private String specialization;
     private boolean availability_schedule;
+    private ArrayList<LessonsDTO> lessons;
+    private ArrayList<CourseDTO> courses;
 }

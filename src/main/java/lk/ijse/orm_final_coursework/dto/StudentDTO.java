@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Getter
@@ -19,4 +20,7 @@ public class StudentDTO {
     private String address;
     private Date dob;
     private Date registrationDate;
+    private ArrayList<StudentCourseDetailDTO> studentCourseDetail;
+    private ArrayList<LessonsDTO> lessons;
+    private ArrayList<PaymentDTO> payments;
 }
