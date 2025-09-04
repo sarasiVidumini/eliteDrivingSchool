@@ -4,6 +4,7 @@ module lk.ijse.orm_final_coursework {
     requires static lombok;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires mysql.connector.j;
 
 
     opens lk.ijse.orm_final_coursework.controller to javafx.fxml;

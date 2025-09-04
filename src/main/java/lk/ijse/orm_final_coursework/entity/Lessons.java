@@ -1,5 +1,6 @@
 package lk.ijse.orm_final_coursework.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
@@ -7,19 +8,44 @@ import java.util.Date;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+//@Builder
 
+@Entity
+@Table(name = "lessons")
 public class Lessons {
+    @Id
+    @Column
     private String lessonId;
-    private String studentId;
-    private String instructorId;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id" , referencedColumnName ="studentId" )
+//    private String studentId;
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "instructor_id" , referencedColumnName = "instructorId")
+//    private String instructorId;
+    private Instructor instructor;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id" , referencedColumnName = "courseId")
+//    private String courseId;
+    private Course course;
+
+    @Column
     private Date lessonDate;
+
+    @Column
     private Time startTime;
+
+    @Column
     private Time endTime;
+
+    @Column
     private String status;
-    private String courseId;
+
 
 }
