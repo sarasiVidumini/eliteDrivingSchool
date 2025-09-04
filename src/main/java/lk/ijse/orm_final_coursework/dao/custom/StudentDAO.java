@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface StudentDAO extends CrudDAO<Student> {
-    public List<String> getAllIds() throws SQLException;
     public String getStudentIdByContact(String phone) throws SQLException;
     public String getStudentFirstNameById(String studentId) throws SQLException;
     public String getStudentLastNameById(String studentId) throws SQLException;

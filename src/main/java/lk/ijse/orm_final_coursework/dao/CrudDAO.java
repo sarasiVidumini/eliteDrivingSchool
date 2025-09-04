@@ -13,9 +13,10 @@ public interface CrudDAO<T> extends SuperDAO{
     public String getNextId(Session session) throws SQLException;
     public List<Student> getAll() throws SQLException;
     public String getLastId() throws SQLException;
-    public boolean save(Student student) throws SQLException;
-    public boolean update(Student student) throws SQLException;
+    public boolean save(T t) throws SQLException;
+    public boolean update(T t) throws SQLException;
     public boolean delete(String id ) throws SQLException;
     public Optional<T> findById(String id) throws SQLException;
     public List<T>  search(String search) throws SQLException;
+    public List<String> getAllIds() throws SQLException;
 }
