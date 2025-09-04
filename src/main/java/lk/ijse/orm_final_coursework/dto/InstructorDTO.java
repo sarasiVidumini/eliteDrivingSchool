@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
