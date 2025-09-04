@@ -1,4 +1,21 @@
 package lk.ijse.orm_final_coursework.dao;
 
-public interface CrudDAO {
+import lk.ijse.orm_final_coursework.entity.Student;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
+public interface CrudDAO<T> extends SuperDAO{
+    public String getNextId(Session session) throws SQLException;
+    public List<Student> getAll() throws SQLException;
+    public String getLastId() throws SQLException;
+    public boolean save(Student student) throws SQLException;
+    public boolean update(Student student) throws SQLException;
+    public boolean delete(String id ) throws SQLException;
+    public Optional<T> findById(String id) throws SQLException;
+    public List<T>  search(String search) throws SQLException;
 }
