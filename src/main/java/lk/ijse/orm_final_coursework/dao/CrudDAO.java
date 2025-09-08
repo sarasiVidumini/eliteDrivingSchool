@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface CrudDAO<T> extends SuperDAO{
     public String getNextId(Session session) throws SQLException;
-    public List<Student> getAll() throws SQLException;
+    public List<T> getAll() throws SQLException;
     public String getLastId() throws SQLException;
     public boolean save(T t) throws SQLException;
     public boolean update(T t) throws SQLException;

@@ -1,5 +1,6 @@
 package lk.ijse.orm_final_coursework.dao;
 
+import lk.ijse.orm_final_coursework.dao.custom.impl.CourseDAOImpl;
 import lk.ijse.orm_final_coursework.dao.custom.impl.StudentDAOImpl;
 import lk.ijse.orm_final_coursework.dao.custom.impl.UserDAOImpl;
 
@@ -18,6 +19,7 @@ public class DAOFactory {
         return switch (daoType){
             case STUDENT -> (T) new StudentDAOImpl();
             case USER ->  (T) new UserDAOImpl();
+            case COURSE ->  (T) new CourseDAOImpl();
         };
    }
 }
