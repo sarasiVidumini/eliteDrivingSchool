@@ -37,11 +37,11 @@ public class UserDAOImpl implements UserDAO {
         return tableCharacter+"001";
     }
 
-    public List<Student> getAll() throws SQLException {
+    public List<User> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
 
         try {
-            List<Student> list = session.createQuery("from Student" , Student.class)
+            List<User> list = session.createQuery("from User" , User.class)
                     .getResultList();
             return list;
         }finally {
