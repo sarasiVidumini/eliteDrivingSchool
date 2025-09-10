@@ -6,4 +6,6 @@ public enum DAOTypes {
     COURSE,
     INSTRUCTOR,
     LESSONS,
+    PAYMENT,
+
 }
