@@ -5,4 +5,5 @@ public enum BOTypes {
     INSTRUCTOR,
     LESSONS,
     PAYMENT,
+    STUDENT,
 }
