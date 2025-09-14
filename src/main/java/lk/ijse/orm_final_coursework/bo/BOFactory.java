@@ -3,6 +3,7 @@ package lk.ijse.orm_final_coursework.bo;
 import lk.ijse.orm_final_coursework.bo.custom.Impl.CourseBOImpl;
 import lk.ijse.orm_final_coursework.bo.custom.Impl.InstructorBOImpl;
 import lk.ijse.orm_final_coursework.bo.custom.Impl.LessonBOImpl;
+import lk.ijse.orm_final_coursework.bo.custom.Impl.PaymentBOImpl;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -19,6 +20,8 @@ public class BOFactory {
                 return new InstructorBOImpl();
             case LESSONS:
                 return new LessonBOImpl();
+            case PAYMENT:
+                return new PaymentBOImpl();
 
                 default:
                     return null;
