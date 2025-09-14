@@ -1,0 +1,93 @@
+package lk.ijse.orm_final_coursework.bo.custom.Impl;
+
+import lk.ijse.orm_final_coursework.bo.custom.InstructorBO;
+import lk.ijse.orm_final_coursework.bo.exceptionHandling.DuplicateException;
+import lk.ijse.orm_final_coursework.bo.exceptionHandling.NotFoundException;
+import lk.ijse.orm_final_coursework.bo.utils.EntityDTOConverter;
+import lk.ijse.orm_final_coursework.dao.DAOFactory;
+import lk.ijse.orm_final_coursework.dao.DAOTypes;
+import lk.ijse.orm_final_coursework.dao.custom.InstructorDAO;
+import lk.ijse.orm_final_coursework.dto.InstructorDTO;
+import lk.ijse.orm_final_coursework.entity.Instructor;
+import org.hibernate.Session;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class InstructorBOImpl implements InstructorBO {
+    private final InstructorDAO instructorDAO = DAOFactory.getInstance().getDAO(DAOTypes.INSTRUCTOR);
+    private final EntityDTOConverter converter = new EntityDTOConverter();
+    @Override
+    public String getNextId(Session session) throws SQLException {
+        return instructorDAO.getNextId(session);
+    }
+
+    @Override
+    public List<InstructorDTO> getAll() throws SQLException {
+        List<Instructor> instructors = instructorDAO.getAll();
+        List<InstructorDTO> instructorDTOS = new ArrayList<>();
+        for (Instructor instructor : instructors) {
+            instructorDTOS.add(converter.getInstructorDTO(instructor));
+        }
+        return instructorDTOS;
+    }
+
+    @Override
+    public String getLastId() throws SQLException {
+        return instructorDAO.getLastId();
+    }
+
+    @Override
+    public boolean save(InstructorDTO instructorDTO) throws SQLException {
+        Optional<Instructor> instructor = instructorDAO.findById(instructorDTO.getInstructorId());
+        if (instructor.isPresent()) {
+            throw new DuplicateException("instructor already exists");
+        }
+        return instructorDAO.save(converter.getInstructor(instructorDTO));
+    }
+
+    @Override
+    public boolean update(InstructorDTO instructorDTO) throws SQLException {
+        Optional<Instructor> instructor = instructorDAO.findById(instructorDTO.getInstructorId());
+        if(instructor.isEmpty()){
+            throw new NotFoundException("instructor not found");
+        }
+
+        return instructorDAO.update(converter.getInstructor(instructorDTO));
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        Optional<Instructor> instructor = instructorDAO.findById(id);
+        if(instructor.isEmpty()){
+            throw new NotFoundException("instructor not found");
+        }
+        return instructorDAO.delete(id);
+    }
+
+    @Override
+    public List<String> getAllIds() throws SQLException {
+        return instructorDAO.getAllIds();
+    }
+
+    @Override
+    public Optional<InstructorDTO> findById(String id) throws SQLException {
+       Optional<Instructor> instructor = instructorDAO.findById(id);
+       if (instructor.isPresent()) {
+           return Optional.of(converter.getInstructorDTO(instructor.get()));
+       }
+       return Optional.empty();
+    }
+
+    @Override
+    public List<InstructorDTO> search(String search) throws SQLException {
+       ArrayList<Instructor> instructors = (ArrayList<Instructor>) instructorDAO.search(search);
+       List<InstructorDTO> instructorDTOS = new ArrayList<>();
+       for (Instructor instructor : instructors) {
+           instructorDTOS.add(converter.getInstructorDTO(instructor));
+       }
+       return instructorDTOS;
+    }
+}
