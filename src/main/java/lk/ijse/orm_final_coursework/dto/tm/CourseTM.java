@@ -11,10 +11,10 @@ import lombok.*;
 
 public class CourseTM {
     private String courseId;
-    private String instructorId;
     private String courseName;
     private String duration;
     private double fee;
     private String description;
+    private String instructorId;
 
 }

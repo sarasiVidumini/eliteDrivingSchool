@@ -13,9 +13,9 @@ import java.util.Date;
 
 public class StudentCourseDetailTM {
     private String studentCourseId;
-    private String studentId;
-    private String courseId;
     private Date enrollmentDate;
     private String status;
     private String grade;
+    private String studentId;
+    private String courseId;
 }

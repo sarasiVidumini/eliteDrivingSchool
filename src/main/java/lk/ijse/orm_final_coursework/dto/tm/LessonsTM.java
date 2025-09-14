@@ -14,12 +14,12 @@ import java.sql.Time;
 
 public class LessonsTM {
     private String  lessonId;
-    private String  studentId;
-    private String courseId;
-    private String instructorId;
     private Date lessonDate;
     private Time startTime;
     private Time endTime;
     private String status;
+    private String  studentId;
+    private String courseId;
+    private String instructorId;
 
 }

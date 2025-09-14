@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class CourseDTO {
     private String courseId;
-    private String instructorId;
     private String courseName;
     private String duration;
     private double fee;
     private String description;
+    private String instructorId;
     private ArrayList<StudentCourseDetailDTO> student_course_detail;
     private ArrayList<LessonsDTO> lessons;
 }

@@ -48,4 +48,7 @@ public class Course {
     )
 
     private List<Lessons> lessons;
+
+//    public Object getInstructorId() {
+//    }
 }
