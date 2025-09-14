@@ -23,6 +23,9 @@ public class BOFactory {
                 return new StudentBOImpl();
             case STUDENTCOURSEDETAIL:
                 return new StudentCourseDetailBOImpl();
+            case USER:
+                return new UserBOImpl();
+
                 default:
                     return null;
         }
