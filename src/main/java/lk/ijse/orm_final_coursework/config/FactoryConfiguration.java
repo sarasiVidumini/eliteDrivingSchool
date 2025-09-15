@@ -17,7 +17,7 @@ public class FactoryConfiguration {
     private FactoryConfiguration(){
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("hibernate.properties"));
+            properties.load(new FileInputStream("property_file/hibernate.properties"));
         }catch (IOException e){
             e.printStackTrace();
         }
