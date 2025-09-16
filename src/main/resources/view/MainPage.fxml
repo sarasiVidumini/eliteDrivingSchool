@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,9 +13,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancMainPage" prefHeight="754.0" prefWidth="1539.0" style="-fx-background-color: #e0ffff; -fx-border-radius: 50; -fx-border-color: #000000; -fx-background-radius: 50;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.MainPageController">
+<AnchorPane fx:id="ancMainPage" prefHeight="754.0" prefWidth="1539.0" style="-fx-background-color: #16a085; -fx-border-radius: 50; -fx-border-color: #000000; -fx-background-radius: 50;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.MainPageController">
    <children>
-      <VBox prefHeight="800.0" prefWidth="986.0" style="-fx-background-color: #e0ffff; -fx-background-radius: 50;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="746.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="100.8" layoutY="44.8" prefHeight="691.0" prefWidth="1335.0" style="-fx-background-color: #16a085; -fx-background-radius: 50; -fx-border-color: #000000; -fx-border-radius: 50;" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="104.0" AnchorPane.topAnchor="44.0">
          <children>
             <ImageView fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
@@ -28,7 +27,7 @@
             </ImageView>
             <HBox prefHeight="14.0" prefWidth="881.0">
                <children>
-                  <Label prefHeight="58.0" prefWidth="169.0" text=" ELITE ">
+                  <Label prefHeight="58.0" prefWidth="169.0" text=" ELITE " textFill="WHITE">
                      <font>
                         <Font name="Times New Roman" size="50.0" />
                      </font>
@@ -43,7 +42,7 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="150.0" prefHeight="14.0" prefWidth="881.0">
                <children>
-                  <Label prefHeight="58.0" prefWidth="474.0" text="DRIVING   SCHOOL ">
+                  <Label prefHeight="58.0" prefWidth="474.0" text="DRIVING   SCHOOL " textFill="#fff6f6">
                      <font>
                         <Font name="Times New Roman" size="50.0" />
                      </font>
@@ -58,7 +57,7 @@
             </HBox>
             <HBox prefHeight="27.0" prefWidth="881.0">
                <children>
-                  <Label text="Learn to drive." textFill="#bc0a0a">
+                  <Label text="Learn to drive." textFill="#050000">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
@@ -73,7 +72,7 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="266.0" prefHeight="27.0" prefWidth="881.0">
                <children>
-                  <Label text="Get your license...!" textFill="#bc0a0a">
+                  <Label text="Get your license...!">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
@@ -83,9 +82,17 @@
                   </Label>
                </children>
             </HBox>
-            <VBox prefHeight="232.0" prefWidth="370.0">
+            <ImageView fx:id="bigImage" fitHeight="406.0" fitWidth="386.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
-                  <Insets left="100.0" right="500.0" top="10.0" />
+                  <Insets bottom="-300.0" left="800.0" top="-200.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../images/The%20Future%20of%20Car%20Ownership_%20Fractional%20Sharing.jpeg" />
+               </image>
+            </ImageView>
+            <VBox prefHeight="234.0" prefWidth="534.0">
+               <VBox.margin>
+                  <Insets left="100.0" right="1000.0" top="40.0" />
                </VBox.margin>
                <children>
                   <ImageView fx:id="smallImage" fitHeight="316.0" fitWidth="369.0" pickOnBounds="true" preserveRatio="true">
@@ -95,41 +102,32 @@
                   </ImageView>
                </children>
             </VBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="129.0" prefWidth="1332.0">
                <children>
                   <Button fx:id="registerButton" mnemonicParsing="false" onAction="#btnGoLoginPageOnAction" style="-fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: #00a8ff; -fx-background-color: #33d9b2;" text="&gt;&gt; REGISTER NOW ...!">
                      <font>
                         <Font size="36.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="350.0" top="40.0" />
+                        <Insets bottom="10.0" left="350.0" top="50.0" />
                      </HBox.margin>
                      <effect>
                         <InnerShadow choke="0.35" height="63.11" radius="38.072500000000005" width="91.18" />
                      </effect>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </HBox>
          </children>
-      </VBox>
-      <VBox layoutX="835.0" layoutY="10.0" prefHeight="790.0" prefWidth="682.0" style="-fx-background-color: #e0ffff; -fx-background-radius: 50;">
-         <children>
-            <ImageView fx:id="bigImage" fitHeight="605.0" fitWidth="565.0" pickOnBounds="true" preserveRatio="true" rotate="-23.2">
-               <image>
-                  <Image url="@../images/The%20Future%20of%20Car%20Ownership_%20Fractional%20Sharing.jpeg" />
-               </image>
-               <VBox.margin>
-                  <Insets left="10.0" right="100.0" top="130.0" />
-               </VBox.margin>
-               <effect>
-                  <GaussianBlur radius="2.93" />
-               </effect>
-            </ImageView>
-         </children>
+         <effect>
+            <DropShadow height="196.52" radius="98.93" spread="0.28" width="201.2" />
+         </effect>
       </VBox>
    </children>
    <effect>
-      <DropShadow radius="51.525" width="187.1">
+      <DropShadow height="162.54" radius="89.83500000000001" width="198.8">
          <color>
             <Color red="0.24210526049137115" green="0.4736842215061188" blue="0.3887719213962555" />
          </color>
