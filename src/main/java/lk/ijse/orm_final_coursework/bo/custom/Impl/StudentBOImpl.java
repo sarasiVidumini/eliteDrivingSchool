@@ -21,8 +21,8 @@ public class StudentBOImpl implements StudentBO {
         private final EntityDTOConverter converter = new EntityDTOConverter();
 
     @Override
-    public String getNextId(Session session) throws SQLException {
-        return studentDAO.getNextId(session);
+    public String getNextId() throws SQLException {
+        return studentDAO.getNextId();
     }
 
     @Override

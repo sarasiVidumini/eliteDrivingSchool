@@ -21,8 +21,8 @@ public class UserBOImpl implements UserBO {
     private final EntityDTOConverter converter = new EntityDTOConverter();
 
     @Override
-    public String getNextId(Session session) throws SQLException {
-        return userDAO.getNextId(session);
+    public String getNextId() throws SQLException {
+        return userDAO.getNextId();
     }
 
     @Override

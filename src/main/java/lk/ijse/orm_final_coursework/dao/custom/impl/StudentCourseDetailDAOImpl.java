@@ -15,7 +15,8 @@ import java.util.Optional;
 public class StudentCourseDetailDAOImpl implements StudentCourseDetailDAO {
     private FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
     @Override
-    public String getNextId(Session session) throws SQLException {
+    public String getNextId() throws SQLException {
+        Session session = factoryConfiguration.getSession();
        String tableString = "SC";
 
        String lastId = session.createQuery(

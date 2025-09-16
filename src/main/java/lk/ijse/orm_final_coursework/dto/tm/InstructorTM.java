@@ -16,5 +16,5 @@ public class InstructorTM {
     private String email;
     private String phone;
     private String specialization;
-    private boolean availability_schedule;
+    private String availability_schedule;
 }

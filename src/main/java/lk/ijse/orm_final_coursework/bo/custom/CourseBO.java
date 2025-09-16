@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseBO extends SuperBO {
-    public String getNextId(Session session) throws SQLException;
+    public String getNextId() throws SQLException;
     public List<CourseDTO> getAll()throws SQLException;
     public String getLastId() throws SQLException;
     public boolean save(CourseDTO courseDTO)throws SQLException;

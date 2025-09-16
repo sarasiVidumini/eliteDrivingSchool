@@ -17,7 +17,8 @@ import java.util.Optional;
 public class StudentDAOImpl implements StudentDAO {
        private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
-       public String getNextId(Session session) throws SQLException {
+       public String getNextId() throws SQLException {
+           Session session = factoryConfiguration.getSession();
            char tableCharacter = 'S';
 
            String lastId = session.createQuery(

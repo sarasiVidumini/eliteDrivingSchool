@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CrudDAO<T> extends SuperDAO{
-    public String getNextId(Session session) throws SQLException;
+    public String getNextId() throws SQLException;
     public List<T> getAll() throws SQLException;
     public String getLastId() throws SQLException;
     public boolean save(T t) throws SQLException;

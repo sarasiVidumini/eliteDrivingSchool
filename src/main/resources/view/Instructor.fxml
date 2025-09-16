@@ -295,12 +295,13 @@
                         </ImageView>
                         <TableView fx:id="tblInstructors" onMouseClicked="#OnClickedTable" prefHeight="453.0" prefWidth="886.0" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colInstructorId" prefWidth="105.59994697570801" text="Instructor Id" />
-                                <TableColumn fx:id="colFirstName" minWidth="0.0" prefWidth="132.79998016357422" text="First Name" />
-                                <TableColumn fx:id="colLastName" prefWidth="149.60003662109375" text="Last Name" />
-                                <TableColumn fx:id="colEmail" prefWidth="244.00003051757812" text="Email" />
-                                <TableColumn fx:id="colPhone" prefWidth="145.5999755859375" text="Phone" />
-                        <TableColumn fx:id="colAvailabilityShedule" prefWidth="153.5999755859375" text="Availability Shedule" />
+                                <TableColumn fx:id="colInstructorId" prefWidth="105.59994697570801" text="instructorId" />
+                                <TableColumn fx:id="colFirstName" minWidth="0.0" prefWidth="132.79998016357422" text="firstName" />
+                                <TableColumn fx:id="colLastName" prefWidth="129.5999755859375" text="lastName" />
+                                <TableColumn fx:id="colEmail" prefWidth="204.80001831054688" text="email" />
+                                <TableColumn fx:id="colPhone" minWidth="0.0" prefWidth="108.800048828125" text="phone" />
+                                <TableColumn fx:id="colSpecialization" prefWidth="120.0" text="specialization" />
+                                <TableColumn fx:id="colAvailabilityShedule" prefWidth="130.4000244140625" text="availability_shedule" />
                             </columns>
                             <VBox.margin>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />

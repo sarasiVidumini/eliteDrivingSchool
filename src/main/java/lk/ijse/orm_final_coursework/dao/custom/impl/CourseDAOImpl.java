@@ -16,7 +16,8 @@ import java.util.Optional;
 public class CourseDAOImpl implements CourseDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
-    public String getNextId(Session session) {
+    public String getNextId() {
+        Session session = factoryConfiguration.getSession();
         char tableCharacter = 'C';
 
         String lastId = session.createQuery(

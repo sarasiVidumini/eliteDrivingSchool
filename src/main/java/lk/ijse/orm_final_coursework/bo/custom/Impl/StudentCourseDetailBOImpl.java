@@ -21,8 +21,8 @@ public class StudentCourseDetailBOImpl implements StudentCourseDetailBO {
     private final EntityDTOConverter converter = new EntityDTOConverter();
 
     @Override
-    public String getNextId(Session session) throws SQLException {
-        return studentCourseDetailDAO.getNextId(session);
+    public String getNextId() throws SQLException {
+        return studentCourseDetailDAO.getNextId();
     }
 
     @Override

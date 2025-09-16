@@ -15,7 +15,8 @@ import java.util.Optional;
 public class LessonDAOImpl implements LessonDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
     @Override
-    public String getNextId(Session session) throws SQLException {
+    public String getNextId() throws SQLException {
+        Session session = factoryConfiguration.getSession();
         char tableCharacter = 'L';
 
         String lastId = session.createQuery(

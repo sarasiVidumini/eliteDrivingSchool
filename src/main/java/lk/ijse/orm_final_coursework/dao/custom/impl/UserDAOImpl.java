@@ -16,7 +16,8 @@ import java.util.Optional;
 public class UserDAOImpl implements UserDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
-    public String getNextId(Session session) {
+    public String getNextId() {
+        Session session = factoryConfiguration.getSession();
         char tableCharacter = 'U';
 
         String lastId = session.createQuery(

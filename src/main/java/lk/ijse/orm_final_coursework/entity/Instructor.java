@@ -37,7 +37,7 @@ public class Instructor {
     private String specialization;
 
     @Column(nullable = false)
-    private boolean availability_schedule;
+    private String availability_schedule;
 
     @OneToMany(
             mappedBy = "instructor",

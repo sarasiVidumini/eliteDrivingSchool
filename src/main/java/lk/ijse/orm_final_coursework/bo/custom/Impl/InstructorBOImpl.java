@@ -20,8 +20,8 @@ public class InstructorBOImpl implements InstructorBO {
     private final InstructorDAO instructorDAO = DAOFactory.getInstance().getDAO(DAOTypes.INSTRUCTOR);
     private final EntityDTOConverter converter = new EntityDTOConverter();
     @Override
-    public String getNextId(Session session) throws SQLException {
-        return instructorDAO.getNextId(session);
+    public String getNextId() throws SQLException {
+        return instructorDAO.getNextId();
     }
 
     @Override

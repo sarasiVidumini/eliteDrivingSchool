@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PaymentBO extends SuperBO {
-    public String getNextId(Session session) throws SQLException;
+    public String getNextId() throws SQLException;
     public List<PaymentDTO> getAll() throws SQLException;
     public String getLastId() throws SQLException;
     public boolean save(PaymentDTO paymentDTO) throws SQLException;

@@ -21,8 +21,8 @@ public class PaymentBOImpl implements PaymentBO {
         private final EntityDTOConverter converter = new EntityDTOConverter();
 
     @Override
-    public String getNextId(Session session) throws SQLException {
-        return paymentDAO.getNextId(session);
+    public String getNextId() throws SQLException {
+        return paymentDAO.getNextId();
     }
 
     @Override

@@ -16,7 +16,8 @@ import java.util.Optional;
 public class InstructorDAOImpl implements InstructorDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
-    public String getNextId(Session session)  throws SQLException {
+    public String getNextId()  throws SQLException {
+        Session session = factoryConfiguration.getSession();
         char tableCharacter = 'I';
 
         String lastId = session.createQuery("SELECT i.id FROM Instructor i ORDER BY i.id DESC ",

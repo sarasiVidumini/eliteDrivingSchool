@@ -21,8 +21,8 @@ public class LessonBOImpl implements LessonBO {
     private final EntityDTOConverter converter = new EntityDTOConverter();
 
     @Override
-    public String getNextId(Session session) throws SQLException {
-        return lessonDAO.getNextId(session);
+    public String getNextId() throws SQLException {
+        return lessonDAO.getNextId();
     }
 
     @Override
