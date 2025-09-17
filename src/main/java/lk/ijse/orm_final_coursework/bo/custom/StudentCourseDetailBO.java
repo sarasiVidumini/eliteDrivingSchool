@@ -19,8 +19,8 @@ public interface StudentCourseDetailBO extends SuperBO {
     public String getLastId() throws SQLException;
     public boolean save(StudentCourseDetailDTO studentCourseDetailDTO) throws SQLException;
     public boolean update(StudentCourseDetailDTO studentCourseDetailDTO) throws SQLException;
-    public boolean delete(String id) throws SQLException;
-    public Optional<StudentCourseDetailDTO> findById(String id) throws SQLException;
+    public boolean delete(Long id) throws SQLException;
+    public Optional<StudentCourseDetailDTO> findById(Long id) throws SQLException;
     public List<StudentCourseDetailDTO> search(String search) throws SQLException;
     public List<String> getAllIds() throws SQLException;
 

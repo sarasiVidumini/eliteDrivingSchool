@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 
 public class StudentCourseDetailDTO {
-    private String studentCourseId;
+    private Long studentCourseId;
     private Date enrollmentDate;
     private String status;
     private String grade;

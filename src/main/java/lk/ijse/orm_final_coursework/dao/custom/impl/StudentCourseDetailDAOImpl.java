@@ -96,7 +96,7 @@ public class StudentCourseDetailDAOImpl implements StudentCourseDetailDAO {
     }
 
     @Override
-    public boolean delete(String id) throws SQLException {
+    public boolean delete(Long id) throws SQLException {
        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
 
        try {
@@ -113,7 +113,7 @@ public class StudentCourseDetailDAOImpl implements StudentCourseDetailDAO {
     }
 
     @Override
-    public Optional<StudentCourseDetail> findById(String id) throws SQLException {
+    public Optional<StudentCourseDetail> findById(Long id) throws SQLException {
         Session session = factoryConfiguration.getSession();
 
         try {

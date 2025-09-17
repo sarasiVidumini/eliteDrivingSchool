@@ -12,11 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 //@Builder
+@Builder
 @Entity
 @Table(name = "course")
 public class Course {
     @Id
-    @Column
+    @Column(name = "course_id")
     private String courseId;
 
     @Column(nullable = false)
@@ -32,7 +33,7 @@ public class Course {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "instructor_id" , referencedColumnName = "instructorId")
+    @JoinColumn(name = "instructor_id" , referencedColumnName = "instructor_id")
     private Instructor instructor;
 //    private String instructorId;
 

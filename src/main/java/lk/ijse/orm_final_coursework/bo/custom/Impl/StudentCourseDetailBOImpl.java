@@ -58,8 +58,9 @@ public class StudentCourseDetailBOImpl implements StudentCourseDetailBO {
         return studentCourseDetailDAO.update(converter.getStudentCourseDetail(studentCourseDetailDTO));
     }
 
+
     @Override
-    public boolean delete(String id) throws SQLException {
+    public boolean delete(Long id) throws SQLException {
         Optional<StudentCourseDetail> studentCourseDetail = studentCourseDetailDAO.findById(id);
         if (studentCourseDetail.isEmpty()){
             throw new NotFoundException("Student course detail not found");
@@ -68,7 +69,7 @@ public class StudentCourseDetailBOImpl implements StudentCourseDetailBO {
     }
 
     @Override
-    public Optional<StudentCourseDetailDTO> findById(String id) throws SQLException {
+    public Optional<StudentCourseDetailDTO> findById(Long id) throws SQLException {
 
         Optional<StudentCourseDetail> studentCourseDetail = studentCourseDetailDAO.findById(id);
         if (studentCourseDetail.isPresent()){

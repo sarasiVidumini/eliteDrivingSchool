@@ -5,6 +5,7 @@ import lk.ijse.orm_final_coursework.entity.Course;
 import org.hibernate.Session;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 public interface CourseDAO extends CrudDAO<Course> {
     public boolean saveNewCourse(Course course)throws SQLException;
