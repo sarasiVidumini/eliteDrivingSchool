@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.UserDAO;
+import lk.ijse.orm_final_coursework.entity.Instructor;
 import lk.ijse.orm_final_coursework.entity.Student;
 import lk.ijse.orm_final_coursework.entity.User;
 import org.hibernate.Session;
@@ -18,33 +19,29 @@ public class UserDAOImpl implements UserDAO {
 
     public String getNextId() {
         Session session = factoryConfiguration.getSession();
-        char tableCharacter = 'U';
-
-        String lastId = session.createQuery(
-                "SELECT u.id FROM User u ORDER BY u.id",
-                String.class
-        )
+        String lastId = (String) session.createQuery(
+                        "SELECT u.userId FROM User u ORDER BY u.userId DESC")
                 .setMaxResults(1)
                 .uniqueResult();
 
-        if(lastId != null) {
-            String lastNumberString = lastId.substring(1);
-            int lastNumber = Integer.parseInt(lastNumberString);
-
-            int nextIdNumber = lastNumber + 1;
-            return String.format(tableCharacter+"3%d", nextIdNumber);
+        if (lastId != null) {
+            int num = Integer.parseInt(lastId.substring(1)); // remove 'I' prefix
+            num++;
+            return String.format("I%03d", num);
+        } else {
+            return "I001";
         }
-
-        return tableCharacter+"001";
     }
+
+
+
 
     public List<User> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
-
         try {
-            List<User> list = session.createQuery("from User" , User.class)
-                    .getResultList();
-            return list;
+            Query<User> query = session.createQuery("from User ",User.class);
+            List<User> userList = query.list();
+            return userList;
         }finally {
             session.close();
         }
@@ -55,14 +52,14 @@ public class UserDAOImpl implements UserDAO {
 
         try {
             Query<String> query = session.createQuery(
-                    "SELECT u.id FROM User u ORDER BY u.id DESC ",
+                    "SELECT u.userId FROM User u ORDER BY u.userId DESC ",
                     String.class
             ).setMaxResults(1);
             List<String> idList = query.list();
             if (idList.isEmpty()) {
                 return null;
             }
-            return idList.get(0);
+            return idList.getFirst();
         }finally {
             session.close();
         }
@@ -70,7 +67,6 @@ public class UserDAOImpl implements UserDAO {
 
     public boolean save(User user) throws SQLException {
         Session session = factoryConfiguration.getSession();
-//        Transaction transaction = currentSession.beginTransaction();
         Transaction transaction = session.beginTransaction();
         try {
             session.persist(user);
@@ -137,7 +133,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             Query<User> query = session.createQuery(
                     "FROM User u" +
-                            " WHERE u.id LIKE  :search OR " +
+                            " WHERE u.userId LIKE  :search OR " +
                             "u.userName LIKE  :search OR " +
                             "u.password LIKE  :search OR " +
                             "u.role LIKE  :search OR " +
@@ -154,20 +150,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<String> getAllIds() throws SQLException {
-        Transaction transaction = null;
-        List<String> idList = new ArrayList<>();
-
+        Session session = factoryConfiguration.getSession();
         try {
-            Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            idList = session.createQuery("SELECT u.id FROM User u" , String.class).list();
-            transaction.commit();
-        }catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            Query<String> query = session.createQuery("SELECT u.userId FROM User u", String.class);
+            return query.list();
+        } finally {
+            session.close();
         }
-
-        return idList;
     }
 }

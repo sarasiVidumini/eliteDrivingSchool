@@ -2,11 +2,14 @@ package lk.ijse.orm_final_coursework.controller;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.UserBO;
@@ -14,6 +17,7 @@ import lk.ijse.orm_final_coursework.dto.UserDTO;
 import lk.ijse.orm_final_coursework.dto.tm.UserTM;
 import org.hibernate.cfg.AbstractPropertyHolder;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -76,7 +80,7 @@ public class ManageUserController implements Initializable {
     }
 
     private void loadNextId() throws Exception {
-        String nextId = lblUserId.getText();
+        String nextId = userBO.getNextId();
         lblUserId.setText(nextId);
     }
     public void btnSaveOnAction(ActionEvent actionEvent) {
@@ -134,15 +138,57 @@ public class ManageUserController implements Initializable {
     }
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {
+        String id  = lblUserId.getText();
+        if (id.isEmpty()){
+            showAlert(Alert.AlertType.ERROR,"Please select an user to delete");
+            return;
+        }
+
+        try {
+            boolean isDeleted = userBO.delete(id);
+            if (isDeleted) {
+                showAlert(Alert.AlertType.INFORMATION, "User deleted successfully!");
+                loadAllUsers();
+                resetForm();
+                loadNextId();
+            }else {
+                showAlert(Alert.AlertType.ERROR,"Failed to delete user!");
+            }
+
+        }catch (Exception e){
+            showAlert(Alert.AlertType.ERROR,"Error deleting user:" + e.getMessage());
+        }
+
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {
+        resetForm();
+        try{
+            loadNextId();
+        }catch (Exception e){
+            showAlert(Alert.AlertType.ERROR,"Error generating ID:" + e.getMessage());
+        }
     }
 
     public void OnClickedTable(MouseEvent mouseEvent) {
+        UserTM selectedItem = tblUsers.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            lblUserId.setText(selectedItem.getUserId());
+            txtUserName.setText(selectedItem.getUserName());
+            txtPassword.setText(selectedItem.getPassword());
+            txtRole.setText(selectedItem.getRole());
+            txtEmail.setText(selectedItem.getEmail());
+            txtStatus.setText(selectedItem.getStatus());
+        }
     }
 
     public void goToDashboard(MouseEvent mouseEvent) {
+        try {
+            Stage stage = (Stage) ancUserPage.getScene().getWindow();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoardPage.fxml"))));
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR,"Navigation error : " + e.getMessage());
+        }
     }
 
     private void resetForm() {
