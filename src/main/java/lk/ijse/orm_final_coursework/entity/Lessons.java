@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -36,7 +37,7 @@ public class Lessons {
     private Course course;
 
     @Column
-    private Date lessonDate;
+    private LocalDate lessonDate;
 
     @Column
     private Time startTime;

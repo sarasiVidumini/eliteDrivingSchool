@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.sql.Time;
 
 public class LessonsTM {
     private String  lessonId;
-    private Date lessonDate;
+    private LocalDate lessonDate;
     private Time startTime;
     private Time endTime;
     private String status;

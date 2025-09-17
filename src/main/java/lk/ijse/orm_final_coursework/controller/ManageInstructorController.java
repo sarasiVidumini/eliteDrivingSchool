@@ -93,17 +93,16 @@ public class ManageInstructorController implements Initializable {
         if (!validateInput()) return;
 
         try {
-            InstructorDTO dto = InstructorDTO.builder()
-                    .instructorId(lblInstructorId.getText())
-                    .firstName(txtFirstName.getText())
-                    .lastName(txtLastName.getText())
-                    .email(txtEmail.getText())
-                    .phone(txtPhone.getText())
-                    .specialization(txtSpecialization.getText())
-                    .availability_schedule(txtAvailabilityShedule.getText())
-                    .build();
 
-            boolean isSaved = instructorBO.save(dto);
+            boolean isSaved = instructorBO.save(InstructorDTO.builder()
+                            .instructorId(lblInstructorId.getText())
+                            .firstName(txtFirstName.getText())
+                            .lastName(txtLastName.getText())
+                            .email(txtEmail.getText())
+                            .phone(txtPhone.getText())
+                            .specialization(txtSpecialization.getText())
+                            .availability_schedule(txtAvailabilityShedule.getText())
+                            .build());
             if (isSaved) {
                 showAlert(Alert.AlertType.INFORMATION, "Instructor saved successfully!");
                 loadAllInstructors();
@@ -121,7 +120,8 @@ public class ManageInstructorController implements Initializable {
         if (!validateInput()) return;
 
         try {
-            InstructorDTO dto = InstructorDTO.builder()
+
+            boolean isUpdated = instructorBO.update(InstructorDTO.builder()
                     .instructorId(lblInstructorId.getText())
                     .firstName(txtFirstName.getText())
                     .lastName(txtLastName.getText())
@@ -129,9 +129,7 @@ public class ManageInstructorController implements Initializable {
                     .phone(txtPhone.getText())
                     .specialization(txtSpecialization.getText())
                     .availability_schedule(txtAvailabilityShedule.getText())
-                    .build();
-
-            boolean isUpdated = instructorBO.update(dto);
+                    .build());
             if (isUpdated) {
                 showAlert(Alert.AlertType.INFORMATION, "Instructor updated successfully!");
                 loadAllInstructors();

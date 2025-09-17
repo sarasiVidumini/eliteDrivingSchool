@@ -87,16 +87,15 @@ public class ManageUserController implements Initializable {
         if (!validateInput()) return;
 
         try {
-            UserDTO userDTO = UserDTO.builder()
+            boolean isSaved = userBO.save( UserDTO.builder()
                     .userId(lblUserId.getText())
                     .userName(txtUserName.getText())
                     .password(txtPassword.getText())
                     .role(txtRole.getText())
                     .email(txtEmail.getText())
                     .status(txtStatus.getText())
-                    .build();
+                    .build());
 
-            boolean isSaved = userBO.save(userDTO);
             if (isSaved) {
                 showAlert(Alert.AlertType.INFORMATION, "User saved successfully!");
                 loadAllUsers();
@@ -114,16 +113,16 @@ public class ManageUserController implements Initializable {
         if (!validateInput()) return;
 
         try {
-            UserDTO userDTO = UserDTO.builder()
+
+            boolean isUpdated = userBO.update( UserDTO.builder()
                     .userId(lblUserId.getText())
                     .userName(txtUserName.getText())
                     .password(txtPassword.getText())
                     .role(txtRole.getText())
                     .email(txtEmail.getText())
                     .status(txtStatus.getText())
-                    .build();
+                    .build());
 
-            boolean isUpdated = userBO.update(userDTO);
             if (isUpdated) {
                 showAlert(Alert.AlertType.INFORMATION, "User updated successfully!");
                 loadAllUsers();
