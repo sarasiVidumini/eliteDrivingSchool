@@ -33,7 +33,7 @@ public class Course {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "instructor_id" , referencedColumnName = "instructor_id")
+    @JoinColumn(name = "instructorId" , referencedColumnName = "instructorId")
     private Instructor instructor;
 //    private String instructorId;
 

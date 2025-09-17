@@ -18,31 +18,26 @@ public class InstructorDAOImpl implements InstructorDAO {
 
     public String getNextId()  throws SQLException {
         Session session = factoryConfiguration.getSession();
-        char tableCharacter = 'I';
-
-        String lastId = session.createQuery("SELECT i.id FROM Instructor i ORDER BY i.id DESC ",
-                String.class
-        )
+        String lastId = (String) session.createQuery(
+                        "SELECT i.instructorId FROM Instructor i ORDER BY i.instructorId DESC")
                 .setMaxResults(1)
                 .uniqueResult();
 
-        if(lastId!= null){
-            String lastNumberString = lastId.substring(1);
-            int lastNumber = Integer.parseInt(lastNumberString);
-
-            int nextIdNumber = lastNumber + 1;
-            return String.format(tableCharacter+"3%d", nextIdNumber);
+        if (lastId != null) {
+            int num = Integer.parseInt(lastId.substring(1)); // remove 'I' prefix
+            num++;
+            return String.format("I%03d", num);
+        } else {
+            return "I001";
         }
-        return tableCharacter+"001";
     }
 
     public List<Instructor> getAll()  throws SQLException {
         Session session = factoryConfiguration.getSession();
-
         try {
-            List<Instructor> list = session.createQuery("from Instructor", Instructor.class)
-                    .getResultList();
-            return list;
+            Query<Instructor> query = session.createQuery("from Instructor ",Instructor.class);
+            List<Instructor> instructorList = query.list();
+            return instructorList;
         }finally {
             session.close();
         }
@@ -52,7 +47,7 @@ public class InstructorDAOImpl implements InstructorDAO {
         Session session = factoryConfiguration.getSession();
         try {
             Query<String> query = session.createQuery(
-                    "SELECT i.id FROM Instructor i ORDER BY i.id DESC ",
+                    "SELECT i.instructorId FROM Instructor i ORDER BY i.instructorId DESC ",
                       String.class
             ).setMaxResults(1);
             List<String> idList = query.list();
@@ -60,68 +55,69 @@ public class InstructorDAOImpl implements InstructorDAO {
                 return null;
             }
 
-            return idList.get(0);
+            return idList.getFirst();
         }finally {
             session.close();
         }
     }
 
     public boolean save(Instructor instructor)  throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
-
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            currentSession.persist(instructor);
+            session.persist(instructor);
+            transaction.commit();
             return true;
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
     }
 
     public boolean update(Instructor instructor)  throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
-
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            currentSession.merge(instructor);
+            session.merge(instructor);
+            transaction.commit();
             return true;
         }catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
     }
 
     public boolean delete(String id)  throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+       Session session = factoryConfiguration.getSession();
+       Transaction transaction = session.beginTransaction();
 
         try {
-            Instructor instructor = currentSession.get(Instructor.class, id);
+            Instructor instructor = session.get(Instructor.class, id);
             if(instructor != null){
-                currentSession.remove(instructor);
+                session.remove(instructor);
+                transaction.commit();
                 return true;
             }
             return false;
         }catch (Exception e) {
+            if (transaction != null) transaction.rollback();
             e.printStackTrace();
             return false;
+        }finally {
+            session.close();
         }
     }
 
     public List<String> getAllIds()  throws SQLException {
-        Transaction transaction = null;
-        List<String> idList = new ArrayList<>();
-
+        Session session = factoryConfiguration.getSession();
         try {
-            Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            idList = session.createQuery("SELECT i.id FROM Instructor i" , String.class).list();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            Query<String> query = session.createQuery("SELECT i.instructorId FROM Instructor i", String.class);
+            return query.list();
+        } finally {
+            session.close();
         }
-
-        return idList;
     }
 
     public Optional<Instructor> findById(String id)  throws SQLException {
@@ -141,7 +137,7 @@ public class InstructorDAOImpl implements InstructorDAO {
 
         try {
             Query<Instructor> query= session.createQuery("FROM Instructor i" +
-                    " WHERE i.id LIKE :searchText OR " +
+                    " WHERE i.instructorId LIKE :searchText OR " +
                     "i.firstName LIKE  :search OR" +
                     " i.lastName LIKE  :search OR" +
                     " i.email LIKE  :search OR" +

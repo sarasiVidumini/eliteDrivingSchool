@@ -18,7 +18,7 @@ import java.util.List;
 public class Instructor {
 
     @Id
-    @Column(name = "instructor_id")
+    @Column(name = "instructorId")
     private String instructorId;
 
     @Column(name = "first_name" , nullable = false)

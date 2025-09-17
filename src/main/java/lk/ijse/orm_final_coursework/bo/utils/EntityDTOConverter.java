@@ -35,7 +35,7 @@ public class EntityDTOConverter {
         instructorDTO.setEmail(instructor.getEmail());
         instructorDTO.setPhone(instructor.getPhone());
         instructorDTO.setSpecialization(instructor.getSpecialization());
-        instructorDTO.setAvailability_schedule(instructor.isAvailability_schedule());
+        instructorDTO.setAvailability_schedule(instructor.getAvailability_schedule());
         return instructorDTO;
     }
 
@@ -47,7 +47,7 @@ public class EntityDTOConverter {
         instructor.setEmail(instructorDTO.getEmail());
         instructor.setPhone(instructorDTO.getPhone());
         instructor.setSpecialization(instructorDTO.getSpecialization());
-        instructor.setAvailability_schedule(instructorDTO.isAvailability_schedule());
+        instructor.setAvailability_schedule(instructorDTO.getAvailability_schedule());
         return instructor;
 
     }
