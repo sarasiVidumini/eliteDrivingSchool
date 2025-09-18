@@ -14,9 +14,9 @@ import java.sql.Date;
 
 public class PaymentTM {
     private String paymentId;
-    private String studentId;
-    private Date paymentDate;
+    private String paymentDate;
     private double amount;
     private String paymentMethod;
     private String status;
+    private String studentId;
 }

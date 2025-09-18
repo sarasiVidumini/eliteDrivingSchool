@@ -24,7 +24,7 @@ public class Payment {
     private Student student;
 
     @Column
-    private Date paymentDate;
+    private String paymentDate;
 
     @Column(nullable = false)
     private double amount;

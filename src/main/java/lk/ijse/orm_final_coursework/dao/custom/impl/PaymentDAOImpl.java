@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.PaymentDAO;
+import lk.ijse.orm_final_coursework.entity.Instructor;
 import lk.ijse.orm_final_coursework.entity.Payment;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,33 +18,27 @@ public class PaymentDAOImpl implements PaymentDAO {
     @Override
     public String getNextId() throws SQLException {
         Session session = factoryConfiguration.getSession();
-        char tableCharacter = 'P';
-
-        String lastId = session.createQuery(
-                "SELECT p.id FROM Payment p ORDER BY p.id DESC",
-                String.class
-        )
+        String lastId = (String) session.createQuery(
+                        "SELECT p.paymentId FROM Payment p ORDER BY p.paymentId DESC")
                 .setMaxResults(1)
                 .uniqueResult();
 
         if (lastId != null) {
-            String lastNumberString = lastId.substring(1);
-            int lastNumber = Integer.parseInt(lastNumberString);
-
-            int nextIdNumber = lastNumber + 1;
-            return String.format(tableCharacter+"3%d", nextIdNumber);
+            int num = Integer.parseInt(lastId.substring(1)); // remove 'P' prefix
+            num++;
+            return String.format("P%03d", num);
+        } else {
+            return "P001";
         }
-        return tableCharacter+"001";
     }
 
     @Override
     public List<Payment> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
-
         try {
-            List<Payment> list = session.createQuery("FROM Payment" , Payment.class)
-                    .getResultList();
-            return list;
+            Query<Payment> query = session.createQuery("from Payment ",Payment.class);
+            List<Payment> paymentList = query.list();
+            return paymentList;
         }finally {
             session.close();
         }
@@ -55,14 +50,14 @@ public class PaymentDAOImpl implements PaymentDAO {
 
         try {
             Query<String> query = session.createQuery(
-                    "SELECT p.id FROM Payment p ORDER BY p.id DESC",
+                    "SELECT p.paymentId FROM Payment p ORDER BY p.paymentId DESC",
                     String.class
             ).setMaxResults(1);
             List<String> idList = query.list();
             if (idList.isEmpty()) {
                 return null;
             }
-            return idList.get(0);
+            return idList.getFirst();
         }finally {
             session.close();
         }
@@ -70,12 +65,15 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public boolean save(Payment payment) throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            currentSession.persist(payment);
+            session.persist(payment);
+            transaction.commit();
             return true;
         }catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -83,12 +81,15 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public boolean update(Payment payment) throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            currentSession.merge(payment);
+            session.merge(payment);
+            transaction.commit();
             return true;
         }catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -96,15 +97,23 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            Payment payment = currentSession.get(Payment.class, id);
-            currentSession.delete(payment);
-            return true;
+            Payment payment = session.get(Payment.class, id);
+            if (payment != null) {
+                session.remove(payment);
+                transaction.commit();
+                return true;
+            }
+            return false;
         }catch (Exception e) {
+            if (transaction != null) transaction.rollback();
             e.printStackTrace();
             return false;
+        }finally {
+            session.close();
         }
     }
 
@@ -128,12 +137,11 @@ public class PaymentDAOImpl implements PaymentDAO {
        try {
            Query<Payment> query = session.createQuery(
                    "FROM Payment p " +
-                           "WHERE p.id LIKE :search OR" +
+                           "WHERE p.paymentId LIKE :search OR" +
                            " p.paymentDate LIKE  :search OR " +
                            " p.amount LIKE  :search OR " +
                            "p.paymentMethod LIKE  :search OR " +
-                           "p.status LIKE  :search  OR  " +
-                           "p.student LIKE  :search",
+                           "p.status LIKE  :search   ",
                    Payment.class
            );
            query.setParameter("search", searchText);
@@ -146,21 +154,12 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public List<String> getAllIds() throws SQLException {
-        Transaction transaction = null;
-        List<String> idList = new ArrayList<>();
-
+        Session session = factoryConfiguration.getSession();
         try {
-            Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            idList = session.createQuery("SELECT p.id FROM Payment p" , String.class).list();
-            transaction.commit();
-        }catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            Query<String> query = session.createQuery("SELECT p.paymentId FROM Payment p", String.class);
+            return query.list();
+        } finally {
+            session.close();
         }
-
-        return idList;
-
     }
 }
