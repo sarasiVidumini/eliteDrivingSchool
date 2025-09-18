@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import lk.ijse.orm_final_coursework.dto.tm.InstructorTM;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -237,5 +239,36 @@ public class ManageInstructorController implements Initializable {
 
     private void showAlert(Alert.AlertType type, String message) {
         new Alert(type, message).show();
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllInstructors();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Failed to search! : " + e.getMessage());
+            }
+        }else {
+            try {
+                ArrayList<InstructorDTO> instructorList = (ArrayList<InstructorDTO>) instructorBO.search(search);
+                tblInstructors.setItems(FXCollections.observableArrayList(
+                        instructorList.stream()
+                                .map(instructorDTO -> new InstructorTM(
+                                        instructorDTO.getInstructorId(),
+                                        instructorDTO.getFirstName(),
+                                        instructorDTO.getLastName(),
+                                        instructorDTO.getEmail(),
+                                        instructorDTO.getPhone(),
+                                        instructorDTO.getSpecialization(),
+                                        instructorDTO.getAvailability_schedule()
+                                )).toList()
+                ));
+            }catch (Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Failed to search! : " + e.getMessage());
+            }
+        }
     }
 }

@@ -132,9 +132,9 @@ public class PaymentDAOImpl implements PaymentDAO {
     @Override
     public List<Payment> search(String search) throws SQLException {
        String searchText = "%" + search + "%";
-       Session session = factoryConfiguration.getSession();
 
-       try {
+
+       try(Session session = factoryConfiguration.getSession()) {
            Query<Payment> query = session.createQuery(
                    "FROM Payment p " +
                            "WHERE p.paymentId LIKE :search OR" +
@@ -144,11 +144,9 @@ public class PaymentDAOImpl implements PaymentDAO {
                            "p.status LIKE  :search   ",
                    Payment.class
            );
-           query.setParameter("search", searchText);
-           List<Payment> paymentList = query.getResultList();
-           return paymentList;
-       }finally {
-           session.close();
+          query.setParameter("search",searchText);
+
+          return query.list();
        }
     }
 

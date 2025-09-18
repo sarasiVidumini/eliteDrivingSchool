@@ -124,9 +124,8 @@ public class UserDAOImpl implements UserDAO {
 
     public List<User> search(String search) throws SQLException {
         String searchText = "%" + search + "%";
-        Session session = factoryConfiguration.getSession();
 
-        try {
+        try (Session session= factoryConfiguration.getSession()) {
             Query<User> query = session.createQuery(
                     "FROM User u" +
                             " WHERE u.userId LIKE  :search OR " +
@@ -138,10 +137,8 @@ public class UserDAOImpl implements UserDAO {
                     User.class
             );
             query.setParameter("search",searchText);
-            List<User> userList = query.list();
-            return userList;
-        }finally {
-            session.close();
+
+            return query.list();
         }
     }
 

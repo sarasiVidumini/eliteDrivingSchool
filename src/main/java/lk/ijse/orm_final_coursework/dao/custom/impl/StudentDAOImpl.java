@@ -148,9 +148,8 @@ public class StudentDAOImpl implements StudentDAO {
        @Override
        public List<Student>  search(String search) throws SQLException {
            String searchText = "%" + search + "%";
-           Session session = factoryConfiguration.getSession();
 
-           try {
+           try (Session session = factoryConfiguration.getSession()) {
               Query<Student> query = session.createQuery(
                       "FROM Student s " +
                               "WHERE s.studentId LIKE  :search OR" +
@@ -161,11 +160,9 @@ public class StudentDAOImpl implements StudentDAO {
                               "s.address LIKE  :search" ,
                       Student.class
               );
-              query.setParameter("search", searchText);
-              List<Student> studentList= query.list();
-              return studentList;
-           }finally {
-               session.close();
+             query.setParameter("search", searchText);
+
+             return query.list();
            }
        }
 

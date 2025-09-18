@@ -11,6 +11,7 @@ import java.util.ArrayList;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 public class InstructorTM {
     private String instructorId;

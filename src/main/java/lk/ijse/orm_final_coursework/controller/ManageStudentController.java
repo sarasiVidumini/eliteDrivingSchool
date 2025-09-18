@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -15,6 +16,7 @@ import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.StudentBO;
 import lk.ijse.orm_final_coursework.dto.InstructorDTO;
 import lk.ijse.orm_final_coursework.dto.StudentDTO;
+import lk.ijse.orm_final_coursework.dto.tm.PaymentTM;
 import lk.ijse.orm_final_coursework.dto.tm.StudentTM;
 
 import java.io.IOException;
@@ -22,6 +24,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -245,5 +248,37 @@ public class ManageStudentController implements Initializable {
 
     private void showAlert(Alert.AlertType type, String message) {
         new Alert(type, message).show();
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllStudents();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!" + e.getMessage());
+            }
+        }else {
+            try {
+                ArrayList<StudentDTO> studentList = (ArrayList<StudentDTO>) studentBO.search(search);
+                tblStudent.setItems(FXCollections.observableArrayList(
+                        studentList.stream()
+                                .map(studentDTO -> new StudentTM(
+                                        studentDTO.getStudentId(),
+                                        studentDTO.getFirstName(),
+                                        studentDTO.getLastName(),
+                                        studentDTO.getEmail(),
+                                        studentDTO.getPhone(),
+                                        studentDTO.getAddress(),
+                                        studentDTO.getDob(),
+                                        studentDTO.getRegistrationDate()
+                                )).toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!" + e.getMessage());
+            }
+        }
     }
 }

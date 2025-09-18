@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import lk.ijse.orm_final_coursework.dto.tm.PaymentTM;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ManagePaymentController implements Initializable {
@@ -216,4 +218,33 @@ public class ManagePaymentController implements Initializable {
         new Alert(type, message).show();
     }
 
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllPayments();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!").show();
+            }
+        }else {
+            try {
+                ArrayList<PaymentDTO> paymentList = (ArrayList<PaymentDTO>) paymentBO.search(search);
+                tblPayments.setItems(FXCollections.observableArrayList(
+                        paymentList.stream()
+                                .map(paymentDTO -> new PaymentTM(
+                                        paymentDTO.getPaymentId(),
+                                        paymentDTO.getPaymentDate(),
+                                        paymentDTO.getAmount(),
+                                        paymentDTO.getPaymentMethod(),
+                                        paymentDTO.getStatus(),
+                                        paymentDTO.getStudentId()
+                                )).toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!").show();
+            }
+        }
+    }
 }

@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import org.hibernate.cfg.AbstractPropertyHolder;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -220,5 +222,35 @@ public class ManageUserController implements Initializable {
 
     private void showAlert(Alert.AlertType alertType , String message) {
         new Alert(alertType , message).show();
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllUsers();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!" + e.getMessage());
+            }
+        }else {
+            try {
+                ArrayList<UserDTO> userList = (ArrayList<UserDTO>) userBO.search(search);
+                tblUsers.setItems(FXCollections.observableArrayList(
+                        userList.stream()
+                                .map(userDTO -> new UserTM(
+                                        userDTO.getUserId(),
+                                        userDTO.getUserName(),
+                                        userDTO.getPassword(),
+                                        userDTO.getRole(),
+                                        userDTO.getEmail(),
+                                        userDTO.getStatus()
+                                )).toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!" + e.getMessage());
+            }
+        }
     }
 }

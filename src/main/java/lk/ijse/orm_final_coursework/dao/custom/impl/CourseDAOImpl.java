@@ -138,17 +138,20 @@ public class CourseDAOImpl implements CourseDAO {
 
     public List<Course> search(String search)throws SQLException{
         String searchText="%"+search+"%";
-        Session session = factoryConfiguration.getSession();
 
-        try {
+
+        try(Session session = factoryConfiguration.getSession()) {
             Query<Course> query = session.createQuery("FROM Course c " +
-                    "WHERE c.courseId LIKE :search OR " + "c.courseName LIKE  :search OR " + " c.duration LIKE  :search OR" + " c.fee LIKE  :search OR" + " c.description LIKE  :search " , Course.class
+                    "WHERE c.courseId LIKE :search OR " +
+                    "c.courseName LIKE  :search OR " +
+                    " c.duration LIKE  :search OR" +
+                    " c.fee LIKE  :search OR" +
+                    " c.description LIKE  :search " ,
+                    Course.class
             );
-            query.setParameter("search",searchText);
-            List<Course> courseList = query.getResultList();
-            return courseList;
-        }finally {
-            session.close();
+            query.setParameter("search", searchText);
+
+            return query.list();
         }
     }
 

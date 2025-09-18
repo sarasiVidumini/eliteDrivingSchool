@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ import java.net.URL;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -229,4 +231,35 @@ public class ManageLessonController implements Initializable {
         new Alert(type, message).show();
     }
 
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllLessons();
+            }catch (Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR,"Failed to search : "+e.getMessage());
+            }
+        }else {
+            try {
+                ArrayList<LessonsDTO> lessons = (ArrayList<LessonsDTO>) lessonBO.search(search);
+                tblLessons.setItems(FXCollections.observableArrayList(
+                        lessons.stream()
+                                .map(lessonsDTO -> new LessonsTM(
+                                        lessonsDTO.getLessonId(),
+                                        lessonsDTO.getLessonDate(),
+                                        lessonsDTO.getStartTime(),
+                                        lessonsDTO.getEndTime(),
+                                        lessonsDTO.getStatus(),
+                                        lessonsDTO.getStudentId(),
+                                        lessonsDTO.getCourseId(),
+                                        lessonsDTO.getInstructorId()
+                                )).toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR,"Failed to search : "+e.getMessage());
+            }
+        }
+    }
 }

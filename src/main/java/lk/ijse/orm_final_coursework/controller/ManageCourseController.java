@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -15,12 +16,14 @@ import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.CourseBO;
 import lk.ijse.orm_final_coursework.dto.CourseDTO;
 import lk.ijse.orm_final_coursework.dto.LessonsDTO;
+import lk.ijse.orm_final_coursework.dto.PaymentDTO;
 import lk.ijse.orm_final_coursework.dto.tm.CourseTM;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ManageCourseController implements Initializable {
@@ -211,5 +214,37 @@ public class ManageCourseController implements Initializable {
 
     private void showAlert(Alert.AlertType type, String message) {
         new Alert(type, message).show();
+    }
+
+
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllCourses();
+            }catch (Exception e){
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR , "Failed to search : " + e.getMessage());
+            }
+        }else {
+            try {
+                ArrayList<CourseDTO> courseList = (ArrayList<CourseDTO>) courseBO.search(search);
+                tblCourses.setItems(FXCollections.observableArrayList(
+                        courseList.stream()
+                                .map(courseDTO -> new CourseTM(
+                                        courseDTO.getCourseId(),
+                                        courseDTO.getCourseName(),
+                                        courseDTO.getDuration(),
+                                        courseDTO.getFee(),
+                                        courseDTO.getDescription(),
+                                        courseDTO.getInstructorId()
+                                )).toList()
+                ));
+
+            }catch (Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR , "Failed to search : " + e.getMessage());
+            }
+        }
     }
 }

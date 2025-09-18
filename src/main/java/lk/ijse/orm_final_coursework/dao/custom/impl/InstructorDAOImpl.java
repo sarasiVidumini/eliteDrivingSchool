@@ -131,26 +131,26 @@ public class InstructorDAOImpl implements InstructorDAO {
         }
     }
 
-    public List<Instructor> search(String search)  throws SQLException {
+    @Override
+    public List<Instructor> search(String search) throws SQLException {
         String searchText = "%" + search + "%";
-        Session session = factoryConfiguration.getSession();
 
-        try {
-            Query<Instructor> query= session.createQuery("FROM Instructor i" +
-                    " WHERE i.instructorId LIKE :searchText OR " +
-                    "i.firstName LIKE  :search OR" +
-                    " i.lastName LIKE  :search OR" +
-                    " i.email LIKE  :search OR" +
-                    " i.phone LIKE  :search OR " +
-                    "i.specialization LIKE  :search OR " +
-                    "i.availability_schedule LIKE  :search",
+        try (Session session = factoryConfiguration.getSession()) {
+            Query<Instructor> query = session.createQuery(
+                    "FROM Instructor i " +
+                            "WHERE i.instructorId LIKE :search OR " +
+                            "i.firstName LIKE :search OR " +
+                            "i.lastName LIKE :search OR " +
+                            "i.email LIKE :search OR " +
+                            "i.phone LIKE :search OR " +
+                            "i.specialization LIKE :search OR " +
+                            "i.availability_schedule LIKE :search",
                     Instructor.class
             );
             query.setParameter("search", searchText);
-            List<Instructor> instructorList = query.list();
-            return instructorList;
-        }finally {
-            session.close();
+
+            return query.list();
         }
     }
+
 }

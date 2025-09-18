@@ -279,7 +279,7 @@
                                 </Label>
                             </center>
                      <right>
-                        <TextField fx:id="txtSearch" prefHeight="26.0" prefWidth="240.0" promptText="Search Here" BorderPane.alignment="CENTER">
+                        <TextField fx:id="txtSearch" onKeyTyped="#search" prefHeight="26.0" prefWidth="240.0" promptText="Search Here" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets bottom="30.0" right="80.0" />
                            </BorderPane.margin>

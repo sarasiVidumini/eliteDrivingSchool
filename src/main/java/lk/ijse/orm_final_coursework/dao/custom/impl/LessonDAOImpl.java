@@ -129,9 +129,9 @@ public class LessonDAOImpl implements LessonDAO {
     @Override
     public List<Lessons> search(String search) throws SQLException {
        String searchText = "%" + search + "%";
-       Session session = factoryConfiguration.getSession();
 
-       try {
+
+       try(Session session = factoryConfiguration.getSession()) {
            Query<Lessons> query = session.createQuery(
                    "FROM Lessons l" +
                            " WHERE l.lessonId LIKE  :search OR" +
@@ -141,11 +141,9 @@ public class LessonDAOImpl implements LessonDAO {
                            "l.status LIKE  :search  " ,
                    Lessons.class
            );
-           query.setParameter("search", searchText);
-           List<Lessons> lessonsList = query.getResultList();
-           return lessonsList;
-       }finally {
-           session.close();
+           query.setParameter("search" , searchText);
+
+           return query.list();
        }
     }
 
