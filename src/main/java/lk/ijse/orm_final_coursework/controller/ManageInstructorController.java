@@ -93,7 +93,6 @@ public class ManageInstructorController implements Initializable {
         if (!validateInput()) return;
 
         try {
-
             boolean isSaved = instructorBO.save(InstructorDTO.builder()
                             .instructorId(lblInstructorId.getText())
                             .firstName(txtFirstName.getText())
@@ -187,12 +186,12 @@ public class ManageInstructorController implements Initializable {
         }
     }
 
-    public void goToDashboard(MouseEvent mouseEvent) {
+    public void goToDashboard(MouseEvent mouseEvent)throws IOException {
         try {
             Stage stage = (Stage) ancInstructorPage.getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/Dashboard.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
             stage.centerOnScreen();
-        } catch (IOException e) {
+        } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Navigation error: " + e.getMessage());
         }
     }

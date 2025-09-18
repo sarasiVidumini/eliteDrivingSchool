@@ -3,6 +3,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.CourseDAO;
 import lk.ijse.orm_final_coursework.entity.Course;
+import lk.ijse.orm_final_coursework.entity.Lessons;
 import lk.ijse.orm_final_coursework.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,31 +19,26 @@ public class CourseDAOImpl implements CourseDAO {
 
     public String getNextId() {
         Session session = factoryConfiguration.getSession();
-        char tableCharacter = 'C';
-
-        String lastId = session.createQuery(
-                "SELECT c.id FROM Course c ORDER BY c.id DESC " ,
-                String.class
-        )
+        String lastId = (String) session.createQuery(
+                        "SELECT c.courseId FROM Course c ORDER BY c.courseId DESC")
                 .setMaxResults(1)
-                .getSingleResult();
+                .uniqueResult();
 
         if (lastId != null) {
-            String lastNumberString = lastId.substring(1);
-            int lastNumber = Integer.parseInt(lastNumberString);
-
-            int nextIdNumber = lastNumber + 1;
-            return String.format(tableCharacter+"3%d", nextIdNumber);
+            int num = Integer.parseInt(lastId.substring(1));
+            num++;
+            return String.format("C%03d", num);
+        } else {
+            return "C001";
         }
-
-        return tableCharacter+"001";
     }
 
     public List<Course> getAll()throws SQLException{
         Session session = factoryConfiguration.getSession();
         try {
-            List<Course> list = session.createQuery("FROM Course" , Course.class).getResultList();
-            return list;
+            Query<Course> query = session.createQuery("from Course ",Course.class);
+            List<Course> courseList = query.list();
+            return courseList;
         }finally {
             session.close();
         }
@@ -52,7 +48,7 @@ public class CourseDAOImpl implements CourseDAO {
         Session session = factoryConfiguration.getSession();
         try {
             Query<String> query = session.createQuery(
-                    "SELECT c.id FROM Course c ORDER BY c.id DESC " ,
+                    "SELECT c.courseId FROM Course c ORDER BY c.courseId DESC " ,
                     String.class
             ).setMaxResults(1);
             List<String> idList = query.list();
@@ -60,7 +56,7 @@ public class CourseDAOImpl implements CourseDAO {
                 return null;
             }
 
-            return idList.get(0);
+            return idList.getFirst();
 
         }finally {
             session.close();
@@ -68,11 +64,14 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     public boolean save(Course course)throws SQLException{
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            currentSession.persist(course);
+            session.persist(course);
+            transaction.commit();
             return true;
         }catch (Exception e){
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -80,48 +79,49 @@ public class CourseDAOImpl implements CourseDAO {
 
 
     public boolean update(Course course)throws SQLException{
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            currentSession.merge(course);
+            session.merge(course);
+            transaction.commit();
             return true;
         }catch (Exception e){
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
     }
 
     public boolean delete(String id)throws SQLException{
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            Student student = currentSession.get(Student.class, id);
+            Student student = session.get(Student.class, id);
             if (student != null) {
-                currentSession.remove(student);
+                session.remove(student);
+                transaction.commit();
                 return true;
             }
             return false;
         }catch (Exception e){
+            if (transaction != null) transaction.rollback();
             e.printStackTrace();
             return false;
+        }finally {
+            session.close();
         }
     }
 
     public List<String> getAllIds()throws SQLException{
-        Transaction transaction = null;
-        List<String> idList = new ArrayList<>();
-
+        Session session = factoryConfiguration.getSession();
         try {
-            Session session = factoryConfiguration.getSession();
-            transaction = session.beginTransaction();
-
-            idList = session.createQuery("SELECT c.id FROM Course c" , String.class ).list();
-            transaction.commit();
-        }catch (Exception e){
-            e.printStackTrace();
+            Query<String> query = session.createQuery("SELECT c.courseId FROM Course c", String.class);
+            return query.list();
+        } finally {
+            session.close();
         }
-
-        return idList;
 
     }
 
@@ -142,7 +142,7 @@ public class CourseDAOImpl implements CourseDAO {
 
         try {
             Query<Course> query = session.createQuery("FROM Course c " +
-                    "WHERE c.id LIKE :search OR " + "c.courseName LIKE  :search OR " + " c.duration LIKE  :search OR" + " c.fee LIKE  :search OR" + " c.description LIKE  :search", Course.class
+                    "WHERE c.courseId LIKE :search OR " + "c.courseName LIKE  :search OR " + " c.duration LIKE  :search OR" + " c.fee LIKE  :search OR" + " c.description LIKE  :search " , Course.class
             );
             query.setParameter("search",searchText);
             List<Course> courseList = query.getResultList();
@@ -153,12 +153,15 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     public boolean saveNewCourse(Course course)throws SQLException{
-        Session currentSession = factoryConfiguration.getSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            currentSession.persist(course);
+            session.persist(course);
+            transaction.commit();
             return true;
         }catch (Exception e){
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }

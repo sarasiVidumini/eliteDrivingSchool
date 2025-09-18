@@ -17,6 +17,8 @@ public class CourseDTO {
     private double fee;
     private String description;
     private String instructorId;
-    private ArrayList<StudentCourseDetailDTO> student_course_detail;
-    private ArrayList<LessonsDTO> lessons;
+    @Builder.Default
+    private ArrayList<StudentCourseDetailDTO> student_course_detail = new ArrayList<>();
+    @Builder.Default
+    private ArrayList<LessonsDTO> lessons = new ArrayList<>();
 }

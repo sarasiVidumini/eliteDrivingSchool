@@ -184,7 +184,7 @@ public class ManageUserController implements Initializable {
     public void goToDashboard(MouseEvent mouseEvent) {
         try {
             Stage stage = (Stage) ancUserPage.getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoardPage.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR,"Navigation error : " + e.getMessage());
         }

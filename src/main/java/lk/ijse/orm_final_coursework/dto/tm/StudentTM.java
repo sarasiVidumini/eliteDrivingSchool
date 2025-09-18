@@ -3,6 +3,7 @@ package lk.ijse.orm_final_coursework.dto.tm;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class StudentTM {
     private String email;
     private String phone;
     private String address;
-    private Date dob;
-    private Date registrationDate;
+    private LocalDate dob;
+    private LocalDate registrationDate;
 
 }

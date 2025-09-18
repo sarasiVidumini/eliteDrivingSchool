@@ -32,6 +32,7 @@ public class Course {
     @Column(nullable = false)
     private String description;
 
+
     @ManyToOne
     @JoinColumn(name = "instructorId" , referencedColumnName = "instructorId")
     private Instructor instructor;

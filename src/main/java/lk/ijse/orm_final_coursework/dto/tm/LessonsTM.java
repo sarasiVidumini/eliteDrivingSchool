@@ -5,6 +5,7 @@ import lombok.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -15,9 +16,9 @@ import java.time.LocalDate;
 
 public class LessonsTM {
     private String  lessonId;
-    private LocalDate lessonDate;
-    private Time startTime;
-    private Time endTime;
+    private String lessonDate;
+    private String startTime;
+    private String endTime;
     private String status;
     private String  studentId;
     private String courseId;

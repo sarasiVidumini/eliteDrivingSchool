@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.LessonDAO;
+import lk.ijse.orm_final_coursework.entity.Instructor;
 import lk.ijse.orm_final_coursework.entity.Lessons;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,32 +18,27 @@ public class LessonDAOImpl implements LessonDAO {
     @Override
     public String getNextId() throws SQLException {
         Session session = factoryConfiguration.getSession();
-        char tableCharacter = 'L';
-
-        String lastId = session.createQuery(
-                "SELECT l.id FROM Lessons l ORDER BY l.id DESC",
-                String.class
-        )
+        String lastId = (String) session.createQuery(
+                        "SELECT l.lessonId FROM Lessons l ORDER BY l.lessonId DESC")
                 .setMaxResults(1)
                 .uniqueResult();
 
         if (lastId != null) {
-            String lastIdNumberString = lastId.substring(1);
-            int lastIdNumber = Integer.parseInt(lastIdNumberString);
-
-            int nextIdNumber = lastIdNumber + 1;
-            return String.format(tableCharacter+"%d", nextIdNumber);
+            int num = Integer.parseInt(lastId.substring(1));
+            num++;
+            return String.format("L%03d", num);
+        } else {
+            return "L001";
         }
-        return tableCharacter + "001";
     }
 
     @Override
     public List<Lessons> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
         try {
-            List<Lessons> list = session.createQuery("FROM Lessons " , Lessons.class)
-                    .getResultList();
-            return list;
+            Query<Lessons> query = session.createQuery("from Lessons ",Lessons.class);
+            List<Lessons> lessonsList = query.list();
+            return lessonsList;
         }finally {
             session.close();
         }
@@ -53,14 +49,14 @@ public class LessonDAOImpl implements LessonDAO {
         Session session = factoryConfiguration.getSession();
         try {
             Query<String> query = session.createQuery(
-                        "SELECT l.id FROM Lessons l ORDER BY l.id DESC",
+                        "SELECT l.lessonId FROM Lessons l ORDER BY l.lessonId DESC",
                     String.class
             ).setMaxResults(1);
             List<String> idList = query.list();
             if (idList.isEmpty()) {
                 return null;
             }
-            return idList.get(0);
+            return idList.getFirst();
         }finally {
             session.close();
         }
@@ -68,12 +64,14 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public boolean save(Lessons lessons) throws SQLException {
-        Session curentSession = factoryConfiguration.getInstance().getCurrentSession();
-
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            curentSession.persist(lessons);
+            session.persist(lessons);
+            transaction.commit();
             return true;
         }catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -81,12 +79,15 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public boolean update(Lessons lessons) throws SQLException {
-        Session curentSession = factoryConfiguration.getInstance().getCurrentSession();
+       Session session = factoryConfiguration.getSession();
+       Transaction transaction = session.beginTransaction();
 
         try {
-            curentSession.merge(lessons);
+            session.merge(lessons);
+            transaction.commit();
             return true;
         }catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -94,18 +95,22 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        Session curentSession = factoryConfiguration.getSession();
-
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
-            Lessons lessons = curentSession.get(Lessons.class, id);
+            Lessons lessons = session.get(Lessons.class, id);
             if (lessons != null) {
-                curentSession.delete(lessons);
+                session.remove(lessons);
+                transaction.commit();
                 return true;
             }
             return false;
         }catch (Exception e) {
+            if (transaction != null) transaction.rollback();
             e.printStackTrace();
             return false;
+        }finally {
+            session.close();
         }
     }
 
@@ -129,14 +134,11 @@ public class LessonDAOImpl implements LessonDAO {
        try {
            Query<Lessons> query = session.createQuery(
                    "FROM Lessons l" +
-                           " WHERE l.id LIKE  :search OR" +
+                           " WHERE l.lessonId LIKE  :search OR" +
                            " l.lessonDate LIKE  :search OR " +
                            "l.startTime LIKE  :search OR" +
                            " l.endTime LIKE  :search OR " +
-                           "l.status LIKE  :search OR " +
-                           "l.student LIKE  :search OR" +
-                           " l.course LIKE  :search OR " +
-                           "l.instructor LIKE  :search",
+                           "l.status LIKE  :search  " ,
                    Lessons.class
            );
            query.setParameter("search", searchText);
@@ -149,20 +151,12 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public List<String> getAllIds() throws SQLException {
-        Transaction transaction = null;
-        List<String> idList = new ArrayList<>();
-
+        Session session = factoryConfiguration.getSession();
         try {
-            Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            idList = session.createQuery("SELECT l.id FROM Lessons l" , String.class).list();
-            transaction.commit();
-        }catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            Query<String> query = session.createQuery("SELECT l.lessonId FROM Lessons l", String.class);
+            return query.list();
+        } finally {
+            session.close();
         }
-
-        return idList;
     }
 }

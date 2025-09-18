@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.dao.SQLUtil;
 import lk.ijse.orm_final_coursework.dao.custom.StudentDAO;
+import lk.ijse.orm_final_coursework.entity.Instructor;
 import org.hibernate.query.Query;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.entity.Student;
@@ -19,39 +20,30 @@ public class StudentDAOImpl implements StudentDAO {
 
        public String getNextId() throws SQLException {
            Session session = factoryConfiguration.getSession();
-           char tableCharacter = 'S';
-
-           String lastId = session.createQuery(
-                   "SELECT  s.id FROM Student s ORDER BY s.id DESC ",
-                   String.class
-           )
+           String lastId = (String) session.createQuery(
+                           "SELECT s.studentId FROM Student s ORDER BY s.studentId DESC")
                    .setMaxResults(1)
                    .uniqueResult();
 
-           if (lastId !=null){
-               String lastNumberString = lastId.substring(1);
-               int lastNumber = Integer.parseInt(lastNumberString);
-
-               int nextIdNumber = lastNumber + 1;
-               return  String.format(tableCharacter + "3%d", nextIdNumber);
+           if (lastId != null) {
+               int num = Integer.parseInt(lastId.substring(1)); // remove 'S' prefix
+               num++;
+               return String.format("S%03d", num);
+           } else {
+               return "S001";
            }
-
-           return tableCharacter + "001";
        }
 
     @Override
     public List<Student> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
         try {
-//               List<Student> studentList = query.list();
-//               return studentList;
-            List<Student> list = session.createQuery("FROM Student" , Student.class)
-                    .getResultList();
-            return list;
+            Query<Student> query = session.createQuery("from Student ",Student.class);
+            List<Student> studentList = query.list();
+            return studentList;
         }finally {
             session.close();
         }
-
 
     }
 
@@ -60,14 +52,14 @@ public class StudentDAOImpl implements StudentDAO {
         Session session = factoryConfiguration.getSession();
         try {
             Query<String> query = session.createQuery(
-                    "SELECT s.id FROM Student s ORDER BY s.id DESC" ,
+                    "SELECT s.studentId FROM Student s ORDER BY s.studentId DESC" ,
                     String.class
             ).setMaxResults(1);
             List<String> idList = query.list();
             if (idList.isEmpty()) {
                 return null;
             }
-            return idList.get(0);
+            return idList.getFirst();
 
         }finally {
             session.close();
@@ -77,12 +69,15 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean save(Student student) throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            currentSession.persist(student);
+            session.persist(student);
+            transaction.commit();
             return true;
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -91,12 +86,15 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean update(Student student) throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
 
         try {
-            currentSession.merge(student);
+            session.merge(student);
+            transaction.commit();
             return true;
         }catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -105,15 +103,19 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        Session currentSession = factoryConfiguration.getInstance().getCurrentSession();
+           Session session = factoryConfiguration.getSession();
+           Transaction transaction = session.beginTransaction();
+
         try {
-            Student student = currentSession.get(Student.class, id);
+            Student student = session.get(Student.class, id);
             if (student != null) {
-                currentSession.remove(student);
+                session.remove(student);
+                transaction.commit();
                 return true;
             }
             return false;
         } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
             e.printStackTrace();
             return false;
         }
@@ -122,24 +124,13 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
        public List<String> getAllIds() throws SQLException{
-           Transaction transaction = null;
-           List<String> idList = new ArrayList<>();
-
-           try {
-               Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-               transaction = session.beginTransaction();
-
-               idList = session.createQuery("SELECT s.id FROM Student s" , String.class).list();
-               transaction.commit();
-           }catch (Exception e) {
-               if (transaction != null) transaction.rollback();{
-                   e.printStackTrace();
-               }
-
-           }
-
-           return idList;
-
+            Session session = factoryConfiguration.getSession();
+            try {
+                Query<String> query = session.createQuery("SELECT s.studentId FROM Student s", String.class);
+                return query.list();
+            } finally {
+                session.close();
+            }
        }
 
        @Override
@@ -162,7 +153,7 @@ public class StudentDAOImpl implements StudentDAO {
            try {
               Query<Student> query = session.createQuery(
                       "FROM Student s " +
-                              "WHERE s.id LIKE  :search OR" +
+                              "WHERE s.studentId LIKE  :search OR" +
                               " s.firstName LIKE  :search OR " +
                               " s.lastName LIKE  :search OR " +
                               "s.email LIKE  :search OR " +
@@ -181,8 +172,8 @@ public class StudentDAOImpl implements StudentDAO {
 @Override
     public String getStudentIdByContact(String phone) throws SQLException {
            try {
-               Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-              String hql = "SELECT s.id FROM Student s WHERE s.phone =  :contact";
+               Session session = factoryConfiguration.getSession();
+              String hql = "SELECT s.studentId FROM Student s WHERE s.phone =  :contact";
 
                String studentId = session.createQuery(hql , String.class).setParameter("contact", phone).uniqueResult();
 
@@ -198,10 +189,10 @@ public class StudentDAOImpl implements StudentDAO {
 @Override
        public String getStudentFirstNameById(String studentId) throws SQLException {
            try {
-               Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-               String hql = "SELECT s.firstName FROM Student s WHERE s.id = :id";
+               Session session = factoryConfiguration.getSession();
+               String hql = "SELECT s.firstName FROM Student s WHERE s.studentId = :studentId";
 
-               String firstName = session.createQuery(hql , String.class).setParameter("id", studentId).uniqueResult();
+               String firstName = session.createQuery(hql , String.class).setParameter("studentId", studentId).uniqueResult();
 
                if (firstName !=null){
                    return firstName;
@@ -215,10 +206,10 @@ public class StudentDAOImpl implements StudentDAO {
        @Override
     public String getStudentLastNameById(String studentId) throws SQLException {
         try {
-            Session session = factoryConfiguration.getSession().getSessionFactory().openSession();
-            String hql = "SELECT s.lastName FROM Student s WHERE s.id = :id";
+            Session session = factoryConfiguration.getSession();
+            String hql = "SELECT s.lastName FROM Student s WHERE s.studentId= :studentId";
 
-            String lastName = session.createQuery(hql , String.class).setParameter("id", studentId).uniqueResult();
+            String lastName = session.createQuery(hql , String.class).setParameter("studentId", studentId).uniqueResult();
 
             if (lastName !=null){
                 return lastName;

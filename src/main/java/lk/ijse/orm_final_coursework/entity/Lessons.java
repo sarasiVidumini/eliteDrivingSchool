@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -37,13 +38,13 @@ public class Lessons {
     private Course course;
 
     @Column
-    private LocalDate lessonDate;
+    private String lessonDate;
 
     @Column
-    private Time startTime;
+    private String startTime;
 
     @Column
-    private Time endTime;
+    private String endTime;
 
     @Column
     private String status;

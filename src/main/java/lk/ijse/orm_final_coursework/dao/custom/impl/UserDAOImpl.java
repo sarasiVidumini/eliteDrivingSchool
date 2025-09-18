@@ -25,11 +25,11 @@ public class UserDAOImpl implements UserDAO {
                 .uniqueResult();
 
         if (lastId != null) {
-            int num = Integer.parseInt(lastId.substring(1)); // remove 'I' prefix
+            int num = Integer.parseInt(lastId.substring(1)); //
             num++;
-            return String.format("I%03d", num);
+            return String.format("U%03d", num);
         } else {
-            return "I001";
+            return "U001";
         }
     }
 
@@ -75,8 +75,6 @@ public class UserDAOImpl implements UserDAO {
         }catch (Exception e) {
             transaction.rollback();
             return false;
-        }finally {
-            session.close();
         }
     }
 
@@ -91,8 +89,6 @@ public class UserDAOImpl implements UserDAO {
         }catch (Exception e) {
             transaction.rollback();
             return false;
-        }finally {
-            session.close();
         }
     }
 

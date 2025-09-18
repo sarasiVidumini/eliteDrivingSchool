@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -14,9 +15,9 @@ import java.util.Date;
 
 public class LessonsDTO {
     private String lessonId;
-    private LocalDate lessonDate;
-    private Time startTime;
-    private Time endTime;
+    private String lessonDate;
+    private String startTime;
+    private String endTime;
     private String status;
     private String studentId;
     private String courseId;

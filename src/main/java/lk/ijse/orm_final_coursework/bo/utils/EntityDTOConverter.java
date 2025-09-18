@@ -3,6 +3,8 @@ package lk.ijse.orm_final_coursework.bo.utils;
 import lk.ijse.orm_final_coursework.dto.*;
 import lk.ijse.orm_final_coursework.entity.*;
 
+import java.sql.Date;
+
 public class EntityDTOConverter {
 
     public CourseDTO getCourseDTO(Course course) {
@@ -18,12 +20,14 @@ public class EntityDTOConverter {
 
     public Course getCourse(CourseDTO courseDTO) {
         Course course = new Course();
+        Instructor instructor = new Instructor();
         course.setCourseId(courseDTO.getCourseId());
         course.setCourseName(courseDTO.getCourseName());
         course.setDuration(courseDTO.getDuration());
         course.setFee(courseDTO.getFee());
         course.setDescription(courseDTO.getDescription());
-        course.setInstructor(course.getInstructor());
+        instructor.setInstructorId(courseDTO.getInstructorId());
+        course.setInstructor(instructor);
         return course;
     }
 
@@ -67,14 +71,20 @@ public class EntityDTOConverter {
 
     public Lessons getLessons(LessonsDTO lessonsDTO) {
         Lessons lessons = new Lessons();
+        Instructor instructor = new Instructor();
+        Course course = new Course();
+        Student student = new Student();
         lessons.setLessonId(lessonsDTO.getLessonId());
         lessons.setLessonDate(lessonsDTO.getLessonDate());
         lessons.setStartTime(lessonsDTO.getStartTime());
         lessons.setEndTime(lessonsDTO.getEndTime());
         lessons.setStatus(lessonsDTO.getStatus());
-        lessons.setStudent(lessons.getStudent());
-        lessons.setCourse(lessons.getCourse());
-        lessons.setInstructor(lessons.getInstructor());
+        student.setStudentId(lessonsDTO.getStudentId());
+        lessons.setStudent(student);
+        course.setCourseId(lessonsDTO.getCourseId());
+        lessons.setCourse(course);
+        instructor.setInstructorId(lessonsDTO.getInstructorId());
+        lessons.setInstructor(instructor);
         return lessons;
     }
 
@@ -91,12 +101,14 @@ public class EntityDTOConverter {
 
     public Payment getPayment(PaymentDTO paymentDTO) {
         Payment payment = new Payment();
+        Student student = new Student();
         payment.setPaymentId(paymentDTO.getPaymentId());
         payment.setPaymentDate(paymentDTO.getPaymentDate());
         payment.setAmount(paymentDTO.getAmount());
         payment.setPaymentMethod(paymentDTO.getPaymentMethod());
         payment.setStatus(paymentDTO.getStatus());
-        payment.setStudent(payment.getStudent());
+        student.setStudentId(paymentDTO.getStudentId());
+        payment.setStudent(student);
         return payment;
     }
 
@@ -139,12 +151,16 @@ public class EntityDTOConverter {
 
     public StudentCourseDetail getStudentCourseDetail(StudentCourseDetailDTO studentCourseDetailDTO) {
         StudentCourseDetail studentCourseDetail = new StudentCourseDetail();
+        Student student = new Student();
+        Course course = new Course();
         studentCourseDetail.setStudentCourseId(studentCourseDetailDTO.getStudentCourseId());
-        studentCourseDetail.setEnrollmentDate(studentCourseDetail.getEnrollmentDate());
-        studentCourseDetail.setStatus(studentCourseDetail.getStatus());
-        studentCourseDetail.setGrade(studentCourseDetail.getGrade());
-        studentCourseDetail.setStudent(studentCourseDetail.getStudent());
-        studentCourseDetail.setCourse(studentCourseDetail.getCourse());
+        studentCourseDetail.setEnrollmentDate((Date) studentCourseDetailDTO.getEnrollmentDate());
+        studentCourseDetail.setStatus(studentCourseDetailDTO.getStatus());
+        studentCourseDetail.setGrade(studentCourseDetailDTO.getGrade());
+        student.setStudentId(studentCourseDetailDTO.getStudentId());
+        studentCourseDetail.setStudent(student);
+        course.setCourseId(studentCourseDetailDTO.getCourseId());
+        studentCourseDetail.setCourse(course);
         return studentCourseDetail;
     }
 

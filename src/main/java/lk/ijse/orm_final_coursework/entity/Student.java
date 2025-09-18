@@ -3,6 +3,7 @@ package lk.ijse.orm_final_coursework.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -35,10 +36,10 @@ public class Student {
     private String address;
 
     @Column(nullable = false)
-    private Date dob;
+    private LocalDate dob;
 
     @Column(nullable = false)
-    private Date registrationDate;
+    private LocalDate registrationDate;
 
     @OneToMany(
             mappedBy = "student",
