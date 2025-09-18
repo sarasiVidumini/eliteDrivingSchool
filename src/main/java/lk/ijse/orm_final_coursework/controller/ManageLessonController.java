@@ -34,7 +34,7 @@ public class ManageLessonController implements Initializable {
     public TextField txtLessonDate;
     public TextField txtStartTime;
     public TextField txtEndTime;
-    public TextField txtStatus;
+    public ComboBox cmbStatus;
     public TextField txtStudentId;
     public TextField txtCourseId;
     public TextField txtInstructorId;
@@ -75,6 +75,13 @@ public class ManageLessonController implements Initializable {
         colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
         colCourseId.setCellValueFactory(new PropertyValueFactory<>("courseId"));
         colInstructorId.setCellValueFactory(new PropertyValueFactory<>("instructorId"));
+
+        try {
+            cmbStatus.setItems(FXCollections.observableArrayList("Scheduled" , "In Progress" , "Cancelled" , "Missed" , "Pending" , "Theory Completed" , "Practical Completed" , "Ready For Test"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load status : " + e.getMessage());
+        }
     }
 
     private void loadAllLessons() throws Exception {
@@ -104,7 +111,7 @@ public class ManageLessonController implements Initializable {
                     .lessonDate(txtLessonDate.getText())
                     .startTime(txtStartTime.getText())
                     .endTime(txtEndTime.getText())
-                    .status(txtStatus.getText())
+                    .status(cmbStatus.getValue().toString())
                     .studentId(txtStudentId.getText())
                     .courseId(txtCourseId.getText())
                     .instructorId(txtInstructorId.getText())
@@ -131,7 +138,7 @@ public class ManageLessonController implements Initializable {
                     .lessonDate(txtLessonDate.getText())
                     .startTime(txtStartTime.getText())
                     .endTime(txtEndTime.getText())
-                    .status(txtStatus.getText())
+                    .status(cmbStatus.getValue().toString())
                     .studentId(txtStudentId.getText())
                     .courseId(txtCourseId.getText())
                     .instructorId(txtInstructorId.getText())
@@ -189,7 +196,7 @@ public class ManageLessonController implements Initializable {
             txtLessonDate.setText(selectedItem.getLessonDate());
             txtStartTime.setText(selectedItem.getStartTime());
             txtEndTime.setText(selectedItem.getEndTime());
-            txtStatus.setText(selectedItem.getStatus());
+            cmbStatus.setValue(selectedItem.getStatus());
             txtStudentId.setText(selectedItem.getStudentId());
             txtCourseId.setText(selectedItem.getCourseId());
             txtInstructorId.setText(selectedItem.getInstructorId());
@@ -210,7 +217,7 @@ public class ManageLessonController implements Initializable {
         txtLessonDate.clear();
         txtStartTime.clear();
         txtEndTime.clear();
-        txtStatus.clear();
+        cmbStatus.getSelectionModel().clearSelection();
         txtStudentId.clear();
         txtCourseId.clear();
         txtInstructorId.clear();

@@ -41,13 +41,14 @@ public class ManageInstructorController implements Initializable {
     public Button btnUpdate;
     public Button btnSave;
     public TextField txtAvailabilityShedule;
-    public TextField txtSpecialization;
+    public ComboBox cmbSpecialization;
     public TextField txtPhone;
     public TextField txtEmail;
     public TextField txtLastName;
     public TextField txtFirstName;
     public AnchorPane ancInstructorPage;
     public Label lblInstructorId;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,6 +69,13 @@ public class ManageInstructorController implements Initializable {
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
         colAvailabilityShedule.setCellValueFactory(new PropertyValueFactory<>("availability_schedule"));
+
+        try {
+            cmbSpecialization.setItems(FXCollections.observableArrayList("Light Vehicle" , "Motorcycle" , "Heavy Vehicle" , "Defensive Driving" , "Special Needs Training" , "Commercial License Training" , "Theory Instructor"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load status : " + e.getMessage());
+        }
     }
 
     private void loadAllInstructors() throws Exception {
@@ -99,7 +107,7 @@ public class ManageInstructorController implements Initializable {
                             .lastName(txtLastName.getText())
                             .email(txtEmail.getText())
                             .phone(txtPhone.getText())
-                            .specialization(txtSpecialization.getText())
+                            .specialization(cmbSpecialization.getValue().toString())
                             .availability_schedule(txtAvailabilityShedule.getText())
                             .build());
             if (isSaved) {
@@ -126,7 +134,7 @@ public class ManageInstructorController implements Initializable {
                     .lastName(txtLastName.getText())
                     .email(txtEmail.getText())
                     .phone(txtPhone.getText())
-                    .specialization(txtSpecialization.getText())
+                    .specialization(cmbSpecialization.getValue().toString())
                     .availability_schedule(txtAvailabilityShedule.getText())
                     .build());
             if (isUpdated) {
@@ -181,7 +189,7 @@ public class ManageInstructorController implements Initializable {
             txtLastName.setText(selected.getLastName());
             txtEmail.setText(selected.getEmail());
             txtPhone.setText(selected.getPhone());
-            txtSpecialization.setText(selected.getSpecialization());
+            cmbSpecialization.setValue(selected.getSpecialization());
             txtAvailabilityShedule.setText(selected.getAvailability_schedule());
         }
     }
@@ -201,7 +209,7 @@ public class ManageInstructorController implements Initializable {
         txtLastName.clear();
         txtEmail.clear();
         txtPhone.clear();
-        txtSpecialization.clear();
+        cmbSpecialization.getSelectionModel().clearSelection();
         txtAvailabilityShedule.clear();
         tblInstructors.getSelectionModel().clearSelection();
     }
@@ -209,7 +217,7 @@ public class ManageInstructorController implements Initializable {
     private boolean validateInput() {
         if (txtFirstName.getText().isEmpty() || txtLastName.getText().isEmpty()
                 || txtEmail.getText().isEmpty() || txtPhone.getText().isEmpty()
-                || txtSpecialization.getText().isEmpty() || txtAvailabilityShedule.getText().isEmpty()) {
+                || cmbSpecialization.getSelectionModel().isEmpty() || txtAvailabilityShedule.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Please fill all fields!");
             return false;
         }

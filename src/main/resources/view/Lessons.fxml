@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane fx:id="ancLessonsPage" prefHeight="500.0" prefWidth="1600.0" style="-fx-background-color: #16a085;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageLessonController">
     <children>
         <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -151,11 +152,11 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="124.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtStatus" prefHeight="26.0" prefWidth="296.0" promptText="Cancelled" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <ComboBox fx:id="cmbStatus" prefHeight="26.0" prefWidth="296.0" promptText="Select Status" style="-fx-border-radius: 30; -fx-background-radius: 30;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
-                                        </TextField>
+                                        </ComboBox>
                                     </children>
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="154.0" prefHeight="17.0" prefWidth="350.0">
@@ -303,7 +304,7 @@
                                 </TextField>
                             </right>
                         </BorderPane>
-                        <ImageView fitHeight="107.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="124.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
                             <VBox.margin>
                                 <Insets left="750.0" />
                             </VBox.margin>

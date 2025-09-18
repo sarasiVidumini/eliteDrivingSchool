@@ -303,12 +303,12 @@
                                 </TextField>
                             </right>
                         </BorderPane>
-                        <ImageView fitHeight="91.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="161.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true">
                             <VBox.margin>
                                 <Insets left="750.0" />
                             </VBox.margin>
                             <image>
-                                <Image url="@../images/download%20(6).png" />
+                                <Image url="@../images/student.png" />
                             </image>
                         </ImageView>
                         <TableView fx:id="tblStudent" onMouseClicked="#OnClickedTable" prefHeight="453.0" prefWidth="886.0" VBox.vgrow="ALWAYS">

@@ -31,7 +31,7 @@ public class ManageCourseController implements Initializable {
 
     public Label lblCourseId;
 
-    public TextField txtCourseName;
+    public ComboBox cmbCourseName;
     public TextField txtDuration;
     public TextField txtFee;
     public TextField txtDescription;
@@ -70,6 +70,13 @@ public class ManageCourseController implements Initializable {
         colFee.setCellValueFactory(new PropertyValueFactory<>("fee"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colInstructorId.setCellValueFactory(new PropertyValueFactory<>("instructorId"));
+
+        try {
+            cmbCourseName.setItems(FXCollections.observableArrayList("Manual Car Driving" , "Automatic Car Driving" , "Motorcycle / Scooter Driving" , "Three-Wheeler Driving" , "Heavy Vehicle Driving(Truck / Bus)"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load course : " + e.getMessage());
+        }
     }
 
     private void loadAllCourses() throws Exception {
@@ -94,7 +101,7 @@ public class ManageCourseController implements Initializable {
         try {
             boolean isSaved = courseBO.save(CourseDTO.builder()
                     .courseId(lblCourseId.getText())
-                    .courseName(txtCourseName.getText())
+                    .courseName(cmbCourseName.getValue().toString())
                     .duration(txtDuration.getText())
                     .fee(Double.parseDouble(txtFee.getText()))
                     .description(txtDescription.getText())
@@ -120,7 +127,7 @@ public class ManageCourseController implements Initializable {
         try {
             boolean isUpdated = courseBO.update(CourseDTO.builder()
                     .courseId(lblCourseId.getText())
-                    .courseName(txtCourseName.getText())
+                    .courseName(cmbCourseName.getValue().toString())
                     .duration(txtDuration.getText())
                     .fee(Double.parseDouble(txtFee.getText()))
                     .description(txtDescription.getText())
@@ -176,7 +183,7 @@ public class ManageCourseController implements Initializable {
         CourseTM selectedItem = (CourseTM) tblCourses.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             lblCourseId.setText(selectedItem.getCourseId());
-            txtCourseName.setText(selectedItem.getCourseName());
+            cmbCourseName.setValue(selectedItem.getCourseName());
             txtDuration.setText(selectedItem.getDuration());
             txtFee.setText(String.valueOf(selectedItem.getFee()));
             txtDescription.setText(selectedItem.getDescription());
@@ -195,7 +202,7 @@ public class ManageCourseController implements Initializable {
     }
 
     private void resetForm() {
-        txtCourseName.clear();
+        cmbCourseName.getSelectionModel().clearSelection();
         txtDuration.clear();
         txtFee.clear();
         txtDescription.clear();

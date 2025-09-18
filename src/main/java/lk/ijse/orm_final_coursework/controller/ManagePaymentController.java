@@ -31,8 +31,8 @@ public class ManagePaymentController implements Initializable {
 
     public TextField txtPaymentDate;
     public TextField txtAmount;
-    public TextField txtPaymentMethod;
-    public TextField txtStatus;
+    public ComboBox cmbPaymentMethod;
+    public ComboBox cmbStatus;
     public TextField txtStudentId;
 
     public Button btnSave;
@@ -49,6 +49,7 @@ public class ManagePaymentController implements Initializable {
     public TableColumn<PaymentTM , String> colPaymentMethod;
     public TableColumn<PaymentTM , String> colStatus;
     public TableColumn<PaymentTM , String> colStudentId;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,6 +69,20 @@ public class ManagePaymentController implements Initializable {
         colPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
+
+        try {
+            cmbPaymentMethod.setItems(FXCollections.observableArrayList("Credit Card" , "Cash"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load payment method! :" + e.getMessage());
+        }
+
+        try {
+            cmbStatus.setItems(FXCollections.observableArrayList("Pending" , "Partially Paid" , "Paid" , "Overdue"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load status : " + e.getMessage());
+        }
     }
 
     private void loadAllPayments() throws Exception {
@@ -94,8 +109,8 @@ public class ManagePaymentController implements Initializable {
                     .paymentId(lblPaymentId.getText())
                     .paymentDate(txtPaymentDate.getText())
                     .amount(Double.parseDouble(txtAmount.getText()))
-                    .paymentMethod(txtPaymentMethod.getText())
-                    .status(txtStatus.getText())
+                    .paymentMethod(cmbPaymentMethod.getValue().toString())
+                    .status(cmbStatus.getValue().toString())
                     .studentId(txtStudentId.getText())
                     .build());
             if (isSaved) {
@@ -117,8 +132,8 @@ public class ManagePaymentController implements Initializable {
                     .paymentId(lblPaymentId.getText())
                     .paymentDate(txtPaymentDate.getText())
                     .amount(Double.parseDouble(txtAmount.getText()))
-                    .paymentMethod(txtPaymentMethod.getText())
-                    .status(txtStatus.getText())
+                    .paymentMethod(cmbPaymentMethod.getValue().toString())
+                    .status(cmbStatus.getValue().toString())
                     .studentId(txtStudentId.getText())
                     .build());
             if (isUpdated) {
@@ -171,8 +186,8 @@ public class ManagePaymentController implements Initializable {
             lblPaymentId.setText(selectedItem.getPaymentId());
             txtPaymentDate.setText(selectedItem.getPaymentDate());
             txtAmount.setText(String.valueOf(selectedItem.getAmount()));
-            txtPaymentMethod.setText(selectedItem.getPaymentMethod());
-            txtStatus.setText(selectedItem.getStatus());
+            cmbPaymentMethod.setValue(selectedItem.getPaymentMethod());
+            cmbStatus.setValue(selectedItem.getStatus());
             txtStudentId.setText(selectedItem.getStudentId());
         }
     }
@@ -190,8 +205,8 @@ public class ManagePaymentController implements Initializable {
     private void resetForm() {
         txtPaymentDate.clear();
         txtAmount.clear();
-        txtPaymentMethod.clear();
-        txtStatus.clear();
+        cmbPaymentMethod.getSelectionModel().clearSelection();
+        cmbStatus.getSelectionModel().clearSelection();
         txtStudentId.clear();
         tblPayments.getSelectionModel().clearSelection();
 

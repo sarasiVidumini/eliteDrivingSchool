@@ -31,7 +31,7 @@ public class ManageUserController implements Initializable {
     public TextField txtPassword;
     public TextField txtRole;
     public TextField txtEmail;
-    public TextField txtStatus;
+    public ComboBox cmbStatus;
     public Button btnSave;
     public Button btnUpdate;
     public Button btnDelete;
@@ -64,6 +64,13 @@ public class ManageUserController implements Initializable {
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        try {
+            cmbStatus.setItems(FXCollections.observableArrayList("Active", "Inactive" , "Suspended" , "Pending Approval"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load status" + e.getMessage());
+        }
     }
 
     public void loadAllUsers() throws Exception {
@@ -93,7 +100,7 @@ public class ManageUserController implements Initializable {
                     .password(txtPassword.getText())
                     .role(txtRole.getText())
                     .email(txtEmail.getText())
-                    .status(txtStatus.getText())
+                    .status(cmbStatus.getValue().toString())
                     .build());
 
             if (isSaved) {
@@ -120,7 +127,7 @@ public class ManageUserController implements Initializable {
                     .password(txtPassword.getText())
                     .role(txtRole.getText())
                     .email(txtEmail.getText())
-                    .status(txtStatus.getText())
+                    .status(cmbStatus.getValue().toString())
                     .build());
 
             if (isUpdated) {
@@ -177,7 +184,7 @@ public class ManageUserController implements Initializable {
             txtPassword.setText(selectedItem.getPassword());
             txtRole.setText(selectedItem.getRole());
             txtEmail.setText(selectedItem.getEmail());
-            txtStatus.setText(selectedItem.getStatus());
+            cmbStatus.setValue(selectedItem.getStatus());
         }
     }
 
@@ -195,12 +202,12 @@ public class ManageUserController implements Initializable {
         txtPassword.clear();
         txtRole.clear();
         txtEmail.clear();
-        txtStatus.clear();
+        cmbStatus.getSelectionModel().clearSelection();
         tblUsers.getSelectionModel().clearSelection();
     }
 
     private boolean validateInput() {
-        if (txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty()|| txtRole.getText().isEmpty() || txtEmail.getText().isEmpty() || txtStatus.getText().isEmpty()) {
+        if (txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty()|| txtRole.getText().isEmpty() || txtEmail.getText().isEmpty() || cmbStatus.getSelectionModel().isEmpty()) {
             showAlert(Alert.AlertType.ERROR , "please input all fields");
         }
 
