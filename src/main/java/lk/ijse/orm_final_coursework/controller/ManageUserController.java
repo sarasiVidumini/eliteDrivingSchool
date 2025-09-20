@@ -14,9 +14,11 @@ import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.UserBO;
+import lk.ijse.orm_final_coursework.controller.util.PasswordUtil;
 import lk.ijse.orm_final_coursework.dto.UserDTO;
 import lk.ijse.orm_final_coursework.dto.tm.UserTM;
 import org.hibernate.cfg.AbstractPropertyHolder;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,12 +28,15 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class ManageUserController implements Initializable {
+
     private final UserBO userBO = (UserBO) BOFactory.getInstance().getBo(BOTypes.USER);
+
     public AnchorPane ancUserPage;
     public Label lblUserId;
     public TextField txtUserName;
     public TextField txtPassword;
-    public TextField txtRole;
+    public TextField txtConfirmPassword;
+    public ComboBox cmbRole;
     public TextField txtEmail;
     public ComboBox cmbStatus;
     public Button btnSave;
@@ -46,6 +51,11 @@ public class ManageUserController implements Initializable {
     public TableColumn<UserTM , String> colRole;
     public TableColumn<UserTM , String> colEmail;
     public TableColumn<UserTM , String> colStatus;
+
+    private final String passwordRegex = "^.{8,}$";
+    private final String usernameRegex = "^[A-Za-z_-]+$";
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,11 +78,19 @@ public class ManageUserController implements Initializable {
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         try {
+            cmbRole.setItems(FXCollections.observableArrayList("Admin" , "Receptionist" ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load role" + e.getMessage());
+        }
+
+        try {
             cmbStatus.setItems(FXCollections.observableArrayList("Active", "Inactive" , "Suspended" , "Pending Approval"));
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR,"Failed to load status" + e.getMessage());
         }
+
     }
 
     public void loadAllUsers() throws Exception {
@@ -96,25 +114,47 @@ public class ManageUserController implements Initializable {
         if (!validateInput()) return;
 
         try {
-            boolean isSaved = userBO.save( UserDTO.builder()
-                    .userId(lblUserId.getText())
-                    .userName(txtUserName.getText())
-                    .password(txtPassword.getText())
-                    .role(txtRole.getText())
-                    .email(txtEmail.getText())
-                    .status(cmbStatus.getValue().toString())
-                    .build());
+           String userId = lblUserId.getText();
+           String username = txtUserName.getText();
+           String email = txtEmail.getText();
+           String role = cmbRole.getValue().toString();
+           String password = txtPassword.getText();
+           String confirmPassword = txtConfirmPassword.getText();
+           String status = cmbStatus.getValue().toString();
 
-            if (isSaved) {
-                showAlert(Alert.AlertType.INFORMATION, "User saved successfully!");
-                loadAllUsers();
-                resetForm();
-                loadNextId();
-            }else {
-                showAlert(Alert.AlertType.ERROR,"Failed to save user!");
-            }
+           if (!username.matches(usernameRegex)) {
+               showAlert(Alert.AlertType.ERROR, "Username is invalid : ");
+               return;
+           }
+
+           if (!password.matches(passwordRegex)) {
+               showAlert(Alert.AlertType.ERROR,"Password is invalid : ");
+           }
+
+           if (!password.equals(confirmPassword)) {
+               showAlert(Alert.AlertType.ERROR, "Password is incorrect :");
+           }
+
+           String encryptedPassword = PasswordUtil.hashPassword(password);
+
+           boolean isSaved = userBO.save(new UserDTO(
+                   userId,
+                   username,
+                   email,
+                   encryptedPassword,
+                   role,
+                   status
+           ));
+
+           if (isSaved) {
+               new Alert(Alert.AlertType.INFORMATION, "User Saved successfully!");
+
+           }else {
+               showAlert(Alert.AlertType.ERROR,"Failed to save user");
+           }
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR,"Error saving user:" + e.getMessage());
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Error :" + e.getMessage());
         }
     }
 
@@ -122,26 +162,47 @@ public class ManageUserController implements Initializable {
         if (!validateInput()) return;
 
         try {
+            String userId = lblUserId.getText();
+            String username = txtUserName.getText();
+            String email = txtEmail.getText();
+            String role = cmbRole.getValue().toString();
+            String password = txtPassword.getText();
+            String confirmPassword = txtConfirmPassword.getText();
+            String status = cmbStatus.getValue().toString();
 
-            boolean isUpdated = userBO.update( UserDTO.builder()
-                    .userId(lblUserId.getText())
-                    .userName(txtUserName.getText())
-                    .password(txtPassword.getText())
-                    .role(txtRole.getText())
-                    .email(txtEmail.getText())
-                    .status(cmbStatus.getValue().toString())
-                    .build());
+            if (!username.matches(usernameRegex)) {
+                showAlert(Alert.AlertType.ERROR, "Username is invalid : ");
+                return;
+            }
+
+            if (!password.matches(passwordRegex)) {
+                showAlert(Alert.AlertType.ERROR,"Password is invalid : ");
+            }
+
+            if (!password.equals(confirmPassword)) {
+                showAlert(Alert.AlertType.ERROR, "Password is incorrect :");
+            }
+
+            String encryptedPassword = PasswordUtil.hashPassword(password);
+
+            boolean isUpdated = userBO.update(new UserDTO(
+                    userId,
+                    username,
+                    email,
+                    encryptedPassword,
+                    role,
+                    status
+            ));
 
             if (isUpdated) {
-                showAlert(Alert.AlertType.INFORMATION, "User updated successfully!");
-                loadAllUsers();
-                resetForm();
-                loadNextId();
+                new Alert(Alert.AlertType.INFORMATION, "User Updated successfully!");
+
             }else {
-                showAlert(Alert.AlertType.ERROR,"Failed to update user!");
+                showAlert(Alert.AlertType.ERROR,"Failed to update user");
             }
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR,"Error updating user:" + e.getMessage());
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Error :" + e.getMessage());
         }
     }
 
@@ -184,7 +245,7 @@ public class ManageUserController implements Initializable {
             lblUserId.setText(selectedItem.getUserId());
             txtUserName.setText(selectedItem.getUserName());
             txtPassword.setText(selectedItem.getPassword());
-            txtRole.setText(selectedItem.getRole());
+            cmbRole.setValue(selectedItem.getRole());
             txtEmail.setText(selectedItem.getEmail());
             cmbStatus.setValue(selectedItem.getStatus());
         }
@@ -202,14 +263,14 @@ public class ManageUserController implements Initializable {
     private void resetForm() {
         txtUserName.clear();
         txtPassword.clear();
-        txtRole.clear();
+        cmbRole.getSelectionModel().clearSelection();
         txtEmail.clear();
         cmbStatus.getSelectionModel().clearSelection();
         tblUsers.getSelectionModel().clearSelection();
     }
 
     private boolean validateInput() {
-        if (txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty()|| txtRole.getText().isEmpty() || txtEmail.getText().isEmpty() || cmbStatus.getSelectionModel().isEmpty()) {
+        if (txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty()|| cmbStatus.getSelectionModel().isEmpty() || txtEmail.getText().isEmpty() || cmbStatus.getSelectionModel().isEmpty()) {
             showAlert(Alert.AlertType.ERROR , "please input all fields");
         }
 

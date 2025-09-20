@@ -125,7 +125,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="58.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <Label text="-Role-" textFill="#0b0101">
+                                        <Label text="-Conform Password-" textFill="#0b0101">
                                             <HBox.margin>
                                                 <Insets left="40.0" />
                                             </HBox.margin>
@@ -133,15 +133,33 @@
                                     </children>
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="76.0" prefHeight="17.0" prefWidth="350.0">
-                                    <children>
-                                        <TextField fx:id="txtRole" prefHeight="26.0" prefWidth="296.0" promptText="Admin" style="-fx-border-radius: 30; -fx-background-radius: 30;">
-                                            <HBox.margin>
-                                                <Insets left="20.0" right="20.0" />
-                                            </HBox.margin>
-                                        </TextField>
-                                    </children>
+                           <children>
+                              <TextField fx:id="txtConfirmPassword" prefHeight="26.0" prefWidth="296.0" promptText="1234" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="106.0" prefHeight="17.0" prefWidth="350.0">
+                                    <children>
+                                        <Label text="-Role-" textFill="#0b0101">
+                                            <HBox.margin>
+                                                <Insets left="40.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox layoutX="10.0" layoutY="124.0" prefHeight="17.0" prefWidth="350.0">
+                           <children>
+                                        <ComboBox fx:id="cmbRole" prefHeight="26.0" prefWidth="296.0" promptText="Select User" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                                        </ComboBox>
+                           </children>
+                                </HBox>
+                                <HBox layoutX="10.0" layoutY="154.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
                                         <Label text="-Email-" textFill="#0b0101">
                                             <HBox.margin>
@@ -150,7 +168,7 @@
                                         </Label>
                                     </children>
                                 </HBox>
-                                <HBox layoutX="10.0" layoutY="124.0" prefHeight="17.0" prefWidth="350.0">
+                                <HBox layoutX="10.0" layoutY="157.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
                                         <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="296.0" promptText="sarasividumini13@gmail.com" style="-fx-border-radius: 30; -fx-background-radius: 30;">
                                             <HBox.margin>
@@ -159,24 +177,24 @@
                                         </TextField>
                                     </children>
                                 </HBox>
-                                <HBox layoutX="10.0" layoutY="154.0" prefHeight="17.0" prefWidth="350.0">
-                                    <children>
-                                        <Label text="-Status-" textFill="#0b0101">
-                                            <HBox.margin>
-                                                <Insets left="40.0" />
-                                            </HBox.margin>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                                <HBox layoutX="10.0" layoutY="157.0" prefHeight="17.0" prefWidth="350.0">
-                                    <children>
+                        <HBox layoutX="10.0" layoutY="53.0" prefHeight="17.0" prefWidth="350.0">
+                           <children>
+                              <Label text="-Status-" textFill="#0b0101">
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="71.0" prefHeight="17.0" prefWidth="350.0">
+                           <children>
                                         <ComboBox fx:id="cmbStatus" prefHeight="26.0" prefWidth="296.0" promptText="Select Status" style="-fx-border-radius: 30; -fx-background-radius: 30;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
                                         </ComboBox>
-                                    </children>
-                                </HBox>
+                           </children>
+                        </HBox>
                             </children>
                             <effect>
                                 <DropShadow height="63.11" radius="25.2075" width="39.72" />
@@ -280,10 +298,10 @@
                             <columns>
                                 <TableColumn fx:id="colUserId" prefWidth="105.59994697570801" text="userId" />
                                 <TableColumn fx:id="colUserName" minWidth="0.0" prefWidth="132.79998016357422" text="userName" />
-                                <TableColumn fx:id="colPassword" prefWidth="129.5999755859375" text="password" />
-                                <TableColumn fx:id="colRole" prefWidth="122.39999389648438" text="role" />
-                                <TableColumn fx:id="colEmail" minWidth="0.0" prefWidth="292.8000793457031" text="email" />
-                                <TableColumn fx:id="colStatus" prefWidth="148.0" text="status" />
+                                <TableColumn fx:id="colPassword" prefWidth="116.79998779296875" text="password" />
+                                <TableColumn fx:id="colRole" minWidth="0.0" prefWidth="128.0" text="role" />
+                                <TableColumn fx:id="colEmail" prefWidth="292.79998779296875" text="email" />
+                        <TableColumn fx:id="colStatus" prefWidth="149.599853515625" text="status" />
                             </columns>
                             <VBox.margin>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />

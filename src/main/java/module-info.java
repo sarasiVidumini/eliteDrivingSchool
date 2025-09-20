@@ -6,6 +6,8 @@ module lk.ijse.orm_final_coursework {
     requires java.naming;
     requires java.sql;
     requires lombok;
+    requires javafx.graphics;
+    requires jbcrypt;
 
     // Hibernate & JavaFX reflection access
     opens lk.ijse.orm_final_coursework.entity to org.hibernate.orm.core, javafx.base;
