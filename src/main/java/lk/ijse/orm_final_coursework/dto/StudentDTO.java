@@ -19,8 +19,8 @@ public class StudentDTO {
     private String address;
     private LocalDate dob;
     private LocalDate registrationDate;
-    @Builder.Default
-    private ArrayList<StudentCourseDetailDTO> studentCourseDetail = new ArrayList<>();
+//    @Builder.Default
+//    private ArrayList<StudentCourseDetailDTO> studentCourseDetail = new ArrayList<>();
     @Builder.Default
     private ArrayList<LessonsDTO> lessons = new ArrayList<>();
     @Builder.Default

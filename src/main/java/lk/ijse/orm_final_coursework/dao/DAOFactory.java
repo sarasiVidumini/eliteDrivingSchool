@@ -20,7 +20,7 @@ public class DAOFactory {
             case LESSONS ->  (T) new LessonDAOImpl();
             case PAYMENT -> (T) new PaymentDAOImpl();
             case STUDENT -> (T) new StudentDAOImpl();
-            case STUDENTCOURSEDETAIL ->  (T) new StudentCourseDetailDAOImpl();
+//            case STUDENTCOURSEDETAIL ->  (T) new StudentCourseDetailDAOImpl();
             case USER ->  (T) new UserDAOImpl();
         };
    }

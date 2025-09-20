@@ -138,31 +138,31 @@ public class EntityDTOConverter {
         return student;
     }
 
-    public StudentCourseDetailDTO getStudentCourseDetailDTO(StudentCourseDetail studentCourseDetail) {
-        StudentCourseDetailDTO studentCourseDetailDTO = new StudentCourseDetailDTO();
-        studentCourseDetailDTO.setStudentCourseId(studentCourseDetail.getStudentCourseId());
-        studentCourseDetailDTO.setEnrollmentDate(studentCourseDetail.getEnrollmentDate());
-        studentCourseDetailDTO.setStatus(studentCourseDetail.getStatus());
-        studentCourseDetailDTO.setGrade(studentCourseDetail.getGrade());
-        studentCourseDetailDTO.setStudentId(studentCourseDetail.getStudent().getStudentId());
-        studentCourseDetailDTO.setCourseId(studentCourseDetail.getCourse().getCourseId());
-        return studentCourseDetailDTO;
-    }
-
-    public StudentCourseDetail getStudentCourseDetail(StudentCourseDetailDTO studentCourseDetailDTO) {
-        StudentCourseDetail studentCourseDetail = new StudentCourseDetail();
-        Student student = new Student();
-        Course course = new Course();
-        studentCourseDetail.setStudentCourseId(studentCourseDetailDTO.getStudentCourseId());
-        studentCourseDetail.setEnrollmentDate((Date) studentCourseDetailDTO.getEnrollmentDate());
-        studentCourseDetail.setStatus(studentCourseDetailDTO.getStatus());
-        studentCourseDetail.setGrade(studentCourseDetailDTO.getGrade());
-        student.setStudentId(studentCourseDetailDTO.getStudentId());
-        studentCourseDetail.setStudent(student);
-        course.setCourseId(studentCourseDetailDTO.getCourseId());
-        studentCourseDetail.setCourse(course);
-        return studentCourseDetail;
-    }
+//    public StudentCourseDetailDTO getStudentCourseDetailDTO(StudentCourseDetail studentCourseDetail) {
+//        StudentCourseDetailDTO studentCourseDetailDTO = new StudentCourseDetailDTO();
+//        studentCourseDetailDTO.setStudentCourseId(studentCourseDetail.getStudentCourseId());
+//        studentCourseDetailDTO.setEnrollmentDate(studentCourseDetail.getEnrollmentDate());
+//        studentCourseDetailDTO.setStatus(studentCourseDetail.getStatus());
+//        studentCourseDetailDTO.setGrade(studentCourseDetail.getGrade());
+//        studentCourseDetailDTO.setStudentId(studentCourseDetail.getStudent().getStudentId());
+//        studentCourseDetailDTO.setCourseId(studentCourseDetail.getCourse().getCourseId());
+//        return studentCourseDetailDTO;
+//    }
+//
+//    public StudentCourseDetail getStudentCourseDetail(StudentCourseDetailDTO studentCourseDetailDTO) {
+//        StudentCourseDetail studentCourseDetail = new StudentCourseDetail();
+//        Student student = new Student();
+//        Course course = new Course();
+//        studentCourseDetail.setStudentCourseId(studentCourseDetailDTO.getStudentCourseId());
+//        studentCourseDetail.setEnrollmentDate((studentCourseDetailDTO.getEnrollmentDate()));
+//        studentCourseDetail.setStatus(studentCourseDetailDTO.getStatus());
+//        studentCourseDetail.setGrade(studentCourseDetailDTO.getGrade());
+//        student.setStudentId(studentCourseDetailDTO.getStudentId());
+//        studentCourseDetail.setStudent(student);
+//        course.setCourseId(studentCourseDetailDTO.getCourseId());
+//        studentCourseDetail.setCourse(course);
+//        return studentCourseDetail;
+//    }
 
     public UserDTO getUserDTO(User user) {
         UserDTO userDTO = new UserDTO();

@@ -41,11 +41,20 @@ public class Student {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
-    @OneToMany(
-            mappedBy = "student",
-            cascade = CascadeType.ALL
+//    @OneToMany(
+//            mappedBy = "student",
+//            cascade = CascadeType.ALL
+//    )
+//    private List<StudentCourseDetail> studentCourseDetails;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_course_detail",
+            joinColumns = @JoinColumn(name = "studentId"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    private List<StudentCourseDetail> studentCourseDetails;
+
+    private List<Course> courses;
 
     @OneToMany(
             mappedBy = "student",

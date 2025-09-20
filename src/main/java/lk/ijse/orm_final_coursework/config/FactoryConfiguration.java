@@ -26,7 +26,6 @@ public class FactoryConfiguration {
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(Lessons.class)
                 .addAnnotatedClass(Payment.class)
-                .addAnnotatedClass(StudentCourseDetail.class)
                 .addAnnotatedClass(Student.class)
                 .addAnnotatedClass(User.class);
 

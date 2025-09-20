@@ -38,11 +38,14 @@ public class Course {
     private Instructor instructor;
 //    private String instructorId;
 
-    @OneToMany(
-            mappedBy = "course",
-            cascade = CascadeType.ALL
-    )
-    private List<StudentCourseDetail> studentsCourseDetail;
+//    @OneToMany(
+//            mappedBy = "course",
+//            cascade = CascadeType.ALL
+//    )
+//    private List<StudentCourseDetail> studentsCourseDetail;
+
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students;
 
     @OneToMany(
             mappedBy = "course",
