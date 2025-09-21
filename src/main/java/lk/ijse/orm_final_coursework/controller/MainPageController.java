@@ -5,12 +5,18 @@ import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class MainPageController {
 
+    public AnchorPane ancMainPage;
     @FXML
     private ImageView bigImage;
 
@@ -42,8 +48,10 @@ public class MainPageController {
         scale.play();
     }
 
-    public void btnGoLoginPageOnAction(ActionEvent actionEvent) {
-
+    public void btnGoLoginPageOnAction(ActionEvent actionEvent) throws IOException {
+        ancMainPage.getChildren().clear();
+        Parent load = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        ancMainPage.getChildren().add(load);
     }
 
 //    @FXML

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DisplacementMap?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.FloatMap?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancLoginPage" prefHeight="800.0" prefWidth="1600.0" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageLoginPageController">
+    <children>
+        <HBox layoutX="0.8" layoutY="8.0" prefHeight="791.0" prefWidth="1552.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="8.0">
+            <children>
+                <VBox prefHeight="730.0" prefWidth="535.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
+                    </HBox.margin>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+               <children>
+                  <HBox prefHeight="57.0" prefWidth="350.0">
+                     <children>
+                        <Label onMouseClicked="#goToMainPage" text="HOME">
+                           <HBox.margin>
+                              <Insets left="450.0" top="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="110.0" prefWidth="568.0">
+                     <children>
+                        <Label prefHeight="58.0" prefWidth="236.0" text="LOGIN SYSTEM">
+                           <HBox.margin>
+                              <Insets left="175.0" top="30.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Times New Roman" size="31.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <ImageView fitHeight="262.0" fitWidth="377.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="100.0" left="100.0" right="100.0" top="50.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@../images/images-removebg-preview%20(2).png" />
+                     </image>
+                  </ImageView>
+               </children>
+                </VBox>
+                <VBox prefHeight="742.0" prefWidth="806.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
+                    <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
+                    </HBox.margin>
+                    <effect>
+                        <DropShadow radius="12.75" width="32.0" />
+                    </effect>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets left="350.0" top="50.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@../images/Driving%20School%20Logo%20Design%20Car%20Silhouette.jpeg" />
+                     </image>
+                     <effect>
+                        <DropShadow height="44.39" radius="16.4325" width="23.34" />
+                     </effect>
+                  </ImageView>
+                  <Label prefHeight="42.0" prefWidth="430.0" text="🚗  ELITE DRIVING SCHOOL">
+                     <VBox.margin>
+                        <Insets left="200.0" top="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Times New Roman" size="33.0" />
+                     </font>
+                     <effect>
+                        <DisplacementMap>
+                           <mapData>
+                              <FloatMap />
+                           </mapData>
+                        </DisplacementMap>
+                     </effect>
+                  </Label>
+                  <Label text="MANAGMENT SYSTEM...! 🚗">
+                     <font>
+                        <Font name="Times New Roman" size="33.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="200.0" />
+                     </VBox.margin>
+                     <effect>
+                        <DisplacementMap>
+                           <mapData>
+                              <FloatMap />
+                           </mapData>
+                        </DisplacementMap>
+                     </effect>
+                  </Label>
+                  <Label text="&quot;Our mission is to provide high-quality, safe, and">
+                     <VBox.margin>
+                        <Insets left="300.0" top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="comprehensive driver education to learners of all ages.">
+                     <VBox.margin>
+                        <Insets left="280.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="We aim to empower students with the skills, knowledge, and confidence">
+                     <VBox.margin>
+                        <Insets left="250.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="to become responsible, competent, and courteous drivers. l">
+                     <VBox.margin>
+                        <Insets left="270.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="Through professional instructors, modern training methods, and ">
+                     <VBox.margin>
+                        <Insets left="260.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="a focus on road safety, we strive to create safer roads and ">
+                     <VBox.margin>
+                        <Insets left="280.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="skilled drivers for our community.”">
+                     <VBox.margin>
+                        <Insets left="350.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#btnGoSignUpPage" prefHeight="36.0" prefWidth="159.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #17c0eb;" styleClass="root" stylesheets="@../styles/main.css" text="GET START">
+                     <VBox.margin>
+                        <Insets left="340.0" top="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnGoSigninPage" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #17c0eb;" styleClass="root" stylesheets="@../styles/main.css" text="I Already Have Account">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="300.0" top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+                </VBox>
+            </children>
+            <effect>
+                <DropShadow radius="12.75" width="32.0" />
+            </effect>
+        </HBox>
+    </children>
+</AnchorPane>

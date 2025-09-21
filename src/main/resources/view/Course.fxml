@@ -16,11 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancCoursePage" prefHeight="500.0" prefWidth="1600.0" style="-fx-background-color: #16a085;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageCourseController">
+<AnchorPane fx:id="ancCoursePage" prefHeight="500.0" prefWidth="1600.0" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageCourseController">
     <children>
         <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <VBox prefHeight="658.0" prefWidth="350.0" style="-fx-border-radius: 50; -fx-background-color: #16a085; -fx-background-radius: 20;">
+                <VBox prefHeight="658.0" prefWidth="350.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
                     <HBox.margin>
                         <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
                     </HBox.margin>
@@ -241,7 +241,7 @@
                         <DropShadow />
                     </effect>
                 </VBox>
-                <VBox prefHeight="20.0" prefWidth="970.0" style="-fx-background-color: #16a085; -fx-background-radius: 20; -fx-border-radius: 20;" HBox.hgrow="NEVER">
+                <VBox prefHeight="20.0" prefWidth="970.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
                     </HBox.margin>

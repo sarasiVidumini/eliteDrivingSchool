@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,9 +12,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancMainPage" prefHeight="754.0" prefWidth="1539.0" style="-fx-background-color: #16a085; -fx-border-radius: 50; -fx-border-color: #000000; -fx-background-radius: 50;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.MainPageController">
+<AnchorPane fx:id="ancMainPage" prefHeight="754.0" prefWidth="1539.0" style="-fx-border-radius: 50; -fx-border-color: #000000; -fx-background-radius: 50;" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.MainPageController">
    <children>
-      <VBox layoutX="100.8" layoutY="44.8" prefHeight="691.0" prefWidth="1335.0" style="-fx-background-color: #16a085; -fx-background-radius: 50; -fx-border-color: #000000; -fx-border-radius: 50;" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="104.0" AnchorPane.topAnchor="44.0">
+      <VBox layoutX="101.6" layoutY="47.199999999999996" prefHeight="661.0" prefWidth="1474.0" style="-fx-background-radius: 50; -fx-border-color: #000000; -fx-border-radius: 50;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="46.0">
          <children>
             <ImageView fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
@@ -104,15 +103,15 @@
             </VBox>
             <HBox prefHeight="129.0" prefWidth="1332.0">
                <children>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#btnGoLoginPageOnAction" style="-fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: #00a8ff; -fx-background-color: #33d9b2;" text="&gt;&gt; REGISTER NOW ...!">
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#btnGoLoginPageOnAction" style="-fx-border-radius: 50; -fx-background-radius: 50;" stylesheets="@../styles/mainFirst.css" text="&gt;&gt; START NOW ...!">
                      <font>
                         <Font size="36.0" />
                      </font>
                      <HBox.margin>
-                        <Insets bottom="10.0" left="350.0" top="50.0" />
+                        <Insets bottom="10.0" left="400.0" top="30.0" />
                      </HBox.margin>
                      <effect>
-                        <InnerShadow choke="0.35" height="63.11" radius="38.072500000000005" width="91.18" />
+                        <DropShadow radius="32.81" width="112.24" />
                      </effect>
                   </Button>
                </children>

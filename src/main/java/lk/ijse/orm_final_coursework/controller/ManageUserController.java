@@ -57,6 +57,7 @@ public class ManageUserController implements Initializable {
 
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setCellValueFactories();
@@ -111,100 +112,152 @@ public class ManageUserController implements Initializable {
         lblUserId.setText(nextId);
     }
     public void btnSaveOnAction(ActionEvent actionEvent) {
-        if (!validateInput()) return;
-
         try {
-           String userId = lblUserId.getText();
-           String username = txtUserName.getText();
-           String email = txtEmail.getText();
-           String role = cmbRole.getValue().toString();
-           String password = txtPassword.getText();
-           String confirmPassword = txtConfirmPassword.getText();
-           String status = cmbStatus.getValue().toString();
+            if (!validateInput()) return;
 
-           if (!username.matches(usernameRegex)) {
-               showAlert(Alert.AlertType.ERROR, "Username is invalid : ");
-               return;
-           }
-
-           if (!password.matches(passwordRegex)) {
-               showAlert(Alert.AlertType.ERROR,"Password is invalid : ");
-           }
-
-           if (!password.equals(confirmPassword)) {
-               showAlert(Alert.AlertType.ERROR, "Password is incorrect :");
-           }
-
-           String encryptedPassword = PasswordUtil.hashPassword(password);
-
-           boolean isSaved = userBO.save(new UserDTO(
-                   userId,
-                   username,
-                   email,
-                   encryptedPassword,
-                   role,
-                   status
-           ));
-
-           if (isSaved) {
-               new Alert(Alert.AlertType.INFORMATION, "User Saved successfully!");
-
-           }else {
-               showAlert(Alert.AlertType.ERROR,"Failed to save user");
-           }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR,"Error :" + e.getMessage());
-        }
-    }
-
-    public void btnUpdateOnAction(ActionEvent actionEvent) {
-        if (!validateInput()) return;
-
-        try {
             String userId = lblUserId.getText();
             String username = txtUserName.getText();
-            String email = txtEmail.getText();
-            String role = cmbRole.getValue().toString();
             String password = txtPassword.getText();
             String confirmPassword = txtConfirmPassword.getText();
+            String email = txtEmail.getText();
+
+            // Check ComboBoxes
+            if (cmbRole.getValue() == null || cmbStatus.getValue() == null) {
+                showAlert(Alert.AlertType.ERROR, "Role or Status must be selected!");
+                return;
+            }
+            String role = cmbRole.getValue().toString();
             String status = cmbStatus.getValue().toString();
 
+            // Username validation
             if (!username.matches(usernameRegex)) {
-                showAlert(Alert.AlertType.ERROR, "Username is invalid : ");
+                showAlert(Alert.AlertType.ERROR, "Username is invalid!");
                 return;
             }
 
+            // Password validation
             if (!password.matches(passwordRegex)) {
-                showAlert(Alert.AlertType.ERROR,"Password is invalid : ");
+                showAlert(Alert.AlertType.ERROR,"Password must be at least 8 characters!");
+                return;
             }
 
+            // Confirm password check
             if (!password.equals(confirmPassword)) {
-                showAlert(Alert.AlertType.ERROR, "Password is incorrect :");
+                showAlert(Alert.AlertType.ERROR, "Passwords do not match!");
+                return;
             }
 
+            // Hash the password
             String encryptedPassword = PasswordUtil.hashPassword(password);
 
+            // Save user
+            boolean isSaved = userBO.save(new UserDTO(
+                    userId,
+                    username,
+                    encryptedPassword,
+                    role,
+                    email,
+                    status
+            ));
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "User saved successfully!").show();
+
+                // Clear input fields
+                txtUserName.clear();
+                txtPassword.clear();
+                txtConfirmPassword.clear();
+                txtEmail.clear();
+                cmbRole.getSelectionModel().clearSelection();
+                cmbStatus.getSelectionModel().clearSelection();
+
+                // Refresh the TableView
+                loadAllUsers();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR,"Failed to save user").show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Error: " + e.getMessage());
+        }
+    }
+
+
+    public void btnUpdateOnAction(ActionEvent actionEvent) {
+        try {
+            if (!validateInput()) return;
+
+            String userId = lblUserId.getText(); // ID of the user to update
+            String username = txtUserName.getText();
+            String password = txtPassword.getText();
+            String confirmPassword = txtConfirmPassword.getText();
+            String email = txtEmail.getText();
+
+            // Check ComboBoxes
+            if (cmbRole.getValue() == null || cmbStatus.getValue() == null) {
+                showAlert(Alert.AlertType.ERROR, "Role or Status must be selected!");
+                return;
+            }
+            String role = cmbRole.getValue().toString();
+            String status = cmbStatus.getValue().toString();
+
+            // Username validation
+            if (!username.matches(usernameRegex)) {
+                showAlert(Alert.AlertType.ERROR, "Username is invalid!");
+                return;
+            }
+
+            // Password validation
+            if (!password.matches(passwordRegex)) {
+                showAlert(Alert.AlertType.ERROR,"Password must be at least 8 characters!");
+                return;
+            }
+
+            // Confirm password check
+            if (!password.equals(confirmPassword)) {
+                showAlert(Alert.AlertType.ERROR, "Passwords do not match!");
+                return;
+            }
+
+            // Hash the password
+            String encryptedPassword = PasswordUtil.hashPassword(password);
+
+            // Update user
             boolean isUpdated = userBO.update(new UserDTO(
                     userId,
                     username,
-                    email,
                     encryptedPassword,
                     role,
+                    email,
                     status
             ));
 
             if (isUpdated) {
-                new Alert(Alert.AlertType.INFORMATION, "User Updated successfully!");
+                new Alert(Alert.AlertType.INFORMATION, "User updated successfully!").show();
 
-            }else {
-                showAlert(Alert.AlertType.ERROR,"Failed to update user");
+                // Clear input fields
+                txtUserName.clear();
+                txtPassword.clear();
+                txtConfirmPassword.clear();
+                txtEmail.clear();
+                cmbRole.getSelectionModel().clearSelection();
+                cmbStatus.getSelectionModel().clearSelection();
+
+                // Refresh the TableView
+                loadAllUsers();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR,"Failed to update user").show();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR,"Error :" + e.getMessage());
+            showAlert(Alert.AlertType.ERROR,"Error: " + e.getMessage());
         }
     }
+
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {
         String id  = lblUserId.getText();
