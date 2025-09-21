@@ -23,7 +23,7 @@ public class ManageLoginPageController {
     }
 
     public void btnGoSigninPage(ActionEvent actionEvent) {
-
+        navigateTo("/view/Signin.fxml");
     }
 
     private void navigateTo(String path) {

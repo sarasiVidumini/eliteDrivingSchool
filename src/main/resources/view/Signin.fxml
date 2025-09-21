@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancSigningPage" prefHeight="800.0" prefWidth="1600.0" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.SigninController">
+    <children>
+        <HBox layoutX="0.8" layoutY="8.0" prefHeight="791.0" prefWidth="1552.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="8.0">
+            <children>
+                <VBox prefHeight="730.0" prefWidth="535.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
+                    </HBox.margin>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                    <children>
+                        <HBox prefHeight="57.0" prefWidth="350.0">
+                            <children>
+                                <Label onMouseClicked="#goToLoginPage" text="&gt; BACK">
+                                    <HBox.margin>
+                                        <Insets left="10.0" top="20.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="System Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="110.0" prefWidth="568.0">
+                            <children>
+                                <Label prefHeight="58.0" prefWidth="266.0" text="SIGN IN SYSTEM">
+                                    <HBox.margin>
+                                        <Insets left="175.0" top="30.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="Times New Roman" size="31.0" />
+                                    </font>
+                                    <effect>
+                                        <DropShadow />
+                                    </effect>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="40.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <ImageView fitHeight="394.0" fitWidth="346.0" pickOnBounds="true" preserveRatio="true">
+                            <VBox.margin>
+                                <Insets bottom="100.0" left="100.0" right="100.0" top="20.0" />
+                            </VBox.margin>
+                            <image>
+                                <Image url="@../images/user-avatar-with-check-mark-icon-admin-icon-technology-icon-logo-emblem-yellow-meter-png-clipart-removebg-preview.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </VBox>
+                <VBox prefHeight="742.0" prefWidth="806.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
+                    <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
+                    </HBox.margin>
+                    <effect>
+                        <DropShadow radius="12.75" width="32.0" />
+                    </effect>
+                    <children>
+                        <HBox prefHeight="69.0" prefWidth="806.0">
+                            <children>
+                                <Label text="Login Your  Account..!">
+                                    <HBox.margin>
+                                        <Insets left="250.0" top="20.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="Times New Roman" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                        </HBox>
+                        <ImageView fitHeight="134.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+                            <VBox.margin>
+                                <Insets left="350.0" />
+                            </VBox.margin>
+                            <image>
+                                <Image url="@../images/new_user-removebg-preview.png" />
+                            </image>
+                        </ImageView>
+                  <Label layoutX="360.0" layoutY="406.0" text="- User Name -">
+                     <VBox.margin>
+                        <Insets left="350.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                        <TextField fx:id="txtUserName" promptText="Enter User Name" style="-fx-border-radius: 20; -fx-background-radius: 20;">
+                            <VBox.margin>
+                                <Insets left="200.0" right="200.0" top="20.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <Label layoutX="360.0" layoutY="130.0" text="- Email -">
+                            <VBox.margin>
+                                <Insets left="350.0" top="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtEmail" promptText="Enter Your Email For Verify You" style="-fx-border-radius: 20; -fx-background-radius: 20;">
+                            <VBox.margin>
+                                <Insets left="200.0" right="200.0" top="15.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <Button fx:id="btnGotIt" mnemonicParsing="false" onAction="#btnGoDashBoardOnAction" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #2ed573;" text="GOT IT">
+                            <VBox.margin>
+                                <Insets left="300.0" top="50.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font size="30.0" />
+                            </font>
+                            <graphic>
+                                <ImageView fitHeight="42.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/black_tik-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <ImageView fitHeight="125.0" fitWidth="181.0" pickOnBounds="true" preserveRatio="true">
+                            <VBox.margin>
+                                <Insets left="670.0" top="100.0" />
+                            </VBox.margin>
+                            <image>
+                                <Image url="@../images/Driving_School_Logo_Design_Car_Silhouette-removebg-preview.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </VBox>
+            </children>
+            <effect>
+                <DropShadow radius="12.75" width="32.0" />
+            </effect>
+        </HBox>
+    </children>
+</AnchorPane>

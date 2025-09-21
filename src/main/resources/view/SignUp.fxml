@@ -27,7 +27,7 @@
                     <children>
                         <HBox prefHeight="57.0" prefWidth="350.0">
                             <children>
-                                <Label onMouseClicked="#goToMainPage" text="&gt; BACK">
+                                <Label onMouseClicked="#goToLoginPage" text="&gt; BACK">
                                     <HBox.margin>
                                         <Insets left="10.0" top="20.0" />
                                     </HBox.margin>
@@ -63,7 +63,7 @@
                                 <Image url="@../images/user_account-removebg-preview.png" />
                             </image>
                         </ImageView>
-                  <Button mnemonicParsing="false" onAction="#btnGoDashBoardOnAction" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #2ed573;" text="GOT IT">
+                  <Button fx:id="btnGotIt" mnemonicParsing="false" onAction="#btnGoDashBoardOnAction" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #2ed573;" text="GOT IT">
                      <VBox.margin>
                         <Insets left="350.0" />
                      </VBox.margin>

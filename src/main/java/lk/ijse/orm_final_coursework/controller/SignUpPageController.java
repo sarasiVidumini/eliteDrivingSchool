@@ -74,8 +74,8 @@ public class SignUpPageController {
         btnGotIt.setDisable(!isValidUserName && !isValidPassword && !isValidConfirmPassword && !isValidEmail);
     }
 
-    public void goToMainPage(MouseEvent mouseEvent) {
-        navigateTo("/view/MainPage.fxml");
+    public void goToLoginPage(MouseEvent mouseEvent) {
+        navigateTo("/view/Login.fxml");
 
     }
 
