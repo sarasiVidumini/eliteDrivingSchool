@@ -12,8 +12,12 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.UserBO;
+import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.SQLUtil;
 import lk.ijse.orm_final_coursework.dto.UserDTO;
+import lk.ijse.orm_final_coursework.entity.User;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.sql.ResultSet;
 import java.util.regex.Pattern;
@@ -83,26 +87,24 @@ public class SignUpPageController {
         String inputUserName = txtUserName.getText();
         String inputPassword = txtPassword.getText();
         String inputConfirmPassword = txtConfirmPassword.getText();
-        String chooseRole = cmbRole.getValue().toString();
+        String chooseRole = cmbRole.getValue() != null ? cmbRole.getValue().toString() : "";
         String inputEmail = txtEmail.getText();
-        String chooseStatus = cmbStatus.getValue().toString();
+        String chooseStatus = cmbStatus.getValue() != null ? cmbStatus.getValue().toString() : "";
 
-        if (inputUserName.isEmpty() || inputPassword.isEmpty() || inputConfirmPassword.isEmpty() || chooseRole.isEmpty() || chooseStatus.isEmpty()) {
+
+        if (inputUserName.isEmpty() || inputPassword.isEmpty() || inputConfirmPassword.isEmpty()
+                || chooseRole.isEmpty() || chooseStatus.isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please fill out all fields.").show();
             return;
         }
 
         if (!inputUserName.matches(usernameRegex)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter  a Valid User Name").show();
+            new Alert(Alert.AlertType.ERROR, "Please enter a valid User Name").show();
             return;
         }
 
         if (!inputPassword.matches(passwordRegex)) {
             new Alert(Alert.AlertType.ERROR, "Please enter a valid password").show();
-        }
-
-        if (!inputConfirmPassword.matches(inputConfirmPassword)) {
-            new Alert(Alert.AlertType.ERROR, "Please reenter a valid password").show();
             return;
         }
 
@@ -111,15 +113,23 @@ public class SignUpPageController {
             return;
         }
 
-        try {
-            ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE userName = ? OR password = ? OR email = ?" , inputUserName , inputPassword , inputEmail);
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            String hql = "FROM User u WHERE u.userName = :userName OR u.password = :password OR u.email = :email";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("userName", inputUserName);
+            query.setParameter("password", inputPassword);
+            query.setParameter("email", inputEmail);
 
-            if (resultSet.next()){
-             new Alert(Alert.AlertType.CONFIRMATION, "User Already Exits").show();
-             return;
+            User existingUser = query.uniqueResult();
+
+            if (existingUser != null) {
+                new Alert(Alert.AlertType.WARNING, "User already exists").show();
+                return;
             }
 
+
             String userId = userBO.getNextId();
+
 
             boolean isSaved = userBO.save(new UserDTO(
                     userId,
@@ -130,19 +140,24 @@ public class SignUpPageController {
                     chooseStatus
             ));
 
-            if (isSaved){
+            if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "User has been created").show();
-            }else {
+
+                navigateTo("/view/DashBoard.fxml");
+
+            } else {
                 new Alert(Alert.AlertType.ERROR, "User could not be created").show();
             }
-        }catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR,"Failed to load role. "+ e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Failed to create user. " + e.getMessage());
         }
 
-        navigateTo("/view/DasBoard.fxml");
+
 
     }
+
 
 
     private void showAlert(Alert.AlertType alertType , String message) {

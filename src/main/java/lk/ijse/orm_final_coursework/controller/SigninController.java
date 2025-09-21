@@ -6,7 +6,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.db.DBConnection;
+import lk.ijse.orm_final_coursework.entity.User;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,25 +43,22 @@ public class SigninController {
         }
     }
 
-    private boolean validateLogin(String name , String email) {
-        String sql = "SELECT * FROM user WHERE username = ? AND email = ?";
+    private boolean validateLogin(String name, String email) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            String hql = "FROM User u WHERE u.userName = :userName AND u.email = :email";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("userName", name);
+            query.setParameter("email", email);
 
-        try(Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, name);
-            statement.setString(2, email);
-
-            ResultSet rs = statement.executeQuery();
-            return rs.next();
+            User user = query.uniqueResult(); // null if no match
+            return user != null;
 
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR,"Database Error" , "Please try again" + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Please try again: " + e.getMessage());
             return false;
         }
-
-
     }
+
 
     private void navigateTo(String path) {
         try {

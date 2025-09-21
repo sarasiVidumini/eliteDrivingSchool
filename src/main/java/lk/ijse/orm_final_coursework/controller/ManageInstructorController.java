@@ -197,13 +197,7 @@ public class ManageInstructorController implements Initializable {
     }
 
     public void goToDashboard(MouseEvent mouseEvent)throws IOException {
-        try {
-            Stage stage = (Stage) ancInstructorPage.getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
-            stage.centerOnScreen();
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Navigation error: " + e.getMessage());
-        }
+        navigateTo("/view/DashBoard.fxml");
     }
 
     private void resetForm() {
@@ -239,6 +233,22 @@ public class ManageInstructorController implements Initializable {
 
     private void showAlert(Alert.AlertType type, String message) {
         new Alert(type, message).show();
+    }
+
+    private void navigateTo(String path) {
+        try {
+            ancInstructorPage.getChildren().clear();
+
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancInstructorPage.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancInstructorPage.heightProperty());
+
+            ancInstructorPage.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
     }
 
     public void search(KeyEvent keyEvent) {

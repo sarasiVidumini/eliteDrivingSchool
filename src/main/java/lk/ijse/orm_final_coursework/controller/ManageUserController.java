@@ -305,12 +305,7 @@ public class ManageUserController implements Initializable {
     }
 
     public void goToDashboard(MouseEvent mouseEvent) {
-        try {
-            Stage stage = (Stage) ancUserPage.getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR,"Navigation error : " + e.getMessage());
-        }
+       navigateTo("/view/DashBoard.fxml");
     }
 
     private void resetForm() {
@@ -336,6 +331,22 @@ public class ManageUserController implements Initializable {
 
     private void showAlert(Alert.AlertType alertType , String message) {
         new Alert(alertType , message).show();
+    }
+
+    private void navigateTo(String path) {
+        try {
+            ancUserPage.getChildren().clear();
+
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancUserPage.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancUserPage.heightProperty());
+
+            ancUserPage.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
     }
 
     public void search(KeyEvent keyEvent) {

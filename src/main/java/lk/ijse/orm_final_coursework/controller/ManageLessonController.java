@@ -206,13 +206,7 @@ public class ManageLessonController implements Initializable {
     }
 
     public void goToDashboard(MouseEvent mouseEvent) throws IOException {
-        try {
-            Stage stage = (Stage) ancLessonsPage.getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
-            stage.centerOnScreen();
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR,"Navigation error : "+e.getMessage());
-        }
+       navigateTo("/view/DashBoard.fxml");
     }
 
     private void resetForm() {
@@ -229,6 +223,22 @@ public class ManageLessonController implements Initializable {
 
     private void showAlert(Alert.AlertType type, String message) {
         new Alert(type, message).show();
+    }
+
+    private void navigateTo(String path) {
+        try {
+            ancLessonsPage.getChildren().clear();
+
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancLessonsPage.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancLessonsPage.heightProperty());
+
+            ancLessonsPage.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
     }
 
     public void search(KeyEvent keyEvent) {

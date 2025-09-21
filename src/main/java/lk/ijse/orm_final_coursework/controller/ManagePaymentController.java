@@ -195,13 +195,7 @@ public class ManagePaymentController implements Initializable {
     }
 
     public void goToDashboard(MouseEvent mouseEvent) throws IOException {
-        try {
-            Stage stage = (Stage) ancPaymentPage.getScene().getWindow();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
-            stage.centerOnScreen();
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR,"Navigation Error : " + e.getMessage());
-        }
+       navigateTo("/view/DashBoard.fxml");
     }
 
     private void resetForm() {
@@ -216,6 +210,22 @@ public class ManagePaymentController implements Initializable {
 
     private void showAlert(Alert.AlertType type, String message) {
         new Alert(type, message).show();
+    }
+
+    private void navigateTo(String path) {
+        try {
+            ancPaymentPage.getChildren().clear();
+
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancPaymentPage.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancPaymentPage.heightProperty());
+
+            ancPaymentPage.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
     }
 
     public void search(KeyEvent keyEvent) {
