@@ -18,6 +18,7 @@ public class ManageLoginPageController {
     }
 
     public void btnGoSignUpPage(ActionEvent actionEvent) {
+        navigateTo("/view/SignUp.fxml");
 
     }
 
