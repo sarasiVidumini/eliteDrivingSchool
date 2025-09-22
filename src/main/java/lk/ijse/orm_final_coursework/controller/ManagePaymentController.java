@@ -37,6 +37,7 @@ public class ManagePaymentController implements Initializable {
     public ComboBox cmbStatus;
     public TextField txtStudentId;
 
+
     public Button btnSave;
     public Button btnUpdate;
     public Button btnDelete;
@@ -71,6 +72,7 @@ public class ManagePaymentController implements Initializable {
         colPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
+
 
         try {
             cmbPaymentMethod.setItems(FXCollections.observableArrayList("Credit Card" , "Cash"));
