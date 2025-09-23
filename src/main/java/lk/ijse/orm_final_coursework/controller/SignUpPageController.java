@@ -3,16 +3,19 @@ package lk.ijse.orm_final_coursework.controller;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.UserBO;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
+import lk.ijse.orm_final_coursework.controller.util.RoleManager;
 import lk.ijse.orm_final_coursework.dao.SQLUtil;
 import lk.ijse.orm_final_coursework.dto.UserDTO;
 import lk.ijse.orm_final_coursework.entity.User;
@@ -79,7 +82,7 @@ public class SignUpPageController {
     }
 
     public void goToLoginPage(MouseEvent mouseEvent) {
-        navigateTo("/view/Login.fxml");
+        loadPage("/view/Login.fxml");
 
     }
 
@@ -94,6 +97,7 @@ public class SignUpPageController {
 
         if (inputUserName.isEmpty() || inputPassword.isEmpty() || inputConfirmPassword.isEmpty()
                 || chooseRole.isEmpty() || chooseStatus.isEmpty()) {
+            btnGotIt.setDisable(true);
             new Alert(Alert.AlertType.ERROR, "Please fill out all fields.").show();
             return;
         }
@@ -143,7 +147,20 @@ public class SignUpPageController {
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "User has been created").show();
 
-                navigateTo("/view/DashBoard.fxml");
+                RoleManager.setUserRole(chooseRole);
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashBoard.fxml"));
+                AnchorPane root = loader.load();
+
+
+                DashBoardPageController controller = loader.getController();
+                controller.setUserRole(chooseRole);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+                ((Stage) ancSignUpPage.getScene().getWindow()).close();
 
             } else {
                 new Alert(Alert.AlertType.ERROR, "User could not be created").show();
@@ -164,19 +181,16 @@ public class SignUpPageController {
         new Alert(alertType , message).show();
     }
 
-    private void navigateTo(String path) {
+    private void loadPage(String path) {
         try {
             ancSignUpPage.getChildren().clear();
-
             AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
-
             anchorPane.prefWidthProperty().bind(ancSignUpPage.widthProperty());
             anchorPane.prefHeightProperty().bind(ancSignUpPage.heightProperty());
-
             ancSignUpPage.getChildren().add(anchorPane);
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Page not found..!");
         }
     }
 
