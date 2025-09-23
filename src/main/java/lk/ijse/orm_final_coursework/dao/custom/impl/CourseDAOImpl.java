@@ -33,7 +33,6 @@ public class CourseDAOImpl implements CourseDAO {
         }
     }
 
-    // Get all courses (lazy-safe for enrollmentCount)
     @Override
     public List<Course> getAll() {
         try (Session session = factoryConfiguration.getSession()) {
@@ -176,5 +175,12 @@ public class CourseDAOImpl implements CourseDAO {
             if (tx != null) tx.rollback();
             throw e;
         }
+    }
+
+    public Course get(String id) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Course course = session.get(Course.class, id);
+        session.close();
+        return course;
     }
 }

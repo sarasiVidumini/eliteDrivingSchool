@@ -2,8 +2,10 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.InstructorDAO;
+import lk.ijse.orm_final_coursework.entity.Course;
 import lk.ijse.orm_final_coursework.entity.Instructor;
 import lk.ijse.orm_final_coursework.entity.Student;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -24,7 +26,7 @@ public class InstructorDAOImpl implements InstructorDAO {
                 .uniqueResult();
 
         if (lastId != null) {
-            int num = Integer.parseInt(lastId.substring(1)); // remove 'I' prefix
+            int num = Integer.parseInt(lastId.substring(1));
             num++;
             return String.format("I%03d", num);
         } else {
@@ -153,4 +155,52 @@ public class InstructorDAOImpl implements InstructorDAO {
         }
     }
 
+    @Override
+    public List<Course> getCoursesByInstructor(String instructorId) throws SQLException {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction tx = null;
+        List<Course> courses = null;
+
+        try {
+            tx = session.beginTransaction();
+            courses = session.createQuery(
+                    "FROM Course c WHERE c.instructor.instructorId = :instructorId",
+                    Course.class
+            ).setParameter("instructorId", instructorId).list();
+
+            for (Course c : courses) {
+                Hibernate.initialize(c.getStudents());
+            }
+
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+        return courses;
+    }
+
+
+    public Instructor get(String instructorId) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = null;
+        Instructor instructor = null;
+
+        try {
+            transaction = session.beginTransaction();
+            instructor = session.get(Instructor.class, instructorId);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+
+        return instructor;
+    }
+
 }
+

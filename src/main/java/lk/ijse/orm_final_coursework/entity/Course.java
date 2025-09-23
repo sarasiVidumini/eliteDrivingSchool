@@ -33,8 +33,8 @@ public class Course {
     private String description;
 
 
-    @ManyToOne
-    @JoinColumn(name = "instructorId" , referencedColumnName = "instructorId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instructorId" , referencedColumnName = "instructorId" , nullable = true)
     private Instructor instructor;
 //    private String instructorId;
 
@@ -60,4 +60,8 @@ public class Course {
 
 //    public Object getInstructorId() {
 //    }
+
+    public String getInstructorId() {
+        return instructor != null ? instructor.getInstructorId() : null;
+    }
 }

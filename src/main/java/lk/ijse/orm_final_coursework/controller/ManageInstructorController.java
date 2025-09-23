@@ -10,17 +10,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.InstructorBO;
-import lk.ijse.orm_final_coursework.dto.CourseDTO;
 import lk.ijse.orm_final_coursework.dto.InstructorDTO;
 import lk.ijse.orm_final_coursework.dto.tm.InstructorTM;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -45,14 +44,13 @@ public class ManageInstructorController implements Initializable {
     public Button btnUpdate;
     public Button btnSave;
     public TextField txtAvailabilityShedule;
-    public ComboBox cmbSpecialization;
+    public ComboBox<String> cmbSpecialization;
     public TextField txtPhone;
     public TextField txtEmail;
     public TextField txtLastName;
     public TextField txtFirstName;
     public AnchorPane ancInstructorPage;
     public Label lblInstructorId;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,17 +72,17 @@ public class ManageInstructorController implements Initializable {
         colSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
         colAvailabilityShedule.setCellValueFactory(new PropertyValueFactory<>("availability_schedule"));
 
-        try {
-            cmbSpecialization.setItems(FXCollections.observableArrayList("Light Vehicle" , "Motorcycle" , "Heavy Vehicle" , "Defensive Driving" , "Special Needs Training" , "Commercial License Training" , "Theory Instructor"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR,"Failed to load status : " + e.getMessage());
-        }
+        cmbSpecialization.setItems(FXCollections.observableArrayList(
+                "Light Vehicle" , "Motorcycle" , "Heavy Vehicle" ,
+                "Defensive Driving" , "Special Needs Training" ,
+                "Commercial License Training" , "Theory Instructor"
+        ));
     }
 
     private void loadAllInstructors() throws Exception {
+        List<InstructorDTO> instructors = instructorBO.getAll();
         tblInstructors.setItems(FXCollections.observableArrayList(
-                instructorBO.getAll().stream().map(dto -> new InstructorTM(
+                instructors.stream().map(dto -> new InstructorTM(
                         dto.getInstructorId(),
                         dto.getFirstName(),
                         dto.getLastName(),
@@ -97,8 +95,7 @@ public class ManageInstructorController implements Initializable {
     }
 
     private void loadNextId() throws Exception {
-        String nextId = instructorBO.getNextId();
-        lblInstructorId.setText(nextId);
+        lblInstructorId.setText(instructorBO.getNextId());
     }
 
     public void btnSaveOnAction(ActionEvent actionEvent) {
@@ -106,14 +103,14 @@ public class ManageInstructorController implements Initializable {
 
         try {
             boolean isSaved = instructorBO.save(InstructorDTO.builder()
-                            .instructorId(lblInstructorId.getText())
-                            .firstName(txtFirstName.getText())
-                            .lastName(txtLastName.getText())
-                            .email(txtEmail.getText())
-                            .phone(txtPhone.getText())
-                            .specialization(cmbSpecialization.getValue().toString())
-                            .availability_schedule(txtAvailabilityShedule.getText())
-                            .build());
+                    .instructorId(lblInstructorId.getText())
+                    .firstName(txtFirstName.getText())
+                    .lastName(txtLastName.getText())
+                    .email(txtEmail.getText())
+                    .phone(txtPhone.getText())
+                    .specialization(cmbSpecialization.getValue())
+                    .availability_schedule(txtAvailabilityShedule.getText())
+                    .build());
             if (isSaved) {
                 showAlert(Alert.AlertType.INFORMATION, "Instructor saved successfully!");
                 loadAllInstructors();
@@ -131,14 +128,13 @@ public class ManageInstructorController implements Initializable {
         if (!validateInput()) return;
 
         try {
-
             boolean isUpdated = instructorBO.update(InstructorDTO.builder()
                     .instructorId(lblInstructorId.getText())
                     .firstName(txtFirstName.getText())
                     .lastName(txtLastName.getText())
                     .email(txtEmail.getText())
                     .phone(txtPhone.getText())
-                    .specialization(cmbSpecialization.getValue().toString())
+                    .specialization(cmbSpecialization.getValue())
                     .availability_schedule(txtAvailabilityShedule.getText())
                     .build());
             if (isUpdated) {
@@ -198,7 +194,7 @@ public class ManageInstructorController implements Initializable {
         }
     }
 
-    public void goToDashboard(MouseEvent mouseEvent)throws IOException {
+    public void goToDashboard(MouseEvent mouseEvent) throws IOException {
         navigateTo("/view/DashBoard.fxml");
     }
 
@@ -255,49 +251,53 @@ public class ManageInstructorController implements Initializable {
 
     public void search(KeyEvent keyEvent) {
         String search = txtSearch.getText();
-        if (search.isEmpty()) {
-            try {
-                loadAllInstructors();
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Failed to search! : " + e.getMessage());
+        try {
+            List<InstructorDTO> instructorList;
+            if (search.isEmpty()) {
+                instructorList = instructorBO.getAll();
+            } else {
+                instructorList = instructorBO.search(search);
             }
-        }else {
-            try {
-                ArrayList<InstructorDTO> instructorList = (ArrayList<InstructorDTO>) instructorBO.search(search);
-                tblInstructors.setItems(FXCollections.observableArrayList(
-                        instructorList.stream()
-                                .map(instructorDTO -> new InstructorTM(
-                                        instructorDTO.getInstructorId(),
-                                        instructorDTO.getFirstName(),
-                                        instructorDTO.getLastName(),
-                                        instructorDTO.getEmail(),
-                                        instructorDTO.getPhone(),
-                                        instructorDTO.getSpecialization(),
-                                        instructorDTO.getAvailability_schedule()
-                                )).toList()
-                ));
-            }catch (Exception e){
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Failed to search! : " + e.getMessage());
-            }
+            tblInstructors.setItems(FXCollections.observableArrayList(
+                    instructorList.stream()
+                            .map(dto -> new InstructorTM(
+                                    dto.getInstructorId(),
+                                    dto.getFirstName(),
+                                    dto.getLastName(),
+                                    dto.getEmail(),
+                                    dto.getPhone(),
+                                    dto.getSpecialization(),
+                                    dto.getAvailability_schedule()
+                            )).toList()
+            ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Failed to search! : " + e.getMessage());
         }
     }
 
     public void btnAssignCourseOnAction(ActionEvent event) {
         try {
-            InstructorTM selected = tblInstructors.getSelectionModel().getSelectedItem();
-            if (selected == null) return;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AssignCoursePopup.fxml"));
+            AnchorPane pane = loader.load();
 
-            String instructorId = selected.getInstructorId();
-            String courseId = "C001"; // Example, should be taken from a ComboBox in UI
-            instructorBO.assignCourse(instructorId, courseId);
+            ManageAssignCoursePopup controller = loader.getController();
+            String instructorId = lblInstructorId.getText();
+            if (instructorId == null || instructorId.isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Please select an instructor first!");
+                return;
+            }
+            controller.setInstructorId(instructorId);
 
-            List<CourseDTO> courses = instructorBO.getInstructorCourses(instructorId);
-            new Alert(Alert.AlertType.INFORMATION, "Assigned Courses: " + courses).show();
+            Stage stage = new Stage();
+            stage.setTitle("Assign Courses to Instructor");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(pane));
+            stage.show();
 
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Failed to assign course: " + e.getMessage()).show();
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Failed to open Assign Courses popup: " + e.getMessage());
         }
     }
 }

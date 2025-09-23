@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CourseDAO extends CrudDAO<Course> {
     public int getEnrollmentCount(String courseId) throws Exception;
     public boolean enrollStudent(String courseId, String studentId) throws Exception;
+    public Course get(String id) throws Exception;
 }

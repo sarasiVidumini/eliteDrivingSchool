@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class InstructorBOImpl implements InstructorBO {
     private final InstructorDAO instructorDAO = DAOFactory.getInstance().getDAO(DAOTypes.INSTRUCTOR);
@@ -96,19 +97,30 @@ public class InstructorBOImpl implements InstructorBO {
        return instructorDTOS;
     }
 
-    public boolean assignCourse(String instructorId, String courseId) throws SQLException {
-        Instructor instructor = (Instructor) instructorDAO.search(instructorId);
-        Course course = (Course) courseDAO.search(courseId);
-        instructor.getCourses().add(course);
-        return instructorDAO.update(instructor);
+    public boolean assignCourse(String instructorId, String courseId) throws Exception {
+        Course course = courseDAO.get(courseId);
+        if (course != null) {
+            Instructor instructor = instructorDAO.get(instructorId);
+            if (instructor == null) {
+                throw new RuntimeException("Instructor not found with ID: " + instructorId);
+            }
+
+            course.setInstructor(instructor);
+            return courseDAO.update(course);
+        }
+        return false;
     }
 
-    public List<CourseDTO> getInstructorCourses(String instructorId) throws SQLException {
-        Instructor instructor = (Instructor) instructorDAO.search(instructorId);
-        List<CourseDTO> dtoList = new ArrayList<>();
-        for(Course c : instructor.getCourses()){
-           dtoList.add(converter.getCourseDTO(c));
-        }
-        return dtoList;
+
+    @Override
+    public List<CourseDTO> getCoursesByInstructor(String instructorId) throws SQLException {
+        List<Course> courses = instructorDAO.getCoursesByInstructor(instructorId);
+        return courses.stream().map(converter::getCourseDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public int getEnrollmentCount(String courseId) throws Exception {
+       return courseDAO.getEnrollmentCount(courseId);
+    }
+
 }
