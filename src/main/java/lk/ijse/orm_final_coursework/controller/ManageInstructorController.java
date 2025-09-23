@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.InstructorBO;
+import lk.ijse.orm_final_coursework.dto.CourseDTO;
 import lk.ijse.orm_final_coursework.dto.InstructorDTO;
 import lk.ijse.orm_final_coursework.dto.tm.InstructorTM;
 
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -279,6 +281,23 @@ public class ManageInstructorController implements Initializable {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Failed to search! : " + e.getMessage());
             }
+        }
+    }
+
+    public void btnAssignCourseOnAction(ActionEvent event) {
+        try {
+            InstructorTM selected = tblInstructors.getSelectionModel().getSelectedItem();
+            if (selected == null) return;
+
+            String instructorId = selected.getInstructorId();
+            String courseId = "C001"; // Example, should be taken from a ComboBox in UI
+            instructorBO.assignCourse(instructorId, courseId);
+
+            List<CourseDTO> courses = instructorBO.getInstructorCourses(instructorId);
+            new Alert(Alert.AlertType.INFORMATION, "Assigned Courses: " + courses).show();
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to assign course: " + e.getMessage()).show();
         }
     }
 }

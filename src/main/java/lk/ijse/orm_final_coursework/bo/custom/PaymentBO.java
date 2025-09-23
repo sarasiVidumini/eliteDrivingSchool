@@ -22,4 +22,6 @@ public interface PaymentBO extends SuperBO {
     public Optional<PaymentDTO> findById(String id) throws SQLException;
     public List<PaymentDTO> search(String search) throws SQLException;
     public List<String> getAllIds() throws SQLException;
+    public boolean processPayment(PaymentDTO paymentDTO) throws SQLException;
+    public List<PaymentDTO> getStudentPayments(String search) throws SQLException;
 }

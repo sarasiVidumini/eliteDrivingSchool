@@ -1,6 +1,7 @@
 package lk.ijse.orm_final_coursework.bo.custom;
 
 import lk.ijse.orm_final_coursework.bo.SuperBO;
+import lk.ijse.orm_final_coursework.dto.CourseDTO;
 import lk.ijse.orm_final_coursework.dto.InstructorDTO;
 import lk.ijse.orm_final_coursework.entity.Instructor;
 import org.hibernate.Session;
@@ -22,5 +23,7 @@ public interface InstructorBO extends SuperBO {
     public List<String> getAllIds()  throws SQLException;
     public Optional<InstructorDTO> findById(String id)  throws SQLException;
     public List<InstructorDTO> search(String search)  throws SQLException;
+    public boolean assignCourse(String instructorId, String courseId)  throws SQLException;
+    public List<CourseDTO> getInstructorCourses(String instructorId)  throws SQLException;
 
 }

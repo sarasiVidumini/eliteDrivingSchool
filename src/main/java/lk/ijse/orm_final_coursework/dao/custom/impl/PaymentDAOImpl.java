@@ -160,4 +160,14 @@ public class PaymentDAOImpl implements PaymentDAO {
             session.close();
         }
     }
+
+    public List<Payment> getByStudentId(String studentId) throws SQLException {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Query<Payment> query = session.createQuery(
+                "FROM Payment p WHERE p.student.studentId = :studentId", Payment.class);
+        query.setParameter("studentId", studentId);
+        List<Payment> list = query.list();
+        session.close();
+        return list;
+    }
 }

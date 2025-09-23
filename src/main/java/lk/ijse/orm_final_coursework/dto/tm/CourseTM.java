@@ -17,4 +17,6 @@ public class CourseTM {
     private String description;
     private String instructorId;
 
+    private int enrollmentCount;
+
 }

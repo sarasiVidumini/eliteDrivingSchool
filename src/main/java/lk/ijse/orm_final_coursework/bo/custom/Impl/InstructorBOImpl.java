@@ -1,13 +1,17 @@
 package lk.ijse.orm_final_coursework.bo.custom.Impl;
 
+import lk.ijse.orm_final_coursework.bo.custom.CourseBO;
 import lk.ijse.orm_final_coursework.bo.custom.InstructorBO;
 import lk.ijse.orm_final_coursework.bo.exceptionHandling.DuplicateException;
 import lk.ijse.orm_final_coursework.bo.exceptionHandling.NotFoundException;
 import lk.ijse.orm_final_coursework.bo.utils.EntityDTOConverter;
 import lk.ijse.orm_final_coursework.dao.DAOFactory;
 import lk.ijse.orm_final_coursework.dao.DAOTypes;
+import lk.ijse.orm_final_coursework.dao.custom.CourseDAO;
 import lk.ijse.orm_final_coursework.dao.custom.InstructorDAO;
+import lk.ijse.orm_final_coursework.dto.CourseDTO;
 import lk.ijse.orm_final_coursework.dto.InstructorDTO;
+import lk.ijse.orm_final_coursework.entity.Course;
 import lk.ijse.orm_final_coursework.entity.Instructor;
 import org.hibernate.Session;
 
@@ -18,6 +22,7 @@ import java.util.Optional;
 
 public class InstructorBOImpl implements InstructorBO {
     private final InstructorDAO instructorDAO = DAOFactory.getInstance().getDAO(DAOTypes.INSTRUCTOR);
+    private final CourseDAO courseDAO = DAOFactory.getInstance().getDAO(DAOTypes.COURSE);
     private final EntityDTOConverter converter = new EntityDTOConverter();
     @Override
     public String getNextId() throws SQLException {
@@ -89,5 +94,21 @@ public class InstructorBOImpl implements InstructorBO {
            instructorDTOS.add(converter.getInstructorDTO(instructor));
        }
        return instructorDTOS;
+    }
+
+    public boolean assignCourse(String instructorId, String courseId) throws SQLException {
+        Instructor instructor = (Instructor) instructorDAO.search(instructorId);
+        Course course = (Course) courseDAO.search(courseId);
+        instructor.getCourses().add(course);
+        return instructorDAO.update(instructor);
+    }
+
+    public List<CourseDTO> getInstructorCourses(String instructorId) throws SQLException {
+        Instructor instructor = (Instructor) instructorDAO.search(instructorId);
+        List<CourseDTO> dtoList = new ArrayList<>();
+        for(Course c : instructor.getCourses()){
+           dtoList.add(converter.getCourseDTO(c));
+        }
+        return dtoList;
     }
 }

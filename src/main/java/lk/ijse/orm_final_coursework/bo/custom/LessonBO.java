@@ -22,4 +22,6 @@ public interface LessonBO extends SuperBO {
     public Optional<LessonsDTO> findById(String id) throws SQLException;
     public List<LessonsDTO> search(String search) throws SQLException;
     public List<String> getAllIds() throws SQLException;
+    public boolean scheduleLesson(LessonsDTO lessonsDTO) throws SQLException;
+    public boolean rescheduleLesson(String lessonId , LessonsDTO dto) throws SQLException;
 }

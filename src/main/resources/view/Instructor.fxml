@@ -294,6 +294,11 @@
                                 <Image url="@../images/download%20(6).png" />
                             </image>
                         </ImageView>
+                  <Button fx:id="btnAssignCourse" mnemonicParsing="false" onAction="#btnAssignCourseOnAction" style="-fx-background-color: #78e08f;" text="+ Assign Courses">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Button>
                         <TableView fx:id="tblInstructors" onMouseClicked="#OnClickedTable" prefHeight="453.0" prefWidth="886.0" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="colInstructorId" prefWidth="105.59994697570801" text="instructorId" />

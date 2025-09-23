@@ -248,12 +248,12 @@
                     <children>
                         <BorderPane prefHeight="62.0" prefWidth="970.0">
                             <center>
-                                <Label prefHeight="58.0" prefWidth="360.0" text="Manage Courses" BorderPane.alignment="CENTER">
+                                <Label prefHeight="58.0" prefWidth="304.0" text="Manage Courses" BorderPane.alignment="CENTER">
                                     <font>
                                         <Font size="40.0" />
                                     </font>
                                     <BorderPane.margin>
-                                        <Insets left="100.0" top="30.0" />
+                                        <Insets left="300.0" top="30.0" />
                                     </BorderPane.margin>
                                     <effect>
                                         <DropShadow />
@@ -270,23 +270,63 @@
                         </BorderPane>
                         <ImageView fitHeight="126.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true">
                             <VBox.margin>
-                                <Insets left="750.0" />
+                                <Insets left="100.0" top="-20.0" />
                             </VBox.margin>
                             <image>
                                 <Image url="@../images/diploma.png" />
                             </image>
                         </ImageView>
+
+                        <VBox prefHeight="228.0" prefWidth="370.0" spacing="15.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #000000;">
+                            <children>
+                                <Label prefHeight="30.0" prefWidth="199.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Enroll Student" textFill="#eb2f06">
+                           <VBox.margin>
+                              <Insets left="100.0" top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="1.0" />
+                           </font></Label>
+
+                                <Label text="Select Student:">
+                           <VBox.margin>
+                              <Insets left="100.0" top="-10.0" />
+                           </VBox.margin></Label>
+                                <ComboBox fx:id="cmbStudentIds" prefHeight="26.0" prefWidth="198.0" promptText="Select Student">
+                           <VBox.margin>
+                              <Insets left="100.0" top="-10.0" />
+                           </VBox.margin></ComboBox>
+
+                                <Label text="Select Course:">
+                           <VBox.margin>
+                              <Insets left="100.0" />
+                           </VBox.margin></Label>
+                                <ComboBox fx:id="cmbCourseIds" prefHeight="26.0" prefWidth="202.0" promptText="Select Course">
+                           <VBox.margin>
+                              <Insets left="100.0" top="-10.0" />
+                           </VBox.margin></ComboBox>
+
+                                <Button fx:id="btnEnrollStudent" onAction="#btnEnrollStudentOnAction" prefHeight="26.0" prefWidth="121.0" style="-fx-background-color: #1e90ff; -fx-text-fill: white;" text="Enroll">
+                           <VBox.margin>
+                              <Insets left="130.0" top="10.0" />
+                           </VBox.margin></Button>
+                            </children>
+                     <VBox.margin>
+                        <Insets left="500.0" right="100.0" top="-60.0" />
+                     </VBox.margin>
+                        </VBox>
+
                         <TableView fx:id="tblCourses" onMouseClicked="#OnClickedTable" prefHeight="453.0" prefWidth="886.0" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colCourseId" prefWidth="105.59994697570801" text="courseId" />
-                                <TableColumn fx:id="colCourseName" minWidth="0.0" prefWidth="185.60002899169922" text="courseName" />
-                                <TableColumn fx:id="colDuration" prefWidth="155.199951171875" text="duration" />
-                                <TableColumn fx:id="colFee" prefWidth="113.60000610351562" text="fee" />
-                                <TableColumn fx:id="colDescription" minWidth="0.0" prefWidth="227.199951171875" text="description" />
-                                <TableColumn fx:id="colInstructorId" prefWidth="148.7999267578125" text="instructorId" />
+                                <TableColumn fx:id="colCourseId" prefWidth="80.00003242492676" text="courseId" />
+                                <TableColumn fx:id="colCourseName" minWidth="0.0" prefWidth="137.60002899169922" text="courseName" />
+                                <TableColumn fx:id="colDuration" prefWidth="157.60003662109375" text="duration" />
+                                <TableColumn fx:id="colFee" prefWidth="127.19992065429688" text="fee" />
+                                <TableColumn fx:id="colDescription" minWidth="0.0" prefWidth="216.0001220703125" text="description" />
+                                <TableColumn fx:id="colInstructorId" prefWidth="102.4000244140625" text="instructorId" />
+                                <TableColumn fx:id="colEnrollmentCount" prefWidth="104.80002441406248" text="enrollmentCount" />
                             </columns>
                             <VBox.margin>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="30.0" />
                             </VBox.margin>
                         </TableView>
                     </children>

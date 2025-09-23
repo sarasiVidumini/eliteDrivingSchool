@@ -5,7 +5,9 @@ import lk.ijse.orm_final_coursework.entity.Lessons;
 import lk.ijse.orm_final_coursework.entity.Payment;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public interface PaymentDAO extends CrudDAO<Payment> {
+    public List<Payment> getByStudentId(String studentId) throws SQLException;
 }

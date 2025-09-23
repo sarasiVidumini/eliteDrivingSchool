@@ -2,34 +2,62 @@ package lk.ijse.orm_final_coursework.bo.utils;
 
 import lk.ijse.orm_final_coursework.dto.*;
 import lk.ijse.orm_final_coursework.entity.*;
+import org.hibernate.Hibernate;
 
 import java.sql.Date;
 
 public class EntityDTOConverter {
 
     public CourseDTO getCourseDTO(Course course) {
+        if (course == null) return null;
+
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setCourseId(course.getCourseId());
         courseDTO.setCourseName(course.getCourseName());
         courseDTO.setDuration(course.getDuration());
         courseDTO.setFee(course.getFee());
         courseDTO.setDescription(course.getDescription());
-        courseDTO.setInstructorId(course.getInstructor().getInstructorId());
+
+
+        if (course.getInstructor() != null) {
+            courseDTO.setInstructorId(course.getInstructor().getInstructorId());
+        }
+
+
+        try {
+            if (course.getStudents() != null) {
+                Hibernate.initialize(course.getStudents());
+                courseDTO.setEnrollmentCount(course.getStudents().size());
+            } else {
+                courseDTO.setEnrollmentCount(0);
+            }
+        } catch (Exception e) {
+            courseDTO.setEnrollmentCount(0);
+        }
+
         return courseDTO;
     }
 
+    // Convert CourseDTO -> Course entity
     public Course getCourse(CourseDTO courseDTO) {
+        if (courseDTO == null) return null;
+
         Course course = new Course();
-        Instructor instructor = new Instructor();
         course.setCourseId(courseDTO.getCourseId());
         course.setCourseName(courseDTO.getCourseName());
         course.setDuration(courseDTO.getDuration());
         course.setFee(courseDTO.getFee());
         course.setDescription(courseDTO.getDescription());
-        instructor.setInstructorId(courseDTO.getInstructorId());
-        course.setInstructor(instructor);
+
+        if (courseDTO.getInstructorId() != null) {
+            Instructor instructor = new Instructor();
+            instructor.setInstructorId(courseDTO.getInstructorId());
+            course.setInstructor(instructor);
+        }
+
         return course;
     }
+
 
     public InstructorDTO getInstructorDTO(Instructor instructor) {
         InstructorDTO instructorDTO = new InstructorDTO();

@@ -23,5 +23,6 @@ public interface CourseBO extends SuperBO {
     public List<String> getAllIds()throws SQLException;
     public Optional<CourseDTO> findById(String id)throws SQLException;
     public List<CourseDTO> search(String search)throws SQLException;
-    public boolean saveNewCourse(CourseDTO courseDTO)throws SQLException;
+    public int getEnrollmentCount(String courseId) throws Exception;
+    public boolean enrollStudent(String courseId, String studentId) throws Exception;
 }

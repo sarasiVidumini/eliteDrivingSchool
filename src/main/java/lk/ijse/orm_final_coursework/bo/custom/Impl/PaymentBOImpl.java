@@ -90,4 +90,22 @@ public class PaymentBOImpl implements PaymentBO {
     public List<String> getAllIds() throws SQLException {
         return paymentDAO.getAllIds();
     }
+
+    public boolean processPayment(PaymentDTO paymentDTO) throws SQLException {
+        return paymentDAO.save(converter.getPayment(paymentDTO));
+    }
+
+    @Override
+    public List<PaymentDTO> getStudentPayments(String studentId) throws SQLException {
+        List<Payment> list = paymentDAO.getByStudentId(studentId);
+        List<PaymentDTO> paymentDTOS = new ArrayList<>();
+        for (Payment payment : list) {
+            paymentDTOS.add(converter.getPaymentDTO(payment));
+        }
+
+        return paymentDTOS;
+
+    }
+
+
 }

@@ -17,5 +17,6 @@ public class PaymentDTO {
     private String paymentMethod;
     private String status;
     private String studentId;
+    private String courseId;
 
 }

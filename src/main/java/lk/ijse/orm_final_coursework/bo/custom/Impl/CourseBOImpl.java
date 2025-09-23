@@ -92,13 +92,16 @@ public class CourseBOImpl implements CourseBO {
         return courseDTOs;
     }
 
-    @Override
-    public boolean saveNewCourse(CourseDTO courseDTO) throws SQLException {
-        Optional<Course> course = courseDAO.findById(courseDTO.getCourseId());
-        if (course.isPresent()) {
-            throw new DuplicateException("course already exist");
-        }
 
-        return courseDAO.save(converter.getCourse(courseDTO));
+    @Override
+    public int getEnrollmentCount(String courseId) throws Exception {
+        return courseDAO.getEnrollmentCount(courseId);
     }
+
+    @Override
+    public boolean enrollStudent(String courseId, String studentId) throws Exception {
+        return courseDAO.enrollStudent(courseId, studentId);
+    }
+
+
 }

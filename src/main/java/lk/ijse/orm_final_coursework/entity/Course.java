@@ -49,10 +49,14 @@ public class Course {
 
     @OneToMany(
             mappedBy = "course",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
     )
 
     private List<Lessons> lessons;
+
+    @Transient
+    private int enrollmentCount;
 
 //    public Object getInstructorId() {
 //    }

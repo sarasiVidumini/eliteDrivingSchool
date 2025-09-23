@@ -2,43 +2,48 @@ package lk.ijse.orm_final_coursework.controller;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.CourseBO;
+import lk.ijse.orm_final_coursework.bo.custom.StudentBO;
 import lk.ijse.orm_final_coursework.dto.CourseDTO;
-import lk.ijse.orm_final_coursework.dto.LessonsDTO;
-import lk.ijse.orm_final_coursework.dto.PaymentDTO;
+import lk.ijse.orm_final_coursework.dto.StudentDTO;
 import lk.ijse.orm_final_coursework.dto.tm.CourseTM;
+import lk.ijse.orm_final_coursework.entity.Course;
+import lk.ijse.orm_final_coursework.entity.Student;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ManageCourseController implements Initializable {
 
     private final CourseBO courseBO = (CourseBO) BOFactory.getInstance().getBo(BOTypes.COURSE);
+    private final StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBo(BOTypes.STUDENT);
 
     public AnchorPane ancCoursePage;
 
     public Label lblCourseId;
 
-    public ComboBox cmbCourseName;
-    public TextField txtDuration;
-    public TextField txtFee;
-    public TextField txtDescription;
-    public TextField txtInstructorId;
+    @FXML
+    private ComboBox<String> cmbCourseName;
+    @FXML
+    private TextField txtDuration;
+    @FXML
+    private TextField txtFee;
+    @FXML
+    private TextField txtDescription;
+    @FXML
+    private TextField txtInstructorId;
 
     public Button btnSave;
     public Button btnUpdate;
@@ -47,13 +52,28 @@ public class ManageCourseController implements Initializable {
 
     public TextField txtSearch;
 
-    public TableView<CourseTM> tblCourses;
-    public TableColumn<CourseTM , String> colCourseId;
-    public TableColumn<CourseTM , String> colCourseName;
-    public TableColumn<CourseTM , String> colDuration;
-    public TableColumn<CourseTM , Double> colFee;
-    public TableColumn<CourseTM , String> colDescription;
-    public TableColumn<CourseTM , String> colInstructorId;
+    @FXML
+    private TableView<CourseTM> tblCourses;
+    @FXML
+    private TableColumn<CourseTM , String> colCourseId;
+    @FXML
+    private TableColumn<CourseTM , String> colCourseName;
+    @FXML
+    private TableColumn<CourseTM , String> colDuration;
+    @FXML
+    private TableColumn<CourseTM , Double> colFee;
+    @FXML
+    private TableColumn<CourseTM , String> colDescription;
+    @FXML
+    private TableColumn<CourseTM , String> colInstructorId;
+    @FXML
+    private TableColumn<CourseTM , Integer> colEnrollmentCount;
+
+    @FXML
+    private ComboBox<String> cmbStudentIds;
+    @FXML
+    private ComboBox<String> cmbCourseIds;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,8 +81,10 @@ public class ManageCourseController implements Initializable {
         try {
             loadAllCourses();
             loadNextId();
+            loadComboBoxes();
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR , "Initialization Error : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -73,129 +95,143 @@ public class ManageCourseController implements Initializable {
         colFee.setCellValueFactory(new PropertyValueFactory<>("fee"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colInstructorId.setCellValueFactory(new PropertyValueFactory<>("instructorId"));
+        colEnrollmentCount.setCellValueFactory(new PropertyValueFactory<>("enrollmentCount"));
 
-        try {
-            cmbCourseName.setItems(FXCollections.observableArrayList("Manual Car Driving" , "Automatic Car Driving" , "Motorcycle / Scooter Driving" , "Three-Wheeler Driving" , "Heavy Vehicle Driving(Truck / Bus)"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR,"Failed to load course : " + e.getMessage());
-        }
-    }
-
-    private void loadAllCourses() throws Exception {
-        tblCourses.setItems(FXCollections.observableArrayList(
-                courseBO.getAll().stream().map(courseDTO -> new CourseTM(
-                        courseDTO.getCourseId(),
-                        courseDTO.getCourseName(),
-                        courseDTO.getDuration(),
-                        courseDTO.getFee(),
-                        courseDTO.getDescription(),
-                        courseDTO.getInstructorId()
-                )).toList()
+        cmbCourseName.setItems(FXCollections.observableArrayList(
+                "Manual Car Driving",
+                "Automatic Car Driving",
+                "Motorcycle / Scooter Driving",
+                "Three-Wheeler Driving",
+                "Heavy Vehicle Driving (Truck / Bus)"
         ));
     }
 
-    private void loadNextId() throws Exception {
-        String nextId = courseBO.getNextId();
-        lblCourseId.setText(nextId);
+    private void loadAllCourses() {
+        try {
+            List<CourseDTO> courses = courseBO.getAll();
+            List<CourseTM> tmList = new ArrayList<>();
+
+            for (CourseDTO dto : courses) {
+                tmList.add(new CourseTM(
+                        dto.getCourseId(),
+                        dto.getCourseName(),
+                        dto.getDuration(),
+                        dto.getFee(),
+                        dto.getDescription(),
+                        dto.getInstructorId(),
+                        dto.getEnrollmentCount()
+                ));
+            }
+
+            tblCourses.setItems(FXCollections.observableArrayList(tmList));
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load courses: " + e.getMessage()).show();
+            e.printStackTrace();
+        }
     }
 
-    public void btnSaveOnAction(ActionEvent actionEvent) {
+    private void loadNextId() {
         try {
-            boolean isSaved = courseBO.save(CourseDTO.builder()
+            lblCourseId.setText(courseBO.getNextId());
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to generate ID: " + e.getMessage()).show();
+            e.printStackTrace();
+        }
+    }
+
+    private void loadComboBoxes() {
+        try {
+            cmbCourseIds.getItems().clear();
+            cmbStudentIds.getItems().clear();
+
+            // Load all course IDs safely
+            List<String> courseIds = courseBO.getAllIds();
+            cmbCourseIds.getItems().addAll(courseIds);
+
+            // Load all student IDs
+            List<String> studentIds = studentBO.getAllIds();
+            cmbStudentIds.getItems().addAll(studentIds);
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Failed to load ComboBoxes: " + e.getMessage());
+        }
+    }
+
+
+
+    // ================= CRUD ====================
+
+    @FXML
+    private void btnSaveOnAction(ActionEvent event) {
+        try {
+            boolean saved = courseBO.save(CourseDTO.builder()
                     .courseId(lblCourseId.getText())
-                    .courseName(cmbCourseName.getValue().toString())
+                    .courseName(cmbCourseName.getValue())
                     .duration(txtDuration.getText())
                     .fee(Double.parseDouble(txtFee.getText()))
                     .description(txtDescription.getText())
                     .instructorId(txtInstructorId.getText())
                     .build());
-
-            if (isSaved) {
-                showAlert(Alert.AlertType.INFORMATION , " Course saving successfully!");
+            if(saved) {
+                showAlert(Alert.AlertType.INFORMATION, "Course saved successfully!");
                 loadAllCourses();
                 resetForm();
                 loadNextId();
-
-            }else {
-                showAlert(Alert.AlertType.ERROR , "Error saving course");
-            }
-
+            } else showAlert(Alert.AlertType.ERROR, "Error saving course!");
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR , "Error saving course: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void btnUpdateOnAction(ActionEvent actionEvent) {
+    @FXML
+    private void btnUpdateOnAction(ActionEvent event) {
         try {
-            boolean isUpdated = courseBO.update(CourseDTO.builder()
+            boolean updated = courseBO.update(CourseDTO.builder()
                     .courseId(lblCourseId.getText())
-                    .courseName(cmbCourseName.getValue().toString())
+                    .courseName(cmbCourseName.getValue())
                     .duration(txtDuration.getText())
                     .fee(Double.parseDouble(txtFee.getText()))
                     .description(txtDescription.getText())
                     .instructorId(txtInstructorId.getText())
                     .build());
-
-            if (isUpdated) {
-                showAlert(Alert.AlertType.INFORMATION , " Course updated successfully!");
+            if(updated) {
+                showAlert(Alert.AlertType.INFORMATION, "Course updated successfully!");
                 loadAllCourses();
                 resetForm();
                 loadNextId();
-            }else {
-                showAlert(Alert.AlertType.ERROR , "Error updating course");
-            }
-
+            } else showAlert(Alert.AlertType.ERROR, "Error updating course!");
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR , "Error updating course: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void btnDeleteOnAction(ActionEvent actionEvent) {
+    @FXML
+    private void btnDeleteOnAction(ActionEvent event) {
         String id = lblCourseId.getText();
-        if (id.isEmpty()){
-            showAlert(Alert.AlertType.WARNING , "Please select a course to delete! ");
+        if(id.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Select a course!");
             return;
         }
-
         try {
-            boolean isDeleted = courseBO.delete(id);
-            if (isDeleted) {
-                showAlert(Alert.AlertType.INFORMATION , " Course deleted successfully!");
+            boolean deleted = courseBO.delete(id);
+            if(deleted) {
+                showAlert(Alert.AlertType.INFORMATION, "Course deleted successfully!");
                 loadAllCourses();
                 resetForm();
                 loadNextId();
-            }else {
-                showAlert(Alert.AlertType.ERROR , "Error deleting course");
-            }
-        }catch (Exception e){
-            showAlert(Alert.AlertType.ERROR , "Error deleting course: " + e.getMessage());
+            } else showAlert(Alert.AlertType.ERROR, "Error deleting course!");
+        } catch(Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void btnResetOnAction(ActionEvent actionEvent) {
+    @FXML
+    private void btnResetOnAction(ActionEvent event) {
         resetForm();
-        try {
-            loadNextId();
-        }catch (Exception e){
-            showAlert(Alert.AlertType.ERROR , "Error generating ID: " + e.getMessage());
-        }
-    }
-
-    public void OnClickedTable(MouseEvent mouseEvent) {
-        CourseTM selectedItem = (CourseTM) tblCourses.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            lblCourseId.setText(selectedItem.getCourseId());
-            cmbCourseName.setValue(selectedItem.getCourseName());
-            txtDuration.setText(selectedItem.getDuration());
-            txtFee.setText(String.valueOf(selectedItem.getFee()));
-            txtDescription.setText(selectedItem.getDescription());
-            txtInstructorId.setText(selectedItem.getInstructorId());
-        }
-    }
-
-    public void goToDashboard(MouseEvent mouseEvent) throws IOException {
-        navigateTo("/view/DashBoard.fxml");
+        loadNextId();
     }
 
     private void resetForm() {
@@ -203,11 +239,78 @@ public class ManageCourseController implements Initializable {
         txtDuration.clear();
         txtFee.clear();
         txtDescription.clear();
+        txtInstructorId.clear();
         tblCourses.getSelectionModel().clearSelection();
     }
 
-    private void showAlert(Alert.AlertType type, String message) {
-        new Alert(type, message).show();
+
+    // ================= Enrollment =================
+
+    @FXML
+    private void btnEnrollStudentOnAction(ActionEvent event) {
+        try {
+            String studentId = (String) cmbStudentIds.getValue();
+            String courseId = (String) cmbCourseIds.getValue();
+
+            if (studentId == null || courseId == null) {
+                showAlert(Alert.AlertType.WARNING, "Select both Student ID and Course ID.");
+                return;
+            }
+
+            boolean enrolled = courseBO.enrollStudent(studentId, courseId);
+
+            if (enrolled) {
+                showAlert(Alert.AlertType.INFORMATION, "Student enrolled successfully!");
+                loadAllCourses(); // refresh table
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Enrollment failed.");
+            }
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error: " + e.getMessage());
+        }
+    }
+
+
+
+
+    // ================= Search =================
+    @FXML
+    private void search(KeyEvent keyEvent) {
+        String text = txtSearch.getText().trim();
+        if(text.isEmpty()) {
+            loadAllCourses();
+            return;
+        }
+
+        try {
+            List<CourseDTO> courses = courseBO.search(text);
+            List<CourseTM> tmList = new ArrayList<>();
+            for(CourseDTO dto : courses) {
+                tmList.add(new CourseTM(
+                        dto.getCourseId(),
+                        dto.getCourseName(),
+                        dto.getDuration(),
+                        dto.getFee(),
+                        dto.getDescription(),
+                        dto.getInstructorId(),
+                        dto.getEnrollmentCount()
+                ));
+            }
+            tblCourses.setItems(FXCollections.observableArrayList(tmList));
+        } catch(Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Search failed: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // ================= Helper =================
+    private void showAlert(Alert.AlertType type, String msg) {
+        new Alert(type, msg).show();
+    }
+
+    public void goToDashboard(MouseEvent mouseEvent) {
+        navigateTo("/view/DashBoard.fxml");
     }
 
     private void navigateTo(String path) {
@@ -226,35 +329,16 @@ public class ManageCourseController implements Initializable {
         }
     }
 
+    public void OnClickedTable(MouseEvent mouseEvent) {
 
-    public void search(KeyEvent keyEvent) {
-        String search = txtSearch.getText();
-        if (search.isEmpty()) {
-            try {
-                loadAllCourses();
-            }catch (Exception e){
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR , "Failed to search : " + e.getMessage());
-            }
-        }else {
-            try {
-                ArrayList<CourseDTO> courseList = (ArrayList<CourseDTO>) courseBO.search(search);
-                tblCourses.setItems(FXCollections.observableArrayList(
-                        courseList.stream()
-                                .map(courseDTO -> new CourseTM(
-                                        courseDTO.getCourseId(),
-                                        courseDTO.getCourseName(),
-                                        courseDTO.getDuration(),
-                                        courseDTO.getFee(),
-                                        courseDTO.getDescription(),
-                                        courseDTO.getInstructorId()
-                                )).toList()
-                ));
-
-            }catch (Exception e){
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR , "Failed to search : " + e.getMessage());
-            }
+        CourseTM selected = tblCourses.getSelectionModel().getSelectedItem();
+        if(selected != null) {
+            lblCourseId.setText(selected.getCourseId());
+            cmbCourseName.setValue(selected.getCourseName());
+            txtDuration.setText(selected.getDuration());
+            txtFee.setText(String.valueOf(selected.getFee()));
+            txtDescription.setText(selected.getDescription());
+            txtInstructorId.setText(selected.getInstructorId());
         }
     }
 }

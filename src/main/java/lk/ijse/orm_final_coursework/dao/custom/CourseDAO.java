@@ -8,5 +8,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public interface CourseDAO extends CrudDAO<Course> {
-    public boolean saveNewCourse(Course course)throws SQLException;
+    public int getEnrollmentCount(String courseId) throws Exception;
+    public boolean enrollStudent(String courseId, String studentId) throws Exception;
 }

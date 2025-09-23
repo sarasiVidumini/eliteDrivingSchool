@@ -47,7 +47,7 @@ public class Student {
 //    )
 //    private List<StudentCourseDetail> studentCourseDetails;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "student_course_detail",
             joinColumns = @JoinColumn(name = "studentId"),

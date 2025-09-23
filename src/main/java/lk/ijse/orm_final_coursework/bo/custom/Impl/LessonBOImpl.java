@@ -90,4 +90,27 @@ public class LessonBOImpl implements LessonBO {
     public List<String> getAllIds() throws SQLException {
         return lessonDAO.getAllIds();
     }
+
+    @Override
+    public boolean scheduleLesson(LessonsDTO lessonsDTO) throws SQLException {
+        return lessonDAO.save(converter.getLessons(lessonsDTO));
+    }
+
+    @Override
+    public boolean rescheduleLesson(String lessonId, LessonsDTO dto) throws SQLException {
+
+        Lessons lesson = (Lessons) lessonDAO.search(lessonId);
+        if (lesson == null) {
+            throw new SQLException("Lesson not found with ID: " + lessonId);
+        }
+
+
+        lesson.setLessonDate(dto.getLessonDate());
+        lesson.setStartTime(dto.getStartTime());
+        lesson.setEndTime(dto.getEndTime());
+
+
+        return lessonDAO.update(lesson);
+    }
+
 }

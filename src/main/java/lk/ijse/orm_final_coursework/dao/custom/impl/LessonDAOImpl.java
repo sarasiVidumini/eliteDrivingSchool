@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.LessonDAO;
+import lk.ijse.orm_final_coursework.dto.LessonsDTO;
 import lk.ijse.orm_final_coursework.entity.Instructor;
 import lk.ijse.orm_final_coursework.entity.Lessons;
 import org.hibernate.Session;
@@ -157,4 +158,5 @@ public class LessonDAOImpl implements LessonDAO {
             session.close();
         }
     }
+
 }
