@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,11 +17,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancCoursePage" prefHeight="500.0" prefWidth="1600.0" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageCourseController">
+<AnchorPane fx:id="ancCoursePage" prefHeight="500.0" prefWidth="1600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageCourseController">
     <children>
-        <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <VBox prefHeight="658.0" prefWidth="350.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
+                <VBox prefHeight="658.0" prefWidth="350.0" style="-fx-border-radius: 50; -fx-background-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" styleClass="root" stylesheets="@../styles/background.css">
                     <HBox.margin>
                         <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
                     </HBox.margin>
@@ -98,7 +99,7 @@
                                 </HBox>
                                 <HBox layoutX="11.0" layoutY="11.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <ComboBox fx:id="cmbCourseName" prefHeight="26.0" prefWidth="296.0" promptText="Select Course" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <ComboBox fx:id="cmbCourseName" prefHeight="26.0" prefWidth="296.0" promptText="Select Course" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -116,7 +117,7 @@
                                 </HBox>
                                 <HBox layoutX="11.0" layoutY="72.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <ComboBox fx:id="cmbDuration" prefHeight="26.0" prefWidth="296.0" promptText="Select Duration" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <ComboBox fx:id="cmbDuration" prefHeight="26.0" prefWidth="296.0" promptText="Select Duration" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -134,7 +135,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="76.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <ComboBox fx:id="cmbFee" prefHeight="26.0" prefWidth="296.0" promptText="Select Fee" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <ComboBox fx:id="cmbFee" prefHeight="26.0" prefWidth="296.0" promptText="Select Fee" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -152,7 +153,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="124.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtDescription" prefHeight="26.0" prefWidth="296.0" promptText="Quick Refresher" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtDescription" prefHeight="26.0" prefWidth="296.0" promptText="Quick Refresher" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -170,7 +171,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="157.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtInstructorId" prefHeight="26.0" prefWidth="296.0" promptText="I001" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtInstructorId" prefHeight="26.0" prefWidth="296.0" promptText="I001" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -178,9 +179,6 @@
                                     </children>
                                 </HBox>
                             </children>
-                            <effect>
-                                <DropShadow height="63.11" radius="25.2075" width="39.72" />
-                            </effect>
                         </VBox>
                         <VBox prefHeight="229.0" prefWidth="350.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #000000;">
                             <VBox.margin>
@@ -241,7 +239,7 @@
                         <DropShadow />
                     </effect>
                 </VBox>
-                <VBox prefHeight="20.0" prefWidth="970.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
+                <VBox prefHeight="20.0" prefWidth="970.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
                     </HBox.margin>
@@ -308,7 +306,10 @@
                                 <Button fx:id="btnEnrollStudent" onAction="#btnEnrollStudentOnAction" prefHeight="26.0" prefWidth="121.0" style="-fx-background-color: #1e90ff; -fx-text-fill: white;" text="Enroll">
                            <VBox.margin>
                               <Insets left="130.0" top="10.0" />
-                           </VBox.margin></Button>
+                           </VBox.margin>
+                           <effect>
+                              <InnerShadow />
+                           </effect></Button>
                             </children>
                      <VBox.margin>
                         <Insets left="500.0" right="100.0" top="-60.0" />

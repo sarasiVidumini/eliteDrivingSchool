@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,11 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancStudentPage" prefHeight="500.0" prefWidth="1600.0" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageStudentController">
+<AnchorPane fx:id="ancStudentPage" prefHeight="500.0" prefWidth="1600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageStudentController">
     <children>
-        <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <VBox prefHeight="658.0" prefWidth="350.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
+                <VBox prefHeight="658.0" prefWidth="350.0" style="-fx-border-radius: 50; -fx-background-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);">
                     <HBox.margin>
                         <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
                     </HBox.margin>
@@ -97,7 +98,7 @@
                                 </HBox>
                                 <HBox layoutX="11.0" layoutY="11.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtFirstName" prefHeight="26.0" prefWidth="296.0" promptText="Sarasi" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtFirstName" prefHeight="26.0" prefWidth="296.0" promptText="Sarasi" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -115,7 +116,7 @@
                                 </HBox>
                                 <HBox layoutX="11.0" layoutY="72.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtLastName" prefHeight="26.0" prefWidth="296.0" promptText="Vidumini" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtLastName" prefHeight="26.0" prefWidth="296.0" promptText="Vidumini" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -133,7 +134,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="76.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="296.0" promptText="sarasividumini13@gmail.com" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="296.0" promptText="sarasividumini13@gmail.com" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -151,7 +152,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="124.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtPhone" prefHeight="26.0" prefWidth="296.0" promptText="0771754098" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtPhone" prefHeight="26.0" prefWidth="296.0" promptText="0771754098" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -169,7 +170,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="157.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtAddress" prefHeight="26.0" prefWidth="296.0" promptText="Maha Induruwa" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtAddress" prefHeight="26.0" prefWidth="296.0" promptText="Maha Induruwa" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -187,7 +188,7 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="200.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtDateOfBirth" prefHeight="26.0" prefWidth="296.0" promptText="2005-01-13" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <TextField fx:id="txtDateOfBirth" prefHeight="26.0" prefWidth="296.0" promptText="2005-01-13" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
@@ -205,7 +206,7 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="244.0" prefHeight="17.0" prefWidth="350.0">
                            <children>
-                              <TextField fx:id="txtRegistrationDate" prefHeight="26.0" prefWidth="296.0" promptText="2025-09-15" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                              <TextField fx:id="txtRegistrationDate" prefHeight="26.0" prefWidth="296.0" promptText="2025-09-15" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
@@ -213,9 +214,6 @@
                            </children>
                         </HBox>
                             </children>
-                            <effect>
-                                <DropShadow height="63.11" radius="25.2075" width="39.72" />
-                            </effect>
                         </VBox>
                         <VBox prefHeight="229.0" prefWidth="350.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #000000;">
                             <VBox.margin>
@@ -276,7 +274,7 @@
                         <DropShadow />
                     </effect>
                 </VBox>
-                <VBox prefHeight="20.0" prefWidth="970.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
+                <VBox prefHeight="20.0" prefWidth="970.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
                     </HBox.margin>
@@ -311,10 +309,13 @@
                                 <Image url="@../images/student.png" />
                             </image>
                         </ImageView>
-                  <Button fx:id="btnStudentPayments" mnemonicParsing="false" onAction="#btnGoStudentPaymentsPopUpOnAction" style="-fx-background-color: #05c46b;" text="Manage Student Payments">
+                  <Button fx:id="btnStudentPayments" mnemonicParsing="false" onAction="#btnGoStudentPaymentsPopUpOnAction" style="-fx-background-color: #05c46b;" text=" + Manage Student Payments">
                      <VBox.margin>
                         <Insets left="20.0" />
                      </VBox.margin>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
                   </Button>
                         <TableView fx:id="tblStudent" onMouseClicked="#OnClickedTable" prefHeight="453.0" prefWidth="886.0" VBox.vgrow="ALWAYS">
                             <columns>

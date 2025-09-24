@@ -7,12 +7,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageAssignCoursePopup">
-    <VBox layoutX="12.0" layoutY="14.0" prefHeight="376.0" prefWidth="580.0" spacing="10" style="-fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageAssignCoursePopup">
+    <VBox layoutX="12.0" layoutY="14.0" prefHeight="376.0" prefWidth="580.0" spacing="10" style="-fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
         <children>
             <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Assign Courses to Instructor">
             <VBox.margin>
@@ -34,7 +35,10 @@
                 <Button fx:id="btnAssignCourse" onAction="#btnAssignCourseOnAction" style="-fx-background-color: #78e08f;" text="+ AssignCourse">
                <HBox.margin>
                   <Insets left="150.0" />
-               </HBox.margin></Button>
+               </HBox.margin>
+               <effect>
+                  <InnerShadow />
+               </effect></Button>
             <VBox.margin>
                <Insets top="20.0" />
             </VBox.margin>

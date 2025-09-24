@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancLoginPage" prefHeight="800.0" prefWidth="1600.0" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageLoginPageController">
+<AnchorPane fx:id="ancLoginPage" prefHeight="800.0" prefWidth="1600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageLoginPageController">
     <children>
-        <HBox layoutX="0.8" layoutY="8.0" prefHeight="791.0" prefWidth="1552.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="8.0">
+        <HBox layoutX="0.8" layoutY="8.0" prefHeight="791.0" prefWidth="1552.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="8.0">
             <children>
-                <VBox prefHeight="730.0" prefWidth="535.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
+                <VBox prefHeight="730.0" prefWidth="535.0" style="-fx-border-radius: 50; -fx-background-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);">
                     <HBox.margin>
                         <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
                     </HBox.margin>
@@ -27,13 +27,16 @@
                <children>
                   <HBox prefHeight="57.0" prefWidth="350.0">
                      <children>
-                        <Label onMouseClicked="#goToMainPage" text="HOME">
+                        <Label onMouseClicked="#goToMainPage" prefHeight="30.0" prefWidth="96.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-background-radius: 5;" text="  ⟪ HOME">
                            <HBox.margin>
                               <Insets left="450.0" top="20.0" />
                            </HBox.margin>
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
                         </Label>
                      </children>
                   </HBox>
@@ -65,7 +68,7 @@
                   </ImageView>
                </children>
                 </VBox>
-                <VBox prefHeight="742.0" prefWidth="806.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
+                <VBox prefHeight="742.0" prefWidth="806.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
                     </HBox.margin>
@@ -170,21 +173,27 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#btnGoSignUpPage" prefHeight="36.0" prefWidth="159.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #17c0eb;" styleClass="root" stylesheets="@../styles/main.css" text="GET START">
+                  <Button mnemonicParsing="false" onAction="#btnGoSignUpPage" prefHeight="36.0" prefWidth="159.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #17c0eb; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" styleClass="root" text="GET START">
                      <VBox.margin>
                         <Insets left="340.0" top="30.0" />
                      </VBox.margin>
                      <font>
                         <Font size="22.0" />
                      </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
-                  <Button layoutX="10.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnGoSigninPage" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #17c0eb;" styleClass="root" stylesheets="@../styles/main.css" text="I Already Have Account">
+                  <Button layoutX="10.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnGoSigninPage" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #17c0eb; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" text="I Already Have Account">
                      <font>
                         <Font size="22.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="300.0" top="20.0" />
                      </VBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
                </children>
                 </VBox>

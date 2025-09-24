@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancDashBoardPage" prefHeight="800.0" prefWidth="1600.0" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.DashBoardPageController">
+<AnchorPane fx:id="ancDashBoardPage" prefHeight="800.0" prefWidth="1600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.DashBoardPageController">
     <children>
-        <HBox layoutX="0.8" layoutY="8.0" prefHeight="791.0" prefWidth="1552.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="8.0">
+        <HBox layoutX="0.8" layoutY="8.0" prefHeight="791.0" prefWidth="1552.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="8.0">
             <children>
-                <VBox prefHeight="738.0" prefWidth="451.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
+                <VBox prefHeight="738.0" prefWidth="451.0" style="-fx-border-radius: 50; -fx-background-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);">
                     <HBox.margin>
                         <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                     </HBox.margin>
@@ -55,39 +55,57 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </HBox>
-                  <Button fx:id="btnCourse" mnemonicParsing="false" onAction="#btnGoCourseOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="COURSE">
+                  <Button fx:id="btnCourse" mnemonicParsing="false" onAction="#btnGoCourseOnAction" prefHeight="61.0" prefWidth="175.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-border-radius: 30; -fx-background-radius: 30;" text="COURSE">
                      <VBox.margin>
                         <Insets left="150.0" />
                      </VBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
-                  <Button fx:id="btnInstructor" mnemonicParsing="false" onAction="#btnGoInstructorOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="INSTRUCTOR">
+                  <Button fx:id="btnInstructor" mnemonicParsing="false" onAction="#btnGoInstructorOnAction" prefHeight="61.0" prefWidth="175.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-border-radius: 30; -fx-background-radius: 30;" text="INSTRUCTOR">
                      <VBox.margin>
                         <Insets left="150.0" top="30.0" />
                      </VBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
-                  <Button fx:id="btnLessons" mnemonicParsing="false" onAction="#btnGoLessonsOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="LESSONS">
+                  <Button fx:id="btnLessons" mnemonicParsing="false" onAction="#btnGoLessonsOnAction" prefHeight="61.0" prefWidth="175.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-background-radius: 30; -fx-border-radius: 30;" text="LESSONS">
                      <VBox.margin>
                         <Insets left="150.0" top="30.0" />
                      </VBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
-                  <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#btnGoPaymentOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="PAYMENT">
+                  <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#btnGoPaymentOnAction" prefHeight="61.0" prefWidth="175.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-background-radius: 30; -fx-border-radius: 30;" text="PAYMENT">
                      <VBox.margin>
                         <Insets left="150.0" top="30.0" />
                      </VBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
-                  <Button fx:id="btnStudent" mnemonicParsing="false" onAction="#btnGoStudentOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="STUDENT">
+                  <Button fx:id="btnStudent" mnemonicParsing="false" onAction="#btnGoStudentOnAction" prefHeight="61.0" prefWidth="175.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-background-radius: 30; -fx-border-radius: 30;" text="STUDENT">
                      <VBox.margin>
                         <Insets left="150.0" top="30.0" />
                      </VBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
-                  <Button fx:id="btnUser" mnemonicParsing="false" onAction="#btnGoUserOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="USER">
+                  <Button fx:id="btnUser" mnemonicParsing="false" onAction="#btnGoUserOnAction" prefHeight="61.0" prefWidth="175.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-background-radius: 30; -fx-border-radius: 30;" text="USER">
                      <VBox.margin>
                         <Insets left="150.0" top="30.0" />
                      </VBox.margin>
+                     <effect>
+                        <DropShadow />
+                     </effect>
                   </Button>
                     </children>
                 </VBox>
-                <VBox prefHeight="754.0" prefWidth="930.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" HBox.hgrow="NEVER">
+                <VBox prefHeight="754.0" prefWidth="930.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
                     </HBox.margin>

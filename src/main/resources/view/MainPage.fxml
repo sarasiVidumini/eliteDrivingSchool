@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,9 +13,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancMainPage" prefHeight="754.0" prefWidth="1539.0" style="-fx-border-radius: 50; -fx-border-color: #000000; -fx-background-radius: 50;" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.MainPageController">
+<AnchorPane fx:id="ancMainPage" prefHeight="754.0" prefWidth="1539.0" style="-fx-border-radius: 50; -fx-border-color: #000000; -fx-background-radius: 50; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.MainPageController">
    <children>
-      <VBox layoutX="101.6" layoutY="47.199999999999996" prefHeight="661.0" prefWidth="1474.0" style="-fx-background-radius: 50; -fx-border-color: #000000; -fx-border-radius: 50;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="46.0">
+      <VBox layoutX="101.6" layoutY="47.199999999999996" prefHeight="661.0" prefWidth="1474.0" style="-fx-background-radius: 50; -fx-border-color: #000000; -fx-border-radius: 50;" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="46.0">
          <children>
             <ImageView fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
@@ -88,6 +89,9 @@
                <image>
                   <Image url="@../images/The%20Future%20of%20Car%20Ownership_%20Fractional%20Sharing.jpeg" />
                </image>
+               <effect>
+                  <DropShadow radius="22.2825" width="70.13" />
+               </effect>
             </ImageView>
             <VBox prefHeight="234.0" prefWidth="534.0">
                <VBox.margin>
@@ -98,12 +102,18 @@
                      <image>
                         <Image url="@../images/Nadat_je_geslaagd_bent_mag_je_tot_je_18de_de_weg_op_samen_met_je_coach_es__-removebg-preview.png" />
                      </image>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <DropShadow radius="16.432499999999997" width="46.73" />
+                     </effect>
                   </ImageView>
                </children>
             </VBox>
             <HBox prefHeight="129.0" prefWidth="1332.0">
                <children>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#btnGoLoginPageOnAction" style="-fx-border-radius: 50; -fx-background-radius: 50;" stylesheets="@../styles/mainFirst.css" text="&gt;&gt; START NOW ...!">
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#btnGoLoginPageOnAction" style="-fx-border-radius: 50; -fx-background-radius: 50; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" stylesheets="@../styles/mainFirst.css" text="&gt;&gt; START NOW ...!">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -111,7 +121,7 @@
                         <Insets bottom="10.0" left="400.0" top="30.0" />
                      </HBox.margin>
                      <effect>
-                        <DropShadow radius="32.81" width="112.24" />
+                        <InnerShadow />
                      </effect>
                   </Button>
                </children>
@@ -121,7 +131,7 @@
             </HBox>
          </children>
          <effect>
-            <DropShadow height="196.52" radius="98.93" spread="0.28" width="201.2" />
+            <DropShadow />
          </effect>
       </VBox>
    </children>
