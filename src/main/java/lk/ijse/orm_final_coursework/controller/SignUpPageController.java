@@ -15,6 +15,7 @@ import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
 import lk.ijse.orm_final_coursework.bo.custom.UserBO;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
+import lk.ijse.orm_final_coursework.controller.util.PasswordUtil;
 import lk.ijse.orm_final_coursework.controller.util.RoleManager;
 import lk.ijse.orm_final_coursework.dao.SQLUtil;
 import lk.ijse.orm_final_coursework.dto.UserDTO;
@@ -138,7 +139,7 @@ public class SignUpPageController {
             boolean isSaved = userBO.save(new UserDTO(
                     userId,
                     inputUserName,
-                    inputPassword,
+                    PasswordUtil.hashPassword(inputPassword),
                     chooseRole,
                     inputEmail,
                     chooseStatus

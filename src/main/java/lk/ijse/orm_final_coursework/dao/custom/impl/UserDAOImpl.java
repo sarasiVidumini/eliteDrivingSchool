@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.UserDAO;
+import lk.ijse.orm_final_coursework.dto.UserDTO;
 import lk.ijse.orm_final_coursework.entity.Instructor;
 import lk.ijse.orm_final_coursework.entity.Student;
 import lk.ijse.orm_final_coursework.entity.User;
@@ -16,6 +17,31 @@ import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
+
+    public User getUserByName(String userName) {
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = null;
+        User user = null;
+        try {
+            transaction = session.beginTransaction();
+
+            Query<User> query = session.createQuery(
+                    "FROM User WHERE userName = :userName", User.class);
+            query.setParameter("userName", userName);
+
+            user = query.uniqueResult(); // gets a single User or null
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return user; // returns null if not found
+    }
+
 
     public String getNextId() {
         Session session = factoryConfiguration.getSession();

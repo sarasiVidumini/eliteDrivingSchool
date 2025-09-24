@@ -8,6 +8,7 @@ import lk.ijse.orm_final_coursework.dao.DAOFactory;
 import lk.ijse.orm_final_coursework.dao.DAOTypes;
 import lk.ijse.orm_final_coursework.dao.custom.UserDAO;
 import lk.ijse.orm_final_coursework.dto.UserDTO;
+import lk.ijse.orm_final_coursework.entity.Student;
 import lk.ijse.orm_final_coursework.entity.User;
 import org.hibernate.Session;
 
@@ -89,5 +90,10 @@ public class UserBOImpl implements UserBO {
     @Override
     public List<String> getAllIds() throws SQLException {
         return userDAO.getAllIds();
+    }
+
+    @Override
+    public UserDTO getUserByName(String userName) throws SQLException {
+        return converter.getUserDTO(userDAO.getUserByName(userName));
     }
 }

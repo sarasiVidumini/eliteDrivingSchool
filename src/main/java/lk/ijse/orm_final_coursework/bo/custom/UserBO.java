@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.bo.custom;
 
 import lk.ijse.orm_final_coursework.bo.SuperBO;
 import lk.ijse.orm_final_coursework.dto.UserDTO;
+import lk.ijse.orm_final_coursework.entity.Student;
 import lk.ijse.orm_final_coursework.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,5 +24,6 @@ public interface UserBO extends SuperBO {
     public Optional<UserDTO> findById(String id) throws SQLException;
     public List<UserDTO> search(String search) throws SQLException;
     public List<String> getAllIds() throws SQLException;
+    public UserDTO getUserByName(String userName) throws SQLException;
 
 }

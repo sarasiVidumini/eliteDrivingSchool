@@ -4,12 +4,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.orm_final_coursework.bo.BOFactory;
+import lk.ijse.orm_final_coursework.bo.BOTypes;
+import lk.ijse.orm_final_coursework.bo.custom.UserBO;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
+import lk.ijse.orm_final_coursework.controller.util.PasswordUtil;
 import lk.ijse.orm_final_coursework.controller.util.RoleManager;
+import lk.ijse.orm_final_coursework.dto.UserDTO;
 import lk.ijse.orm_final_coursework.entity.User;
 import lk.ijse.orm_final_coursework.controller.util.RoleManager;
 import org.hibernate.Session;
@@ -19,6 +25,8 @@ public class SigninController {
     public AnchorPane ancSigningPage;
     public TextField txtUserName;
     public TextField txtEmail;
+    public PasswordField txtPassword;
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBo(BOTypes.USER);
 
     public void goToLoginPage(MouseEvent mouseEvent) {
         navigateTo("/view/Login.fxml");
@@ -26,15 +34,15 @@ public class SigninController {
 
     public void btnGoDashBoardOnAction(ActionEvent actionEvent) {
         String name = txtUserName.getText().trim();
-        String email = txtEmail.getText().trim();
+        String password = txtPassword.getText().trim();
 
-        if (name.isEmpty() || email.isEmpty()) {
+        if (name.isEmpty() || password.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Empty fields", "Please fill in all fields");
             return;
         }
 
-        User user = validateLogin(name, email);
-        if (user != null) {
+        UserDTO user = validateLogin(name);
+        if (user != null && PasswordUtil.verifyPassword(password, user.getPassword())) {
 
             RoleManager.setUserRole(user.getRole());
 
@@ -58,20 +66,21 @@ public class SigninController {
                 showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load dashboard.");
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Login Error", "Invalid Credentials. Please check your username or email.");
+            showAlert(Alert.AlertType.ERROR, "Login Error", "Invalid Credentials. Please check your username or password.");
         }
     }
 
-    private User validateLogin(String name, String email) {
-        try (Session session = FactoryConfiguration.getInstance().getSession()) {
-            String hql = "FROM User u WHERE u.userName = :userName AND u.email = :email";
-            Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("userName", name);
-            query.setParameter("email", email);
-
-            return query.uniqueResult();
+    private UserDTO validateLogin(String name) {
+        try {
+            UserDTO user = userBO.getUserByName(name);
+            System.out.println(user);
+            if (user == null) {
+                return null;
+            }
+            return user;
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Please try again: " + e.getMessage());
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Authentication Error", "Please try again: " + e.getMessage());
             return null;
         }
     }
