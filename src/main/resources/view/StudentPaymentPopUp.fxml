@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="350.0" prefWidth="420.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final_coursework.controller.ManageStudentPaymentPopup">
+
+    <children>
+        <VBox alignment="CENTER" layoutX="20" layoutY="40" spacing="15" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
+            <children>
+
+                <!-- Title -->
+                <Label text="Student Payment" textFill="#4c7396">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+
+                <!-- Student ID -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="120" text="Student ID:" />
+                    <TextField fx:id="txtStudentId" editable="false" prefWidth="200" />
+                </HBox>
+
+                <!-- Total Fee -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="120" text="Total Fee:" />
+                    <TextField fx:id="txtTotalFee" editable="false" prefWidth="200" />
+                </HBox>
+
+                <!-- Course Selection -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="120" text="Course:" />
+                    <ComboBox fx:id="cmbCourses" prefWidth="200" promptText="Select Course" />
+                </HBox>
+
+                <!-- Payment Method -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="120" text="Payment Method:" />
+                    <ComboBox fx:id="cmbPaymentMethod" prefWidth="200" promptText="Select Payment Method" />
+                </HBox>
+
+                <!-- Payment Date -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefWidth="120" text="Payment Date:" />
+                    <Label fx:id="lblPaymentDate" text="2025-09-24" />
+                </HBox>
+
+                <!-- Buttons -->
+                <HBox alignment="CENTER" spacing="20">
+                    <Button fx:id="btnSave" onAction="#savePayment" prefWidth="100" text="Save" />
+                    <Button fx:id="btnCancel" onAction="#cancelPayment" prefWidth="100" text="Cancel" />
+                </HBox>
+
+            </children>
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

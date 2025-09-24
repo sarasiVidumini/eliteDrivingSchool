@@ -96,15 +96,8 @@ public class PaymentBOImpl implements PaymentBO {
     }
 
     @Override
-    public List<PaymentDTO> getStudentPayments(String studentId) throws SQLException {
-        List<Payment> list = paymentDAO.getByStudentId(studentId);
-        List<PaymentDTO> paymentDTOS = new ArrayList<>();
-        for (Payment payment : list) {
-            paymentDTOS.add(converter.getPaymentDTO(payment));
-        }
-
-        return paymentDTOS;
-
+    public List<PaymentDTO> getPaymentByStudent(String studentId) throws SQLException {
+        return paymentDAO.getPaymentByStudent(studentId);
     }
 
 

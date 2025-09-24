@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
@@ -58,6 +59,7 @@ public class ManageStudentController implements Initializable {
     public TableColumn<StudentTM , String> colAddress;
     public TableColumn<StudentTM , Date> colDob;
     public TableColumn<StudentTM , Date> colRegistrationDate;
+    public Button btnStudentPayments;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -290,6 +292,32 @@ public class ManageStudentController implements Initializable {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Failed to search!" + e.getMessage());
             }
+        }
+    }
+
+    public void btnGoStudentPaymentsPopUpOnAction(ActionEvent actionEvent) {
+        StudentTM selected = tblStudent.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Please select a student first!");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/StudentPaymentPopUp.fxml"));
+            AnchorPane pane = loader.load();
+
+            // Pass student ID to popup controller
+            ManageStudentPaymentPopup controller = loader.getController();
+            controller.setStudentId(selected.getStudentId());
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(pane));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Student Payments");
+            stage.showAndWait(); // Wait for popup to close before returning
+
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Failed to open Student Payments popup: " + e.getMessage());
         }
     }
 }

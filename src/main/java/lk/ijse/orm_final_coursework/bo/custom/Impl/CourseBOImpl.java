@@ -103,5 +103,10 @@ public class CourseBOImpl implements CourseBO {
         return courseDAO.enrollStudent(courseId, studentId);
     }
 
+    @Override
+    public CourseDTO getCourseByName(String courseName) throws Exception {
+        return courseDAO.getCourseByName(courseName);
+    }
+
 
 }

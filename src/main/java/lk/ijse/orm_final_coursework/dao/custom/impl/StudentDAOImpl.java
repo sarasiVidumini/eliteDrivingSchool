@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.dao.SQLUtil;
 import lk.ijse.orm_final_coursework.dao.custom.StudentDAO;
+import lk.ijse.orm_final_coursework.entity.Course;
 import lk.ijse.orm_final_coursework.entity.Instructor;
 import org.hibernate.query.Query;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
@@ -215,6 +216,14 @@ public class StudentDAOImpl implements StudentDAO {
             e.printStackTrace();
         }
         return "Student Not Found";
+    }
+
+    @Override
+    public Student get(String studentId) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Student student = session.get(Student.class, studentId);
+        session.close();
+        return student;
     }
 
 

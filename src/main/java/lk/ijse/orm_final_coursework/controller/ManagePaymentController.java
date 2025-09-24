@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.orm_final_coursework.bo.BOFactory;
 import lk.ijse.orm_final_coursework.bo.BOTypes;
@@ -259,4 +260,6 @@ public class ManagePaymentController implements Initializable {
             }
         }
     }
+
+
 }

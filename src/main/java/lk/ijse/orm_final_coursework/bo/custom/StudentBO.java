@@ -26,6 +26,7 @@ public interface StudentBO extends SuperBO {
     public String getStudentIdByContact(String phone) throws SQLException;
     public String getStudentFirstNameById(String studentId) throws SQLException;
     public String getStudentLastNameById(String studentId) throws SQLException;
+    public StudentDTO getStudentById(String studentId) throws Exception;
 
 
 }

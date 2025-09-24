@@ -4,12 +4,14 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class StudentDTO {
     private String studentId;
     private String firstName;
@@ -22,7 +24,7 @@ public class StudentDTO {
 //    @Builder.Default
 //    private ArrayList<StudentCourseDetailDTO> studentCourseDetail = new ArrayList<>();
     @Builder.Default
-    private ArrayList<LessonsDTO> lessons = new ArrayList<>();
+    private List<LessonsDTO> lessons = new ArrayList<>();
     @Builder.Default
     private ArrayList<PaymentDTO> payments = new ArrayList<>();
 }

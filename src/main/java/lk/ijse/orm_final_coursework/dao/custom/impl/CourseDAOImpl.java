@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.CourseDAO;
+import lk.ijse.orm_final_coursework.dto.CourseDTO;
 import lk.ijse.orm_final_coursework.entity.Course;
 import lk.ijse.orm_final_coursework.entity.Student;
 import org.hibernate.Hibernate;
@@ -10,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -183,4 +185,38 @@ public class CourseDAOImpl implements CourseDAO {
         session.close();
         return course;
     }
+
+    @Override
+    public CourseDTO getCourseByName(String courseName) throws Exception {
+        // Open Hibernate session
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            session.beginTransaction();
+
+            // HQL query to fetch Course entity by courseName
+            String hql = "FROM Course c WHERE c.courseName = :name";
+            Course courseEntity = session.createQuery(hql, Course.class)
+                    .setParameter("name", courseName)
+                    .uniqueResult();
+
+            session.getTransaction().commit();
+
+            if (courseEntity != null) {
+                // Convert Course entity to CourseDTO
+                return CourseDTO.builder()
+                        .courseId(courseEntity.getCourseId())
+                        .courseName(courseEntity.getCourseName())
+                        .duration(courseEntity.getDuration())
+                        .fee(courseEntity.getFee())
+                        .description(courseEntity.getDescription())
+                        .instructorId(courseEntity.getInstructorId())
+                        .enrollmentCount(courseEntity.getEnrollmentCount())
+                        .lessons(new ArrayList<>()) // You can map lessons if needed
+                        .build();
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get course by name: " + e.getMessage(), e);
+        }
+    }
+
 }

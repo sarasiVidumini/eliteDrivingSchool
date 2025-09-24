@@ -177,24 +177,6 @@
                                         </TextField>
                                     </children>
                                 </HBox>
-                        <HBox layoutX="10.0" layoutY="183.0" prefHeight="17.0" prefWidth="350.0">
-                           <children>
-                              <Label text="- Course Id-" textFill="#0b0101">
-                                 <HBox.margin>
-                                    <Insets left="40.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="200.0" prefHeight="17.0" prefWidth="350.0">
-                           <children>
-                              <TextField fx:id="txtCourseId" prefHeight="26.0" prefWidth="296.0" promptText="C001" style="-fx-border-radius: 30; -fx-background-radius: 30;">
-                                 <HBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                        </HBox>
                             </children>
                             <effect>
                                 <DropShadow height="63.11" radius="25.2075" width="39.72" />
@@ -300,8 +282,8 @@
                                 <TableColumn fx:id="colPaymentDate" minWidth="0.0" prefWidth="140.79991912841797" text="paymentDate" />
                                 <TableColumn fx:id="colAmount" prefWidth="144.79998779296875" text="amount" />
                                 <TableColumn fx:id="colPaymentMethod" prefWidth="150.40005493164062" text="paymentMethod" />
-                                <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="125.60009765625" text="status" />
-                                <TableColumn fx:id="colStudentId" prefWidth="131.9998779296875" text="studentId" />
+                                <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="232.0" text="status" />
+                                <TableColumn fx:id="colStudentId" prefWidth="157.5999755859375" text="studentId" />
                             </columns>
                             <VBox.margin>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />

@@ -150,6 +150,7 @@ public class EntityDTOConverter {
         studentDTO.setAddress(student.getAddress());
         studentDTO.setDob(student.getDob());
         studentDTO.setRegistrationDate(student.getRegistrationDate());
+        studentDTO.setLessons(student.getLessons().stream().map(this::getLessonsDTO).toList());
         return studentDTO;
     }
 

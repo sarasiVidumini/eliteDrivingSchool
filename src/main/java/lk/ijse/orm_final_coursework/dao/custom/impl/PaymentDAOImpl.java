@@ -2,6 +2,7 @@ package lk.ijse.orm_final_coursework.dao.custom.impl;
 
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.dao.custom.PaymentDAO;
+import lk.ijse.orm_final_coursework.dto.PaymentDTO;
 import lk.ijse.orm_final_coursework.entity.Instructor;
 import lk.ijse.orm_final_coursework.entity.Payment;
 import org.hibernate.Session;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 public class PaymentDAOImpl implements PaymentDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
+    private static final List<PaymentDTO> paymentList = new ArrayList<>();
     @Override
     public String getNextId() throws SQLException {
         Session session = factoryConfiguration.getSession();
@@ -69,6 +71,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         Transaction transaction = session.beginTransaction();
 
         try {
+            payment.setPaymentId(getNextId());
             session.persist(payment);
             transaction.commit();
             return true;
@@ -169,5 +172,21 @@ public class PaymentDAOImpl implements PaymentDAO {
         List<Payment> list = query.list();
         session.close();
         return list;
+    }
+
+    @Override
+    public boolean savePayment(PaymentDTO payment) throws SQLException {
+      return paymentList.add(payment);
+    }
+
+    @Override
+    public List<PaymentDTO> getPaymentByStudent(String studentId) throws SQLException {
+        List<PaymentDTO> result = new ArrayList<>();
+        for (PaymentDTO paymentDTO : paymentList) {
+            if (paymentDTO.getStudentId().equals(studentId)) {
+                result.add(paymentDTO);
+            }
+        }
+        return result;
     }
 }

@@ -116,11 +116,11 @@
                                 </HBox>
                                 <HBox layoutX="11.0" layoutY="72.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtDuration" prefHeight="26.0" prefWidth="296.0" promptText="5 Days" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <ComboBox fx:id="cmbDuration" prefHeight="26.0" prefWidth="296.0" promptText="Select Duration" style="-fx-border-radius: 30; -fx-background-radius: 30;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
-                                        </TextField>
+                                        </ComboBox>
                                     </children>
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="58.0" prefHeight="17.0" prefWidth="350.0">
@@ -134,11 +134,11 @@
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="76.0" prefHeight="17.0" prefWidth="350.0">
                                     <children>
-                                        <TextField fx:id="txtFee" prefHeight="26.0" prefWidth="296.0" promptText="12000.00" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                        <ComboBox fx:id="cmbFee" prefHeight="26.0" prefWidth="296.0" promptText="Select Fee" style="-fx-border-radius: 30; -fx-background-radius: 30;">
                                             <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                             </HBox.margin>
-                                        </TextField>
+                                        </ComboBox>
                                     </children>
                                 </HBox>
                                 <HBox layoutX="10.0" layoutY="106.0" prefHeight="17.0" prefWidth="350.0">

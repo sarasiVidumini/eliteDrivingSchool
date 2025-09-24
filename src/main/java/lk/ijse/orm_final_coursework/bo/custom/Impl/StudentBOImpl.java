@@ -106,4 +106,28 @@ public class StudentBOImpl implements StudentBO {
         return studentDAO.getStudentLastNameById(studentId);
     }
 
+
+    @Override
+    public StudentDTO getStudentById(String studentId) throws Exception {
+        // Fetch Student entity from DAO
+        Student studentEntity = studentDAO.get(studentId); // studentDAO.get() should return Student entity by ID
+        if (studentEntity == null) {
+            return null;
+        }
+
+        // Map entity to DTO
+        return StudentDTO.builder()
+                .studentId(studentEntity.getStudentId())
+                .firstName(studentEntity.getFirstName())
+                .lastName(studentEntity.getLastName())
+                .email(studentEntity.getEmail())
+                .phone(studentEntity.getPhone())
+                .address(studentEntity.getAddress())
+                .dob(studentEntity.getDob())
+                .registrationDate(studentEntity.getRegistrationDate())
+
+                .build();
+    }
+
+
 }

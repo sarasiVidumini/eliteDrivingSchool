@@ -36,7 +36,7 @@ public class ManageAssignCoursePopup {
     private TableColumn<CourseTM, Integer> colEnrollmentCount;
 
     @FXML
-    private Button btnAssignCourse;
+    public Button btnAssignCourse;
 
     private final InstructorBO instructorBO =
             (InstructorBO) BOFactory.getInstance().getBo(BOTypes.INSTRUCTOR);

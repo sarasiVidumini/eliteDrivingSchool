@@ -12,10 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
+@ToString
 @Table(name = "payment")
 public class Payment {
     @Id
-    @Column
     private String paymentId;
 
     @ManyToOne

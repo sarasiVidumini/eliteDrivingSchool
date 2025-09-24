@@ -32,14 +32,16 @@ public class ManageCourseController implements Initializable {
 
     public AnchorPane ancCoursePage;
 
+    @FXML
     public Label lblCourseId;
+    @FXML
+    public ComboBox<String> cmbDuration;
+    @FXML
+    public ComboBox cmbFee;
 
     @FXML
     private ComboBox<String> cmbCourseName;
-    @FXML
-    private TextField txtDuration;
-    @FXML
-    private TextField txtFee;
+
     @FXML
     private TextField txtDescription;
     @FXML
@@ -98,12 +100,33 @@ public class ManageCourseController implements Initializable {
         colEnrollmentCount.setCellValueFactory(new PropertyValueFactory<>("enrollmentCount"));
 
         cmbCourseName.setItems(FXCollections.observableArrayList(
-                "Manual Car Driving",
-                "Automatic Car Driving",
-                "Motorcycle / Scooter Driving",
-                "Three-Wheeler Driving",
-                "Heavy Vehicle Driving (Truck / Bus)"
+                "Basic Learner Program",
+                "Advanced Defensive Driving",
+                "Motorcycle License Training",
+                "Heavy Vehicle Training",
+                "Refresher  Driving Course"
         ));
+
+        cmbDuration.setItems(FXCollections.observableArrayList(
+                "12 Weeks",
+                "8 Weeks",
+                "16 Weeks",
+                "6 Months",
+                "3 Months"
+        ));
+
+        try {
+            cmbFee.setItems(FXCollections.observableArrayList(
+                    "50000.00",
+                    "65000.00",
+                    "75000.00",
+                    "150000.00",
+                    "30000.00"
+            ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, " Failed to load Fee: " + e.getMessage());
+        }
     }
 
     private void loadAllCourses() {
@@ -167,8 +190,8 @@ public class ManageCourseController implements Initializable {
             boolean saved = courseBO.save(CourseDTO.builder()
                     .courseId(lblCourseId.getText())
                     .courseName(cmbCourseName.getValue())
-                    .duration(txtDuration.getText())
-                    .fee(Double.parseDouble(txtFee.getText()))
+                    .duration(cmbDuration.getValue())
+                    .fee(Double.parseDouble(cmbFee.getValue().toString()))
                     .description(txtDescription.getText())
                     .instructorId(txtInstructorId.getText())
                     .build());
@@ -190,8 +213,8 @@ public class ManageCourseController implements Initializable {
             boolean updated = courseBO.update(CourseDTO.builder()
                     .courseId(lblCourseId.getText())
                     .courseName(cmbCourseName.getValue())
-                    .duration(txtDuration.getText())
-                    .fee(Double.parseDouble(txtFee.getText()))
+                    .duration(cmbDuration.getValue())
+                    .fee(Double.parseDouble(cmbFee.getValue().toString()))
                     .description(txtDescription.getText())
                     .instructorId(txtInstructorId.getText())
                     .build());
@@ -236,8 +259,8 @@ public class ManageCourseController implements Initializable {
 
     private void resetForm() {
         cmbCourseName.getSelectionModel().clearSelection();
-        txtDuration.clear();
-        txtFee.clear();
+        cmbDuration.getSelectionModel().clearSelection();
+        cmbFee.getSelectionModel().clearSelection();
         txtDescription.clear();
         txtInstructorId.clear();
         tblCourses.getSelectionModel().clearSelection();
@@ -335,8 +358,8 @@ public class ManageCourseController implements Initializable {
         if(selected != null) {
             lblCourseId.setText(selected.getCourseId());
             cmbCourseName.setValue(selected.getCourseName());
-            txtDuration.setText(selected.getDuration());
-            txtFee.setText(String.valueOf(selected.getFee()));
+            cmbDuration.setValue(selected.getDuration());
+            cmbFee.setValue(Double.valueOf(String.valueOf(selected.getFee())));
             txtDescription.setText(selected.getDescription());
             txtInstructorId.setText(selected.getInstructorId());
         }

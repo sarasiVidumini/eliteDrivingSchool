@@ -311,6 +311,11 @@
                                 <Image url="@../images/student.png" />
                             </image>
                         </ImageView>
+                  <Button fx:id="btnStudentPayments" mnemonicParsing="false" onAction="#btnGoStudentPaymentsPopUpOnAction" style="-fx-background-color: #05c46b;" text="Manage Student Payments">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </Button>
                         <TableView fx:id="tblStudent" onMouseClicked="#OnClickedTable" prefHeight="453.0" prefWidth="886.0" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="colStudentId" prefWidth="81.59994697570801" text="studentId" />
