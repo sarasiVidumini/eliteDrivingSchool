@@ -121,7 +121,7 @@ public class ManageUserController implements Initializable {
             String confirmPassword = txtConfirmPassword.getText();
             String email = txtEmail.getText();
 
-            // Check ComboBoxes
+
             if (cmbRole.getValue() == null || cmbStatus.getValue() == null) {
                 showAlert(Alert.AlertType.ERROR, "Role or Status must be selected!");
                 return;
@@ -129,28 +129,28 @@ public class ManageUserController implements Initializable {
             String role = cmbRole.getValue().toString();
             String status = cmbStatus.getValue().toString();
 
-            // Username validation
+
             if (!username.matches(usernameRegex)) {
                 showAlert(Alert.AlertType.ERROR, "Username is invalid!");
                 return;
             }
 
-            // Password validation
+
             if (!password.matches(passwordRegex)) {
                 showAlert(Alert.AlertType.ERROR,"Password must be at least 8 characters!");
                 return;
             }
 
-            // Confirm password check
+
             if (!password.equals(confirmPassword)) {
                 showAlert(Alert.AlertType.ERROR, "Passwords do not match!");
                 return;
             }
 
-            // Hash the password
+
             String encryptedPassword = PasswordUtil.hashPassword(password);
 
-            // Save user
+
             boolean isSaved = userBO.save(new UserDTO(
                     userId,
                     username,
@@ -163,7 +163,7 @@ public class ManageUserController implements Initializable {
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "User saved successfully!").show();
 
-                // Clear input fields
+
                 txtUserName.clear();
                 txtPassword.clear();
                 txtConfirmPassword.clear();
@@ -171,7 +171,7 @@ public class ManageUserController implements Initializable {
                 cmbRole.getSelectionModel().clearSelection();
                 cmbStatus.getSelectionModel().clearSelection();
 
-                // Refresh the TableView
+
                 loadAllUsers();
 
             } else {
@@ -189,13 +189,13 @@ public class ManageUserController implements Initializable {
         try {
             if (!validateInput()) return;
 
-            String userId = lblUserId.getText(); // ID of the user to update
+            String userId = lblUserId.getText();
             String username = txtUserName.getText();
             String password = txtPassword.getText();
             String confirmPassword = txtConfirmPassword.getText();
             String email = txtEmail.getText();
 
-            // Check ComboBoxes
+
             if (cmbRole.getValue() == null || cmbStatus.getValue() == null) {
                 showAlert(Alert.AlertType.ERROR, "Role or Status must be selected!");
                 return;
@@ -203,28 +203,28 @@ public class ManageUserController implements Initializable {
             String role = cmbRole.getValue().toString();
             String status = cmbStatus.getValue().toString();
 
-            // Username validation
+
             if (!username.matches(usernameRegex)) {
                 showAlert(Alert.AlertType.ERROR, "Username is invalid!");
                 return;
             }
 
-            // Password validation
+
             if (!password.matches(passwordRegex)) {
                 showAlert(Alert.AlertType.ERROR,"Password must be at least 8 characters!");
                 return;
             }
 
-            // Confirm password check
+
             if (!password.equals(confirmPassword)) {
                 showAlert(Alert.AlertType.ERROR, "Passwords do not match!");
                 return;
             }
 
-            // Hash the password
+
             String encryptedPassword = PasswordUtil.hashPassword(password);
 
-            // Update user
+
             boolean isUpdated = userBO.update(new UserDTO(
                     userId,
                     username,
@@ -237,7 +237,7 @@ public class ManageUserController implements Initializable {
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "User updated successfully!").show();
 
-                // Clear input fields
+
                 txtUserName.clear();
                 txtPassword.clear();
                 txtConfirmPassword.clear();
@@ -245,7 +245,7 @@ public class ManageUserController implements Initializable {
                 cmbRole.getSelectionModel().clearSelection();
                 cmbStatus.getSelectionModel().clearSelection();
 
-                // Refresh the TableView
+
                 loadAllUsers();
 
             } else {

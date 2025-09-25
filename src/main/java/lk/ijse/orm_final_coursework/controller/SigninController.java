@@ -24,8 +24,8 @@ import org.hibernate.query.Query;
 public class SigninController {
     public AnchorPane ancSigningPage;
     public TextField txtUserName;
-    public TextField txtEmail;
     public PasswordField txtPassword;
+
     private final UserBO userBO = (UserBO) BOFactory.getInstance().getBo(BOTypes.USER);
 
     public void goToLoginPage(MouseEvent mouseEvent) {

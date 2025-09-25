@@ -167,11 +167,11 @@ public class ManageCourseController implements Initializable {
             cmbCourseIds.getItems().clear();
             cmbStudentIds.getItems().clear();
 
-            // Load all course IDs safely
+
             List<String> courseIds = courseBO.getAllIds();
             cmbCourseIds.getItems().addAll(courseIds);
 
-            // Load all student IDs
+
             List<String> studentIds = studentBO.getAllIds();
             cmbStudentIds.getItems().addAll(studentIds);
 
@@ -182,7 +182,7 @@ public class ManageCourseController implements Initializable {
 
 
 
-    // ================= CRUD ====================
+
 
     @FXML
     private void btnSaveOnAction(ActionEvent event) {
@@ -267,7 +267,7 @@ public class ManageCourseController implements Initializable {
     }
 
 
-    // ================= Enrollment =================
+
 
     @FXML
     private void btnEnrollStudentOnAction(ActionEvent event) {
@@ -297,7 +297,7 @@ public class ManageCourseController implements Initializable {
 
 
 
-    // ================= Search =================
+
     @FXML
     private void search(KeyEvent keyEvent) {
         String text = txtSearch.getText().trim();
@@ -327,7 +327,7 @@ public class ManageCourseController implements Initializable {
         }
     }
 
-    // ================= Helper =================
+
     private void showAlert(Alert.AlertType type, String msg) {
         new Alert(type, msg).show();
     }

@@ -22,12 +22,12 @@ public class MainPageController {
 
     public void initialize() {
         ScaleTransition scale = new ScaleTransition(Duration.seconds(2), bigImage);
-        scale.setFromX(1.0);  // normal width
-        scale.setFromY(1.0);  // normal height
-        scale.setToX(0.7);    // shrink to 70% width
-        scale.setToY(0.7);    // shrink to 70% height
-        scale.setAutoReverse(true);        // grow back
-        scale.setCycleCount(ScaleTransition.INDEFINITE); // repeat forever
+        scale.setFromX(1.0);
+        scale.setFromY(1.0);
+        scale.setToX(0.7);
+        scale.setToY(0.7);
+        scale.setAutoReverse(true);
+        scale.setCycleCount(ScaleTransition.INDEFINITE);
         scale.play();
 
 

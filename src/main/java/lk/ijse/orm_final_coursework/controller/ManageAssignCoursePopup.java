@@ -88,7 +88,7 @@ public class ManageAssignCoursePopup {
         try {
             List<CourseDTO> courses = instructorBO.getCoursesByInstructor(instructorId);
 
-            // Convert to CourseTM objects
+
             List<CourseTM> courseTMs = new ArrayList<>();
             for (CourseDTO dto : courses) {
                 courseTMs.add(new CourseTM(

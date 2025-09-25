@@ -306,7 +306,7 @@ public class ManageStudentController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/StudentPaymentPopUp.fxml"));
             AnchorPane pane = loader.load();
 
-            // Pass student ID to popup controller
+
             ManageStudentPaymentPopup controller = loader.getController();
             controller.setStudentId(selected.getStudentId());
 
@@ -314,7 +314,7 @@ public class ManageStudentController implements Initializable {
             stage.setScene(new Scene(pane));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Student Payments");
-            stage.showAndWait(); // Wait for popup to close before returning
+            stage.showAndWait();
 
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Failed to open Student Payments popup: " + e.getMessage());
