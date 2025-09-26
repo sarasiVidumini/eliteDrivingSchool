@@ -17,14 +17,10 @@ import lk.ijse.orm_final_coursework.bo.custom.UserBO;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.controller.util.PasswordUtil;
 import lk.ijse.orm_final_coursework.controller.util.RoleManager;
-import lk.ijse.orm_final_coursework.dao.SQLUtil;
 import lk.ijse.orm_final_coursework.dto.UserDTO;
 import lk.ijse.orm_final_coursework.entity.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-
-import java.sql.ResultSet;
-import java.util.regex.Pattern;
 
 public class SignUpPageController {
 

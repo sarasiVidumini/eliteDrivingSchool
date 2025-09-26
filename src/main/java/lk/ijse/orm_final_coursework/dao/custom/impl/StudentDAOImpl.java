@@ -1,18 +1,13 @@
 package lk.ijse.orm_final_coursework.dao.custom.impl;
 
-import lk.ijse.orm_final_coursework.dao.SQLUtil;
 import lk.ijse.orm_final_coursework.dao.custom.StudentDAO;
-import lk.ijse.orm_final_coursework.entity.Course;
-import lk.ijse.orm_final_coursework.entity.Instructor;
 import org.hibernate.query.Query;
 import lk.ijse.orm_final_coursework.config.FactoryConfiguration;
 import lk.ijse.orm_final_coursework.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
