@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -65,7 +66,7 @@
                         </ImageView>
                     </children>
                 </VBox>
-                <VBox prefHeight="742.0" prefWidth="806.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%);" HBox.hgrow="NEVER">
+                <VBox prefHeight="742.0" prefWidth="806.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #66ffff 100%); -fx-border-color: #000000;" HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
                     </HBox.margin>
@@ -111,11 +112,31 @@
                                 <Insets left="350.0" top="20.0" />
                             </VBox.margin>
                         </Label>
-                        <PasswordField fx:id="txtPassword" promptText="Enter Your Email For Verify You" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #000000;">
+                        <HBox spacing="15.0">
+                            <children>
+                                <PasswordField fx:id="txtPassword" prefHeight="0.0" prefWidth="570.0" promptText="Enter Password" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </PasswordField>
+                                <TextField fx:id="textField" managed="false" promptText="Password" visible="false" HBox.hgrow="ALWAYS">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </TextField>
+                                <CheckBox fx:id="showPassword" text="Show">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets top="6.0" />
+                                    </HBox.margin>
+                                </CheckBox>
+                            </children>
                             <VBox.margin>
-                                <Insets left="200.0" right="200.0" top="15.0" />
+                                <Insets left="70.0" right="40.0" top="8.0" />
                             </VBox.margin>
-                        </PasswordField>
+                        </HBox>
 <!--                        <PasswordField fx:id="txtPassword" promptText="Enter Your Email For Verify You" />-->
                         <Button fx:id="btnGotIt" mnemonicParsing="false" onAction="#btnGoDashBoardOnAction" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #2ed573;" text="GOT IT">
                             <VBox.margin>

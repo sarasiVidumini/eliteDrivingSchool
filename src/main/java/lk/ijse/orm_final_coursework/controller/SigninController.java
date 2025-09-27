@@ -2,8 +2,10 @@ package lk.ijse.orm_final_coursework.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -21,10 +23,16 @@ import lk.ijse.orm_final_coursework.controller.util.RoleManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-public class SigninController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SigninController implements Initializable {
     public AnchorPane ancSigningPage;
     public TextField txtUserName;
     public PasswordField txtPassword;
+    public TextField textField;
+    public CheckBox showPassword;
+
 
     private final UserBO userBO = (UserBO) BOFactory.getInstance().getBo(BOTypes.USER);
 
@@ -107,5 +115,15 @@ public class SigninController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        textField.managedProperty().bind(showPassword.selectedProperty());
+        textField.visibleProperty().bind(showPassword.selectedProperty());
+        txtPassword.managedProperty().bind(showPassword.selectedProperty().not());
+        txtPassword.visibleProperty().bind(showPassword.selectedProperty().not());
+        textField.textProperty().bindBidirectional(txtPassword.textProperty());
+
     }
 }
